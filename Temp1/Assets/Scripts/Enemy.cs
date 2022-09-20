@@ -54,17 +54,23 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (!isAttack)
+        {
+            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+            Targeting();
+        }
+
         AnimationTest();                     // 애니메이션 테스트 메소드 1,2,3,4
-        MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-        Targeting();
     }
 
     private void MoveToTarget()
     {
+        isChase = true;                                                                     // 이동중임을 알리는 bool 값
         targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
+
         rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //리지드바디를 사용하여 타겟으로 이동
         transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-        isChase = true;                                                                     // 이동중임을 알리는 bool 값
+
         anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화
     }
 
@@ -79,22 +85,22 @@ public class Enemy : MonoBehaviour
             {
                 case Type.Orc:
                     targetRadius = 1.5f;
-                    targetRange = 3f;
+                    targetRange = 1f;
                     break;
 
                 case Type.Skelleton:
-                    targetRadius = 1f;
-                    targetRange = 12f;
+                    targetRadius = 1.5f;
+                    targetRange = 1f;
                     break;
 
                 case Type.Mage:
                     targetRadius = 0.5f;
-                    targetRange = 25f;
+                    targetRange = 10f;
                     break;
 
                 case Type.Shell:
                     targetRadius = 0.5f;
-                    targetRange = 25f;
+                    targetRange = 7f;
                     break;
             }
         }
@@ -107,14 +113,44 @@ public class Enemy : MonoBehaviour
 
         if (rayHits.Length > 0)
         {
-            Attack();
+            StartCoroutine(Attack());
         }
     }
 
-    void Attack()
+    IEnumerator Attack()
     {
-        Debug.Log($"{enemyType}: 공격");
+        isChase = false;
+        isAttack = true;
+        anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
+
+
+        switch (enemyType)
+        {
+            case Type.Orc:
+                yield return new WaitForSeconds(1f);
+                isAttack = false;
+                break;
+
+            case Type.Skelleton:
+                yield return new WaitForSeconds(0.6f);
+                isAttack = false;
+                break;
+
+            case Type.Mage:
+                yield return new WaitForSeconds(0.8f);
+                isAttack = false;
+                break;
+
+            case Type.Shell:
+                transform.position = target.position;
+                yield return new WaitForSeconds(0.5f);
+                isAttack = false;
+                break;
+        }
+
+        isChase = true;
+        yield return new WaitForSeconds(1f);
     }
 
     private void AnimationTest()

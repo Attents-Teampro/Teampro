@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 6259778561874722237, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
 --- !u!1 &256692394
@@ -302,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 130964, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 402612, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1275,7 +1279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4353710160343206, guid: 642da47e7eb2d1d46b95a788e3632619, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.03
+      value: 16.16
       objectReference: {fileID: 0}
     - target: {fileID: 4353710160343206, guid: 642da47e7eb2d1d46b95a788e3632619, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1582,7 +1586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
       propertyPath: moveSpeed
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
       propertyPath: meleeAttack
@@ -1654,6 +1658,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 814742700}
     - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: rotSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: curHealth
       value: 100
       objectReference: {fileID: 0}
@@ -1663,7 +1671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: moveSpeed
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: meleeAttack
@@ -1676,6 +1684,10 @@ PrefabInstance:
     - target: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: m_Name
       value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3913395872218927939, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: m_RootOrder

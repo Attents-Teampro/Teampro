@@ -2200,9 +2200,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6919919595640518030}
   - component: {fileID: 7013726315466832128}
-  - component: {fileID: 41651507}
   - component: {fileID: 809526587123546975}
   - component: {fileID: 41651508}
+  - component: {fileID: 41651507}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Untagged
@@ -2248,33 +2248,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &41651507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6919170241241052080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  curHealth: 100
-  maxHealth: 100
-  target: {fileID: 0}
-  moveSpeed: 5
-  rotSpeed: 1
-  projectile: {fileID: 0}
-  meleeAttack: {fileID: 750466852037717921}
-  nav: {fileID: 0}
-  rb: {fileID: 0}
-  capsuleCollider: {fileID: 0}
-  anim: {fileID: 0}
-  isChase: 0
-  isAttack: 0
-  isDead: 0
 --- !u!136 &809526587123546975
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2305,6 +2278,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &41651507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919170241241052080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  curHealth: 100
+  maxHealth: 100
+  target: {fileID: 0}
+  moveSpeed: 5
+  rotSpeed: 1
+  projectile: {fileID: 0}
+  meleeAttack: {fileID: 750466852037717921}
+  nav: {fileID: 0}
+  rb: {fileID: 0}
+  capsuleCollider: {fileID: 0}
+  anim: {fileID: 0}
+  isChase: 0
+  isAttack: 0
+  isDead: 0
 --- !u!1 &6919189120848913620
 GameObject:
   m_ObjectHideFlags: 0

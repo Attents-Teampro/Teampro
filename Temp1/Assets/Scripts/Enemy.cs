@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using static UnityEngine.UI.Image;
 
 public class Enemy : MonoBehaviour
 {
@@ -33,7 +35,6 @@ public class Enemy : MonoBehaviour
     bool isGetHitTest = false;
     bool isDieTest = false;
 
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -55,6 +56,7 @@ public class Enemy : MonoBehaviour
     {
         AnimationTest();                     // 애니메이션 테스트 메소드 1,2,3,4
         MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+        Targeting();
     }
 
     private void MoveToTarget()
@@ -64,6 +66,55 @@ public class Enemy : MonoBehaviour
         transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
         anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화
+    }
+
+    void Targeting()
+    {
+        float targetRadius = default;   //sphere의 반지름
+        float targetRange = default;    //최대 길이
+
+        if (!isDead)
+        {
+            switch (enemyType)
+            {
+                case Type.Orc:
+                    targetRadius = 1.5f;
+                    targetRange = 3f;
+                    break;
+
+                case Type.Skelleton:
+                    targetRadius = 1f;
+                    targetRange = 12f;
+                    break;
+
+                case Type.Mage:
+                    targetRadius = 0.5f;
+                    targetRange = 25f;
+                    break;
+
+                case Type.Shell:
+                    targetRadius = 0.5f;
+                    targetRange = 25f;
+                    break;
+            }
+        }
+
+        //https://ssabi.tistory.com/29
+        //https://www.youtube.com/watch?v=voEFSbIPYjw
+        //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
+        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius,
+                transform.forward, targetRange, LayerMask.GetMask("Player"));
+
+        if (rayHits.Length > 0)
+        {
+            Attack();
+        }
+    }
+
+    void Attack()
+    {
+        Debug.Log($"{enemyType}: 공격");
+        anim.SetBool("isAttack", true);
     }
 
     private void AnimationTest()
@@ -120,5 +171,5 @@ public class Enemy : MonoBehaviour
         isDieTest = false;
         StopCoroutine(Action4());
     }
-    
+
 }

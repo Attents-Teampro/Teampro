@@ -123,36 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &41651506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
-  m_PrefabInstance: {fileID: 1769494045}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &41651507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 41651506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  curHealth: 0
-  maxHealth: 0
-  target: {fileID: 0}
-  projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
-  nav: {fileID: 0}
-  rigid: {fileID: 0}
-  boxCollider: {fileID: 0}
-  anim: {fileID: 0}
-  isChase: 0
-  isAttack: 0
-  isDead: 0
 --- !u!1001 &53019163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -160,9 +130,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 252084201, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 814742700}
+    - target: {fileID: 252084201, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
+      propertyPath: curHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 252084201, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 252084201, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6256739830325471373, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6256739830325471373, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -210,66 +196,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
---- !u!1 &250921513 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
-  m_PrefabInstance: {fileID: 1871425871}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &250921514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250921513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  curHealth: 0
-  maxHealth: 0
-  target: {fileID: 0}
-  projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
-  nav: {fileID: 0}
-  rigid: {fileID: 0}
-  boxCollider: {fileID: 0}
-  anim: {fileID: 0}
-  isChase: 0
-  isAttack: 0
-  isDead: 0
---- !u!1 &252084200 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6259778561874722237, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
-  m_PrefabInstance: {fileID: 53019163}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &252084201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252084200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  curHealth: 0
-  maxHealth: 0
-  target: {fileID: 0}
-  projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
-  nav: {fileID: 0}
-  rigid: {fileID: 0}
-  boxCollider: {fileID: 0}
-  anim: {fileID: 0}
-  isChase: 0
-  isAttack: 0
-  isDead: 0
 --- !u!1 &256692394
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,36 +289,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 23.87, y: -180, z: 0}
---- !u!1 &446608346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4158859801316043186, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
-  m_PrefabInstance: {fileID: 984011987}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &446608347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446608346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  curHealth: 0
-  maxHealth: 0
-  target: {fileID: 0}
-  projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
-  nav: {fileID: 0}
-  rigid: {fileID: 0}
-  boxCollider: {fileID: 0}
-  anim: {fileID: 0}
-  isChase: 0
-  isAttack: 0
-  isDead: 0
 --- !u!1001 &462547145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -406,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 130964, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 402612, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1102,6 +998,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
+--- !u!4 &814742700 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4353710160343206, guid: 642da47e7eb2d1d46b95a788e3632619, type: 3}
+  m_PrefabInstance: {fileID: 837691499}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &837691499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1166,6 +1067,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 446608347, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 814742700}
+    - target: {fileID: 446608347, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+      propertyPath: curHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 446608347, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 446608347, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4158859801316043186, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
       propertyPath: m_Name
       value: Shell
@@ -1273,6 +1190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7644fea9ad31cfe4ea784580b3630c54, type: 3}
+--- !u!65 &1225763290 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3417546833848006894, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+  m_PrefabInstance: {fileID: 1871425871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1328032227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1330,6 +1252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e5260db8dd196a4cb582c3ca2ae3ebf, type: 3}
+--- !u!65 &1537425429 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 750466852037717921, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+  m_PrefabInstance: {fileID: 1769494045}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1653579986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,13 +1321,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 814742700}
+    - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: curHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 41651507, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: meleeAttack
+      value: 
+      objectReference: {fileID: 1537425429}
+    - target: {fileID: 4044941017801014722, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
       propertyPath: m_Name
       value: Orc
       objectReference: {fileID: 0}
     - target: {fileID: 6919919595640518030, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6919919595640518030, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1451,6 +1402,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 814742700}
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: curHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 250921514, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: meleeAttack
+      value: 
+      objectReference: {fileID: 1225763290}
+    - target: {fileID: 2797694296825776882, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
       propertyPath: m_Name
       value: Skeleton

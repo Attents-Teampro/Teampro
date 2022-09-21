@@ -122,7 +122,7 @@ public class Enemy : MonoBehaviour
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        anim.SetBool("isAttack", true);
+        anim.SetTrigger("doAttack");
 
 
         switch (enemyType)

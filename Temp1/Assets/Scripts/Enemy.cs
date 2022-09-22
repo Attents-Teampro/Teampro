@@ -152,11 +152,26 @@ public class Enemy : MonoBehaviour
         isChase = true;
         yield return new WaitForSeconds(1f);
     }
+    IEnumerator OnDead()
+    {
+        anim.SetTrigger("doDie");
+        yield return new WaitForSeconds(1.5f);
+
+        Destroy(gameObject);
+
+    }
 
     private void AnimationTest()
     {
-        if (Input.GetKeyDown("1") && !isAttackTest)
-            StartCoroutine(Action1());
+        if (Input.GetKeyDown("1"))
+        {
+            curHealth -= 50;
+            anim.SetTrigger("doGetHit");
+            if (curHealth < 0)
+            {
+                StartCoroutine(OnDead());
+            }
+        }
 
         if (Input.GetKeyDown("2") && !isWalkTest)
             StartCoroutine(Action2());
@@ -200,11 +215,13 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator Action4()
     {
+
         anim.SetTrigger("doDie");
         isDieTest = true;
         yield return new WaitForSeconds(0.8f);
 
         isDieTest = false;
+        yield return new WaitForSeconds(0.5f);
         StopCoroutine(Action4());
     }
 

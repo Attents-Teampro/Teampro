@@ -2305,6 +2305,7 @@ MonoBehaviour:
   isChase: 0
   isAttack: 0
   isDead: 0
+  isGetHit: 0
 --- !u!1 &6919189120848913620
 GameObject:
   m_ObjectHideFlags: 0

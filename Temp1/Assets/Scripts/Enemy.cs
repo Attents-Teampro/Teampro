@@ -29,10 +29,10 @@ public class Enemy : MonoBehaviour
     public bool isChase;                //타겟을 향해 이동중
     public bool isAttack;
     public bool isDead;
+    public bool isGetHit = false;
 
     bool isAttackTest = false;
     bool isWalkTest = false;
-    bool isGetHitTest = false;
     bool isDieTest = false;
 
     private void Awake()
@@ -66,12 +66,16 @@ public class Enemy : MonoBehaviour
     private void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
-        targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
 
-        rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //리지드바디를 사용하여 타겟으로 이동
-        transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
+        if (!isGetHit)
+        {
+            targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
 
-        anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화
+            rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //리지드바디를 사용하여 타겟으로 이동
+            transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
+
+            anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
+        }
     }
 
     void Targeting()
@@ -165,22 +169,31 @@ public class Enemy : MonoBehaviour
     {
         if (Input.GetKeyDown("1"))
         {
-            curHealth -= 50;
-            anim.SetTrigger("doGetHit");
-            if (curHealth < 0)
-            {
-                StartCoroutine(OnDead());
-            }
+            StartCoroutine(OnGetHit());
         }
 
         if (Input.GetKeyDown("2") && !isWalkTest)
             StartCoroutine(Action2());
 
-        if (Input.GetKeyDown("3") && !isGetHitTest)
+        if (Input.GetKeyDown("3") && !isGetHit)
             StartCoroutine(Action3());
 
         if (Input.GetKeyDown("4") && !isDieTest)
             StartCoroutine(Action4());
+    }
+
+    IEnumerator OnGetHit()
+    {
+        curHealth -= 50;
+        anim.SetBool("isWalk", false);
+        isGetHit = true;
+        anim.SetTrigger("doGetHit");
+        if (curHealth < 0)
+        {
+            StartCoroutine(OnDead());
+        }
+        yield return new WaitForSeconds(0.8f);
+        isGetHit = false;
     }
 
     IEnumerator Action1()
@@ -205,12 +218,12 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator Action3()
     {
-        isGetHitTest = true;
+        isGetHit = true;
         anim.SetBool("isGetHit", true);
         yield return new WaitForSeconds(0.8f);
 
         anim.SetBool("isGetHit", false);
-        isGetHitTest = false;
+        isGetHit = false;
         StopCoroutine(Action3());
     }
     IEnumerator Action4()
@@ -224,5 +237,6 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         StopCoroutine(Action4());
     }
+
 
 }

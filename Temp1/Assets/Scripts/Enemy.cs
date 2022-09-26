@@ -35,6 +35,9 @@ public class Enemy : MonoBehaviour
     bool isWalkTest = false;
     bool isDieTest = false;
 
+    private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
+    private Transform mageStaff;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,6 +46,12 @@ public class Enemy : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
         meleeAttack = GetComponent<BoxCollider>();
         target = target.GetComponent<Transform>();
+
+        if(enemyType == Type.Mage)
+        {
+            mageStaff = transform.GetChild(2);
+            mageBulletPosition = mageStaff.GetChild(0);
+        }
     }
 
     private void Start()
@@ -142,8 +151,10 @@ public class Enemy : MonoBehaviour
                 break;
 
             case Type.Mage:
-                yield return new WaitForSeconds(0.8f);
-                isAttack = false;
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(MageAttack());
+                yield return new WaitForSeconds(1.0f);
+                // isAttack = false;
                 break;
 
             case Type.Shell:
@@ -238,5 +249,11 @@ public class Enemy : MonoBehaviour
         StopCoroutine(Action4());
     }
 
+    IEnumerator MageAttack()
+    {
+        Instantiate(projectile,mageBulletPosition.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+        isAttack = false;
+    }
 
 }

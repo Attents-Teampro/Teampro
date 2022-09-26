@@ -134,10 +134,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 814742700}
-    - target: {fileID: 252084201, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
-      propertyPath: projectile
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6256739830325471373, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
       propertyPath: m_RootOrder
       value: 6

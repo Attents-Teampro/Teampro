@@ -3,15 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Weapon
+  - Melee
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

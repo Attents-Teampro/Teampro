@@ -60,15 +60,16 @@ public class Player : MonoBehaviour
 
     void GetInput()
     {
+        //아래 주석 처리한 입력값들은 에러 떠서 임시로 주석 처리 했습니다.by 손동욱
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         //wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
         fDown = Input.GetButtonDown("Fire1");
-        iDown = Input.GetButtonDown("Interation");
-        sDown1 = Input.GetButtonDown("Swap1");
-        sDown2 = Input.GetButtonDown("Swap2");
-        sDown3 = Input.GetButtonDown("Swap3");
+        //iDown = Input.GetButtonDown("Interation");
+        //sDown1 = Input.GetButtonDown("Swap1");
+        //sDown2 = Input.GetButtonDown("Swap2");
+        //sDown3 = Input.GetButtonDown("Swap3");
     }
 
     void Move()

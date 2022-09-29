@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     void GetInput()
     {
-        //아래 주석 처리한 입력값들은 에러 떠서 임시로 주석 처리 했습니다.by 손동욱
+        //인풋 매니저 수정 완료(정상작동)
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");

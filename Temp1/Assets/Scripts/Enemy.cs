@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
 
         if (rayHits.Length > 0)
         {
-            Debug.Log("레이캐스트 식별");
+            //Debug.Log("레이캐스트 식별");
             StartCoroutine(Attack());
         }
     }

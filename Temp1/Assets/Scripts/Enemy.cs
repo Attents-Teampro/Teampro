@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         meleeAttack = GetComponent<BoxCollider>();
-        target = target.GetComponent<Transform>();
+        //target = target.GetComponent<Transform>();
 
         if(enemyType == Type.Mage)
         {
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
     {
         //meleeAttack.enabled = false;        //밀리 어택 컬리젼을 꺼 둠
         //StartCoroutine(Action());           //코루틴 테스트용 임시 코드
-
+        target = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     private void Update()

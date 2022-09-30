@@ -2291,8 +2291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  curHealth: 100
-  maxHealth: 100
+  curHealth: 200
+  maxHealth: 200
   target: {fileID: 0}
   moveSpeed: 5
   rotSpeed: 1

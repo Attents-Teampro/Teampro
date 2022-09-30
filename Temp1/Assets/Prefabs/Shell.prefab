@@ -983,8 +983,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  curHealth: 100
-  maxHealth: 100
+  curHealth: 80
+  maxHealth: 80
   target: {fileID: 0}
   moveSpeed: 3
   rotSpeed: 1
@@ -997,6 +997,7 @@ MonoBehaviour:
   isChase: 0
   isAttack: 0
   isDead: 0
+  isGetHit: 0
 --- !u!1 &4158907722797144342
 GameObject:
   m_ObjectHideFlags: 0

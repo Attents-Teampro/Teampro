@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  curHealth: 100
-  maxHealth: 100
+  curHealth: 150
+  maxHealth: 150
   target: {fileID: 0}
   moveSpeed: 7
   rotSpeed: 1
@@ -161,6 +161,7 @@ MonoBehaviour:
   isChase: 0
   isAttack: 0
   isDead: 0
+  isGetHit: 0
 --- !u!1 &3909862852291791141
 GameObject:
   m_ObjectHideFlags: 0

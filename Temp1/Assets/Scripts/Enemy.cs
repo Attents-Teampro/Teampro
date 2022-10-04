@@ -7,12 +7,14 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, ICharacter
 {
     public enum Type { Orc, Skelleton, Mage, Shell, Boss }
     public Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
-    public int curHealth;
-    public int maxHealth;
+    public int curHealth;               //현재 체력
+    public int maxHealth;               //최대 체력
+    public int minDamage;               //최소 공격 데미지
+    public int maxDamege;               //최대 공격 데미지
     public Transform target;            //플레이어 타겟
     public float moveSpeed = default;             //이동 속도
     public float rotSpeed = 1.0f;
@@ -25,6 +27,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
+    //public GameObject player;
 
     public bool isChase;                //타겟을 향해 이동중
     public bool isAttack;
@@ -45,9 +48,9 @@ public class Enemy : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         meleeAttack = GetComponent<BoxCollider>();
-        //target = target.GetComponent<Transform>();
+       // target = target.GetComponent<Transform>();
 
-        if(enemyType == Type.Mage)
+        if (enemyType == Type.Mage)
         {
             mageStaff = transform.GetChild(2);
             mageBulletPosition = mageStaff.GetChild(0);
@@ -57,8 +60,8 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         //meleeAttack.enabled = false;        //밀리 어택 컬리젼을 꺼 둠
-        //StartCoroutine(Action());           //코루틴 테스트용 임시 코드
         target = GameObject.Find("Player").GetComponent<Transform>();
+        //player = GameObject.Find("Player").GetComponent<GameObject>();
     }
 
     private void Update()
@@ -72,6 +75,9 @@ public class Enemy : MonoBehaviour
         AnimationTest();                     // 애니메이션 테스트 메소드 1,2,3,4
     }
 
+    /// <summary>
+    /// 타겟을 향해 이동 : 추 후 타겟 거리를 보고 이동 targetDistance 변수로 처리 예정
+    /// </summary>
     private void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
@@ -91,7 +97,7 @@ public class Enemy : MonoBehaviour
     {
         float targetRadius = default;   //sphere의 반지름
         float targetRange = default;    //최대 길이
-
+        
         if (!isDead)
         {
             switch (enemyType)
@@ -124,20 +130,27 @@ public class Enemy : MonoBehaviour
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius,
                 transform.forward, targetRange, LayerMask.GetMask("Player"));
 
+        // 레이캐스트에 Player 오브젝트가 판별되면 어택
         if (rayHits.Length > 0)
         {
             //Debug.Log("레이캐스트 식별");
             StartCoroutine(Attack());
+            //ICharacter.Attack(player, minDamage);
+            
         }
     }
 
+    /// <summary>
+    /// Enemy 어택 함수 : ICharater Attack으로 대체 예정
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Attack()
     {
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-
+        //meleeAttack.enabled = true;
 
         switch (enemyType)
         {
@@ -168,15 +181,21 @@ public class Enemy : MonoBehaviour
         isChase = true;
         yield return new WaitForSeconds(1f);
     }
+    /// <summary>
+    /// Enemy 죽는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator OnDead()
     {
         anim.SetTrigger("doDie");
         yield return new WaitForSeconds(1.5f);
 
         Destroy(gameObject);
-
     }
 
+    /// <summary>
+    /// 애니메이션 테스트용 함수 (삭제 예정)
+    /// </summary>
     private void AnimationTest()
     {
         if (Input.GetKeyDown("1"))
@@ -194,6 +213,10 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Action4());
     }
 
+    /// <summary>
+    /// Enemy 피격 함수 : ICharater로 대체 예정
+    /// </summary>
+    /// <returns></returns>
     IEnumerator OnGetHit()
     {
         curHealth -= 50;
@@ -207,7 +230,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         isGetHit = false;
     }
-
+    
     IEnumerator Action1()
     {
         anim.SetBool("isAttack", true);
@@ -252,9 +275,23 @@ public class Enemy : MonoBehaviour
 
     IEnumerator MageAttack()
     {
-        Instantiate(projectile,mageBulletPosition.position, Quaternion.identity);
+        Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
         isAttack = false;
     }
 
+    void ICharacter.Die()
+    {
+        StartCoroutine(OnDead());
+    }
+    void ICharacter.Attacked(int damage)
+    {
+        curHealth -= damage;
+        StartCoroutine(OnGetHit());
+    }
+
+    void ICharacter.Attack(GameObject target, int damage)
+    {
+        StartCoroutine(Attack());
+    }
 }

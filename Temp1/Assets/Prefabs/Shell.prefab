@@ -985,8 +985,10 @@ MonoBehaviour:
   enemyType: 3
   curHealth: 80
   maxHealth: 80
+  minDamage: 50
+  maxDamege: 50
   target: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 1
   rotSpeed: 1
   projectile: {fileID: 0}
   meleeAttack: {fileID: 0}

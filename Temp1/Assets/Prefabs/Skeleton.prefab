@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1972950870096873511
 Transform:
   m_ObjectHideFlags: 0
@@ -40,7 +40,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2797694296825776882}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.50245416, y: 0.77914757, z: 1.7757688}
@@ -149,9 +149,11 @@ MonoBehaviour:
   enemyType: 1
   curHealth: 150
   maxHealth: 150
+  minDamage: 50
+  maxDamege: 50
   target: {fileID: 0}
-  moveSpeed: 7
-  rotSpeed: 1
+  moveSpeed: 10
+  rotSpeed: 2
   projectile: {fileID: 0}
   meleeAttack: {fileID: 3417546833848006894}
   nav: {fileID: 0}

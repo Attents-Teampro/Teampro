@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ICharacter
 {
-    public float attackDamage = default;
+    public float attackDamage = 50f;
     private float projectileSpeed = 10f;
 
     Rigidbody rb;
@@ -29,5 +29,19 @@ public class Projectile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void ICharacter.Die()
+    {
+        
+    }
+    void ICharacter.Attacked(int damage)
+    {
+       
+    }
+
+    void ICharacter.Attack(GameObject target, int damage)
+    {
+        
     }
 }

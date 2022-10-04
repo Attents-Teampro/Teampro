@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 2970882173640018654}
   - component: {fileID: 252084202}
   - component: {fileID: 252084201}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1961,6 +1961,8 @@ MonoBehaviour:
   enemyType: 2
   curHealth: 100
   maxHealth: 100
+  minDamage: 0
+  maxDamege: 0
   target: {fileID: 0}
   moveSpeed: 1
   rotSpeed: 1

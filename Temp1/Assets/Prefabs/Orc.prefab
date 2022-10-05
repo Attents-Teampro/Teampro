@@ -2294,7 +2294,7 @@ MonoBehaviour:
   curHealth: 200
   maxHealth: 200
   minDamage: 50
-  maxDamege: 50
+  maxDamage: 50
   target: {fileID: 0}
   moveSpeed: 5
   rotSpeed: 1

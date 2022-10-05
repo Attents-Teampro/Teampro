@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour, ICharacter
     public int minDamage;               //최소 공격 데미지
     public int maxDamage;               //최대 공격 데미지
     public Transform target;            //플레이어 타겟
-    public float moveSpeed = default;             //이동 속도
+    public float moveSpeed = default;   //이동 속도
     public float rotSpeed = 1.0f;
 
     Vector3 targetDirection;
@@ -27,16 +27,13 @@ public class Enemy : MonoBehaviour, ICharacter
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
-    //public GameObject player;
 
     public bool isChase;                //타겟을 향해 이동중
     public bool isAttack;
     public bool isDead;
     public bool isGetHit = false;
 
-    bool isAttackTest = false; //테스트 변수 삭제 예정
-    bool isWalkTest = false;
-    bool isDieTest = false;
+    ICharacter playerCharacter;
 
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
@@ -59,7 +56,7 @@ public class Enemy : MonoBehaviour, ICharacter
     private void Start()
     {
         target = GameObject.Find("Player").GetComponent<Transform>();
-        //player = GameObject.Find("Player").GetComponent<GameObject>();
+        playerCharacter = target.GetComponent<ICharacter>();      //플레이어 캐릭터의 인터페이스 참조
     }
 
     private void Update()
@@ -70,7 +67,7 @@ public class Enemy : MonoBehaviour, ICharacter
             Targeting();
         }
     }
-
+        
     /// <summary>
     /// 타겟을 향해 이동 : 추 후 타겟 거리를 보고 이동 targetDistance 변수로 처리 예정
     /// </summary>
@@ -130,9 +127,7 @@ public class Enemy : MonoBehaviour, ICharacter
         if (rayHits.Length > 0)
         {
             //Debug.Log("레이캐스트 식별");
-            Attack(target.gameObject,maxDamage);
-            //ICharacter.Attack(player, minDamage);
-            
+            StartCoroutine(enemyAttack());
         }
     }
 
@@ -196,7 +191,7 @@ public class Enemy : MonoBehaviour, ICharacter
     /// <returns></returns>
     IEnumerator OnGetHit()
     {
-        curHealth -= 50;
+        curHealth -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
@@ -234,5 +229,6 @@ public class Enemy : MonoBehaviour, ICharacter
     public void Attack(GameObject target, int damage)
     {
         StartCoroutine(enemyAttack());
+        playerCharacter.Attacked(maxDamage);
     }
 }

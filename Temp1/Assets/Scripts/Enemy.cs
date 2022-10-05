@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviour, ICharacter
 
     private void Start()
     {
-        //meleeAttack.enabled = false;        //밀리 어택 컬리젼을 꺼 둠
         target = GameObject.Find("Player").GetComponent<Transform>();
         //player = GameObject.Find("Player").GetComponent<GameObject>();
     }
@@ -70,8 +69,6 @@ public class Enemy : MonoBehaviour, ICharacter
             MoveToTarget();                     // 타겟을 향이 이동하는 메소드
             Targeting();
         }
-
-        AnimationTest();                     // 애니메이션 테스트 메소드 1,2,3,4
     }
 
     /// <summary>
@@ -133,7 +130,7 @@ public class Enemy : MonoBehaviour, ICharacter
         if (rayHits.Length > 0)
         {
             //Debug.Log("레이캐스트 식별");
-            StartCoroutine(enemyAttack());
+            Attack(target.gameObject,maxDamage);
             //ICharacter.Attack(player, minDamage);
             
         }
@@ -192,26 +189,7 @@ public class Enemy : MonoBehaviour, ICharacter
         Destroy(gameObject);
     }
 
-    /// <summary>
-    /// 애니메이션 테스트용 함수 (삭제 예정)
-    /// </summary>
-    private void AnimationTest()
-    {
-        if (Input.GetKeyDown("1"))
-        {
-            StartCoroutine(OnGetHit());
-        }
-
-        if (Input.GetKeyDown("2") && !isWalkTest)
-            StartCoroutine(Action2());
-
-        if (Input.GetKeyDown("3") && !isGetHit)
-            StartCoroutine(Action3());
-
-        if (Input.GetKeyDown("4") && !isDieTest)
-            StartCoroutine(Action4());
-    }
-
+    
     /// <summary>
     /// Enemy 피격 함수 : ICharater로 대체 예정
     /// </summary>
@@ -224,53 +202,13 @@ public class Enemy : MonoBehaviour, ICharacter
         anim.SetTrigger("doGetHit");
         if (curHealth < 0)
         {
-            StartCoroutine(OnDead());
+            Die();
         }
         yield return new WaitForSeconds(0.8f);
         isGetHit = false;
     }
     
-    IEnumerator Action1()
-    {
-        anim.SetBool("isAttack", true);
-        isAttackTest = true;
-        yield return new WaitForSeconds(0.8f);
-
-        anim.SetBool("isAttack", false);
-        isAttackTest = false;
-        StopCoroutine(Action1());
-    }
-    IEnumerator Action2()
-    {
-        anim.SetBool("isWalk", true);
-        isWalkTest = true;
-        yield return new WaitForSeconds(0.8f);
-
-        anim.SetBool("isWalk", false);
-        isWalkTest = false;
-        StopCoroutine(Action2());
-    }
-    IEnumerator Action3()
-    {
-        isGetHit = true;
-        anim.SetBool("isGetHit", true);
-        yield return new WaitForSeconds(0.8f);
-
-        anim.SetBool("isGetHit", false);
-        isGetHit = false;
-        StopCoroutine(Action3());
-    }
-    IEnumerator Action4()
-    {
-
-        anim.SetTrigger("doDie");
-        isDieTest = true;
-        yield return new WaitForSeconds(0.8f);
-
-        isDieTest = false;
-        yield return new WaitForSeconds(0.5f);
-        StopCoroutine(Action4());
-    }
+    
     /// <summary>
     /// 마법사용 원거리 발사체 생성 함수
     /// </summary>
@@ -283,17 +221,17 @@ public class Enemy : MonoBehaviour, ICharacter
        
     }
 
-    void ICharacter.Die()
+    public void Die()
     {
         StartCoroutine(OnDead());
     }
-    void ICharacter.Attacked(int damage)
+    public void Attacked(int damage)
     {
         curHealth -= damage;
         StartCoroutine(OnGetHit());
     }
 
-    void ICharacter.Attack(GameObject target, int damage)
+    public void Attack(GameObject target, int damage)
     {
         StartCoroutine(enemyAttack());
     }

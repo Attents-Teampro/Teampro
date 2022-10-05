@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour, ICharacter
     public int curHealth;               //현재 체력
     public int maxHealth;               //최대 체력
     public int minDamage;               //최소 공격 데미지
-    public int maxDamege;               //최대 공격 데미지
+    public int maxDamage;               //최대 공격 데미지
     public Transform target;            //플레이어 타겟
     public float moveSpeed = default;             //이동 속도
     public float rotSpeed = 1.0f;
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour, ICharacter
     public bool isDead;
     public bool isGetHit = false;
 
-    bool isAttackTest = false;
+    bool isAttackTest = false; //테스트 변수 삭제 예정
     bool isWalkTest = false;
     bool isDieTest = false;
 
@@ -47,8 +47,7 @@ public class Enemy : MonoBehaviour, ICharacter
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        meleeAttack = GetComponent<BoxCollider>();
-       // target = target.GetComponent<Transform>();
+        meleeAttack = GameObject.Find("MeleeAttack").GetComponent<BoxCollider>();
 
         if (enemyType == Type.Mage)
         {
@@ -134,7 +133,7 @@ public class Enemy : MonoBehaviour, ICharacter
         if (rayHits.Length > 0)
         {
             //Debug.Log("레이캐스트 식별");
-            StartCoroutine(Attack());
+            StartCoroutine(enemyAttack());
             //ICharacter.Attack(player, minDamage);
             
         }
@@ -144,7 +143,7 @@ public class Enemy : MonoBehaviour, ICharacter
     /// Enemy 어택 함수 : ICharater Attack으로 대체 예정
     /// </summary>
     /// <returns></returns>
-    IEnumerator Attack()
+    IEnumerator enemyAttack()
     {
         isChase = false;
         isAttack = true;
@@ -272,12 +271,16 @@ public class Enemy : MonoBehaviour, ICharacter
         yield return new WaitForSeconds(0.5f);
         StopCoroutine(Action4());
     }
-
+    /// <summary>
+    /// 마법사용 원거리 발사체 생성 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator MageAttack()
     {
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
         isAttack = false;
+       
     }
 
     void ICharacter.Die()
@@ -292,6 +295,6 @@ public class Enemy : MonoBehaviour, ICharacter
 
     void ICharacter.Attack(GameObject target, int damage)
     {
-        StartCoroutine(Attack());
+        StartCoroutine(enemyAttack());
     }
 }

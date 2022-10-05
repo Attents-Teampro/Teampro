@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Projectile : MonoBehaviour, ICharacter
 {
-    public float attackDamage = 50f;
+    public int attackDamage = 50;
     private float projectileSpeed = 10f;
+
+    ICharacter playerCharacter;
 
     Rigidbody rb;
     Transform player;
@@ -14,7 +17,7 @@ public class Projectile : MonoBehaviour, ICharacter
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player").GetComponent<Transform>();
-        
+        playerCharacter = player.GetComponent<ICharacter>();
     }
 
     // Update is called once per frame
@@ -28,19 +31,21 @@ public class Projectile : MonoBehaviour, ICharacter
         if(other.CompareTag("Player"))
         {
             Destroy(this.gameObject);
+            //playerCharacter.Attacked(attackDamage);
+            Debug.Log("MageAttack");
         }
     }
 
-    void ICharacter.Die()
+    public void Die()
     {
         
     }
-    void ICharacter.Attacked(int damage)
+    public void Attacked(int damage)
     {
        
     }
 
-    void ICharacter.Attack(GameObject target, int damage)
+    public void Attack(GameObject target, int damage)
     {
         
     }

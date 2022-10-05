@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1972950870096873511}
   - component: {fileID: 3417546833848006894}
+  - component: {fileID: 1568259691}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -24,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2797694296825776882}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.741, y: -1.67, z: 0.68}
+  m_LocalRotation: {x: -0.10358754, y: -0.07374563, z: -0.1577963, w: 0.9792505}
+  m_LocalPosition: {x: -0.016359776, y: -0.019037962, z: 1.1213254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3913488453846677443}
+  m_Father: {fileID: 3914051489283206529}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3417546833848006894
@@ -45,6 +46,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.50245416, y: 0.77914757, z: 1.7757688}
   m_Center: {x: -0.0032126307, y: -0.021845743, z: 0.04631436}
+--- !u!114 &1568259691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797694296825776882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7c1879b7309914584771a088704749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3909837000738111945
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,16 +159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 1
   curHealth: 150
   maxHealth: 150
   minDamage: 50
   maxDamage: 50
   target: {fileID: 0}
-  moveSpeed: 10
+  moveSpeed: 15
   rotSpeed: 2
   projectile: {fileID: 0}
-  meleeAttack: {fileID: 3417546833848006894}
+  meleeAttack: {fileID: 0}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}
@@ -1039,7 +1051,8 @@ Transform:
   m_LocalPosition: {x: -0.13964394, y: -0.012275841, z: 0.061538935}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1972950870096873511}
   m_Father: {fileID: 3913760563227683633}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1193,15 +1206,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3910638361964616765}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.99204886, z: -0.7966844}
+  m_LocalRotation: {x: -0.64972496, y: -0, z: -0, w: 0.7601693}
+  m_LocalPosition: {x: 0, y: 1.2356054, z: -0.84237695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1972950870096873511}
+  m_Children: []
   m_Father: {fileID: 3913395872218927939}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -81.042, y: 0, z: 0}
 --- !u!137 &4010804722520313945
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

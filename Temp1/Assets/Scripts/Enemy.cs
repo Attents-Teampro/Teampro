@@ -10,7 +10,7 @@ using static UnityEngine.UI.Image;
 public class Enemy : MonoBehaviour, ICharacter
 {
     public enum Type { Orc, Skelleton, Mage, Shell, Boss }
-    public Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
+    Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
     public int curHealth;               //현재 체력
     public int maxHealth;               //최대 체력
     public int minDamage;               //최소 공격 데미지
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, ICharacter
     Vector3 targetDirection;
 
     public GameObject projectile;       //원거리용 발사체
-    public BoxCollider meleeAttack;     //밀리 어택용 컬리젼 박스
+    public GameObject meleeAttack;     //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
     public NavMeshAgent nav;            //네비 매쉬를 사용
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
@@ -44,7 +44,9 @@ public class Enemy : MonoBehaviour, ICharacter
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        meleeAttack = GameObject.Find("MeleeAttack").GetComponent<BoxCollider>();
+        meleeAttack = GameObject.Find("MeleeAttack");
+        
+        //meleeAttack = GameObject.Find("MeleeAttack").GetComponent<BoxCollider>();
 
         if (enemyType == Type.Mage)
         {
@@ -57,6 +59,10 @@ public class Enemy : MonoBehaviour, ICharacter
     {
         target = GameObject.Find("Player").GetComponent<Transform>();
         playerCharacter = target.GetComponent<ICharacter>();      //플레이어 캐릭터의 인터페이스 참조
+        if(meleeAttack != null)
+        {
+            meleeAttack.SetActive(false);
+        }
     }
 
     private void Update()
@@ -126,13 +132,12 @@ public class Enemy : MonoBehaviour, ICharacter
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
         if (rayHits.Length > 0)
         {
-            //Debug.Log("레이캐스트 식별");
             StartCoroutine(enemyAttack());
         }
     }
 
     /// <summary>
-    /// Enemy 어택 함수 : ICharater Attack으로 대체 예정
+    /// Enemy 어택 함수 : 어택 관련 모션 처리
     /// </summary>
     /// <returns></returns>
     IEnumerator enemyAttack()
@@ -141,7 +146,7 @@ public class Enemy : MonoBehaviour, ICharacter
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-        //meleeAttack.enabled = true;
+        meleeAttack.SetActive(true);
 
         switch (enemyType)
         {
@@ -170,6 +175,7 @@ public class Enemy : MonoBehaviour, ICharacter
         }
 
         isChase = true;
+        meleeAttack.SetActive(false);
         yield return new WaitForSeconds(1f);
     }
     /// <summary>
@@ -186,7 +192,7 @@ public class Enemy : MonoBehaviour, ICharacter
 
     
     /// <summary>
-    /// Enemy 피격 함수 : ICharater로 대체 예정
+    /// Enemy 피격 함수 : 피격관련 모션 처리
     /// </summary>
     /// <returns></returns>
     IEnumerator OnGetHit()
@@ -213,7 +219,6 @@ public class Enemy : MonoBehaviour, ICharacter
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
         isAttack = false;
-       
     }
 
     public void Die()
@@ -229,6 +234,6 @@ public class Enemy : MonoBehaviour, ICharacter
     public void Attack(GameObject target, int damage)
     {
         StartCoroutine(enemyAttack());
-        playerCharacter.Attacked(maxDamage);
+       // playerCharacter.Attacked(maxDamage);
     }
 }

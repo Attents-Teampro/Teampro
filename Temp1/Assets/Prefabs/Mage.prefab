@@ -1958,13 +1958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 2
   curHealth: 100
   maxHealth: 100
   minDamage: 0
-  maxDamege: 0
+  maxDamage: 0
   target: {fileID: 0}
-  moveSpeed: 1
+  moveSpeed: 8
   rotSpeed: 1
   projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
   meleeAttack: {fileID: 0}

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2419732191355241361}
   - component: {fileID: 750466852037717921}
+  - component: {fileID: 1394649302}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -24,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4044941017801014722}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38, y: -1.072, z: -0.274}
+  m_LocalRotation: {x: -0.7214505, y: -0.65713793, z: 0.20634572, w: 0.07141703}
+  m_LocalPosition: {x: -0.27035183, y: -0.6596608, z: -0.104896665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6924138921991178712}
-  m_RootOrder: 0
+  m_Father: {fileID: 6924120542210727960}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &750466852037717921
 BoxCollider:
@@ -45,6 +46,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1394649302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4044941017801014722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7c1879b7309914584771a088704749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6917554155563990528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,8 +1764,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 1.4098849, z: -0.5299894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2419732191355241361}
+  m_Children: []
   m_Father: {fileID: 6919919595640518030}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1901,6 +1913,7 @@ Transform:
   - {fileID: 6920144713859776654}
   - {fileID: 6924034414345528862}
   - {fileID: 6920051294544278764}
+  - {fileID: 2419732191355241361}
   m_Father: {fileID: 6923931033079168488}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2290,16 +2303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   curHealth: 200
   maxHealth: 200
   minDamage: 50
   maxDamage: 50
   target: {fileID: 0}
-  moveSpeed: 5
+  moveSpeed: 10
   rotSpeed: 1
   projectile: {fileID: 0}
-  meleeAttack: {fileID: 750466852037717921}
+  meleeAttack: {fileID: 0}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}

@@ -166,7 +166,6 @@ public class Enemy : MonoBehaviour, ICharacter
             case Type.Mage:
                 anim.SetTrigger("doAttack");
                 yield return new WaitForSeconds(0.4f);
-                //MageAttack();
                 Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
                 yield return new WaitForSeconds(1.1f);
                 isAttack = false;
@@ -217,18 +216,6 @@ public class Enemy : MonoBehaviour, ICharacter
         isGetHit = false;
     }
     
-    
-    /// <summary>
-    /// 마법사용 원거리 발사체 생성 함수
-    /// </summary>
-    /// <returns></returns>
-    void MageAttack()
-    {
-        //yield return new WaitForSeconds(0.2f);
-        Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
-        //yield return new WaitForSeconds(1.1f);
-        //isAttack = false;
-    }
 
     public void Die()
     {

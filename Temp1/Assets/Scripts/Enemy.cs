@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour, ICharacter
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        meleeAttack = GameObject.Find("MeleeAttack");
+        //meleeAttack = transform.FindChild("MeleeAttack").GetComponent<GameObject>();
         
         //meleeAttack = GameObject.Find("MeleeAttack").GetComponent<BoxCollider>();
 

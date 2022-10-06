@@ -166,7 +166,8 @@ public class Enemy : MonoBehaviour, ICharacter
             case Type.Mage:
                 anim.SetTrigger("doAttack");
                 yield return new WaitForSeconds(0.4f);
-                MageAttack();
+                //MageAttack();
+                Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
                 yield return new WaitForSeconds(1.1f);
                 isAttack = false;
                 break;

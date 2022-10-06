@@ -2222,7 +2222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6919919595640518030
 Transform:
   m_ObjectHideFlags: 0
@@ -2303,6 +2303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   curHealth: 200
   maxHealth: 200
   minDamage: 50
@@ -2311,7 +2312,7 @@ MonoBehaviour:
   moveSpeed: 10
   rotSpeed: 1
   projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
+  meleeAttack: {fileID: 4044941017801014722}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}

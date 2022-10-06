@@ -10,7 +10,7 @@ using static UnityEngine.UI.Image;
 public class Enemy : MonoBehaviour, ICharacter
 {
     public enum Type { Orc, Skelleton, Mage, Shell, Boss }
-    Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
+    public Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
     public int curHealth;               //현재 체력
     public int maxHealth;               //최대 체력
     public int minDamage;               //최소 공격 데미지
@@ -44,9 +44,7 @@ public class Enemy : MonoBehaviour, ICharacter
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        //meleeAttack = transform.FindChild("MeleeAttack").GetComponent<GameObject>();
-        
-        //meleeAttack = GameObject.Find("MeleeAttack").GetComponent<BoxCollider>();
+        //projectile = gameObject.GetComponent<GameObject>();
 
         if (enemyType == Type.Mage)
         {
@@ -145,37 +143,46 @@ public class Enemy : MonoBehaviour, ICharacter
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        anim.SetTrigger("doAttack");
-        meleeAttack.SetActive(true);
+       
 
         switch (enemyType)
         {
             case Type.Orc:
+                anim.SetTrigger("doAttack");
+                meleeAttack.SetActive(true);
                 yield return new WaitForSeconds(1f);
                 isAttack = false;
+                meleeAttack.SetActive(false);
                 break;
 
             case Type.Skelleton:
+                anim.SetTrigger("doAttack");
+                meleeAttack.SetActive(true);
                 yield return new WaitForSeconds(0.6f);
                 isAttack = false;
+                meleeAttack.SetActive(false);
                 break;
 
             case Type.Mage:
-                yield return new WaitForSeconds(0.5f);
-                StartCoroutine(MageAttack());
-                yield return new WaitForSeconds(1.0f);
-                // isAttack = false;
+                anim.SetTrigger("doAttack");
+                yield return new WaitForSeconds(0.4f);
+                MageAttack();
+                yield return new WaitForSeconds(1.1f);
+                isAttack = false;
                 break;
 
             case Type.Shell:
+                anim.SetTrigger("doAttack");
+                meleeAttack.SetActive(true);
                 transform.position = target.position;
                 yield return new WaitForSeconds(0.5f);
                 isAttack = false;
+                meleeAttack.SetActive(false);
                 break;
         }
 
         isChase = true;
-        meleeAttack.SetActive(false);
+       
         yield return new WaitForSeconds(1f);
     }
     /// <summary>
@@ -214,11 +221,12 @@ public class Enemy : MonoBehaviour, ICharacter
     /// 마법사용 원거리 발사체 생성 함수
     /// </summary>
     /// <returns></returns>
-    IEnumerator MageAttack()
+    void MageAttack()
     {
+        //yield return new WaitForSeconds(0.2f);
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.2f);
-        isAttack = false;
+        //yield return new WaitForSeconds(1.1f);
+        //isAttack = false;
     }
 
     public void Die()

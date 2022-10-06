@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour, ICharacter
 {
     public int attackDamage = 50;
     private float projectileSpeed = 10f;
+    Vector3 targetPoint;
 
     ICharacter playerCharacter;
 
@@ -18,17 +19,18 @@ public class Projectile : MonoBehaviour, ICharacter
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player").GetComponent<Transform>();
         playerCharacter = player.GetComponent<ICharacter>();
+        targetPoint = player.position + new Vector3(0, 1f, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.position+new Vector3(0,1f,0), projectileSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position,targetPoint, projectileSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             Destroy(this.gameObject);
             //playerCharacter.Attacked(attackDamage);
@@ -38,15 +40,15 @@ public class Projectile : MonoBehaviour, ICharacter
 
     public void Die()
     {
-        
+
     }
     public void Attacked(int damage)
     {
-       
+
     }
 
     public void Attack(GameObject target, int damage)
     {
-        
+
     }
 }

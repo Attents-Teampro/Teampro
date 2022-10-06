@@ -16,7 +16,7 @@ public class MeleeAttack : MonoBehaviour, ICharacter
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Attack");
-            Attack(enemy.target.gameObject,enemy.maxDamage);
+            //Attack(enemy.target.gameObject,enemy.maxDamage);
         }
     }
 

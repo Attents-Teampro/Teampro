@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour, ICharacter
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
 
-        if (!isGetHit)
+        if (!isGetHit && !isAttack)
         {
             targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
 
@@ -229,7 +229,7 @@ public class Enemy : MonoBehaviour, ICharacter
 
     public void Attack(GameObject target, int damage)
     {
-        StartCoroutine(enemyAttack());
+        //StartCoroutine(enemyAttack());
        // playerCharacter.Attacked(maxDamage);
     }
 }

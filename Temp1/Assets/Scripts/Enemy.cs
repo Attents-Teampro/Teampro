@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour, ICharacter
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
+    public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
 
     public bool isChase;                //타겟을 향해 이동중
     public bool isAttack;
@@ -45,6 +46,12 @@ public class Enemy : MonoBehaviour, ICharacter
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         //projectile = gameObject.GetComponent<GameObject>();
+        //10.11 추가 by 손동욱
+        if(mainManager == null)
+        {
+            mainManager = FindObjectOfType<MainManager>();
+        }
+
 
         if (enemyType == Type.Mage)
         {
@@ -220,6 +227,10 @@ public class Enemy : MonoBehaviour, ICharacter
     public void Die()
     {
         StartCoroutine(OnDead());
+
+        //10.11 추가 by 손동욱
+        //메인 매니저에게 죽은 몬스터 수를 갱신
+        mainManager.numOfDieEnemy++;
     }
     public void Attacked(int damage)
     {

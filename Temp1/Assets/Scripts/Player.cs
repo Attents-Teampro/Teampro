@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using static UnityEditor.Progress;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-
+        
     }
 
     void Update()
@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
 
     void GetInput()
     {
-        //인풋 매니저 수정 완료(정상작동)
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
@@ -106,8 +105,9 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
+
         if (equipWeapon == null)
-            return;
+        return;
 
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
@@ -115,8 +115,9 @@ public class Player : MonoBehaviour
         if(fDown && isFireReady && !isDodge && !isSwap)
         {
             equipWeapon.Use();
-            anim.SetTrigger("doSwing");
+            anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             fireDelay = 0;
+            
         }
     }
 

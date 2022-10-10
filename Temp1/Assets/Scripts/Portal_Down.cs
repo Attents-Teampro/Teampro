@@ -7,6 +7,10 @@ public class Portal_Down : MonoBehaviour
 {
     Player player;
 
+    private void Start()
+    {
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

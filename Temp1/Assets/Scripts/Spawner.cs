@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+
+
     //생성할 몬스터 프리팹, 몬스터가 생성되는 위치 계산을 위한 벽 오브젝트
     public GameObject enemyObject, Wall;
 
-    //벽에 생성될 포탈
-    public Portal_temp portal;
+    //생성된 몬스터 수를 저장할 매니저 스크립트
+    //시작할 때 메인 매니저에게 값을 넘긴다. 메인 매니저는 넘겨진 값들을 합해서 총 몬스터 수를 구한다.
+    public MainManager mainManager;
 
     //변수 floor에는 Ground 오브젝트 넣으면 됩니다.
     public BoxCollider floor;
@@ -27,6 +30,13 @@ public class Spawner : MonoBehaviour
     int count = 0;
     private void Start()
     {
+        //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
+        if (mainManager == null)
+        {
+            mainManager = FindObjectOfType<MainManager>();
+        }
+        mainManager.numOfStageEnemy += numOfEnemy;
+
         //차일드 0번부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
         Vector3[] WallPosition; 
         WallPosition = new Vector3[Wall.transform.childCount];

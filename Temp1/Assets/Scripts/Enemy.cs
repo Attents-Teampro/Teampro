@@ -46,12 +46,12 @@ public class Enemy : MonoBehaviour, ICharacter
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         //projectile = gameObject.GetComponent<GameObject>();
-        //10.11 추가 by 손동욱
+        //10.11 추가
         if(mainManager == null)
         {
             mainManager = FindObjectOfType<MainManager>();
         }
-
+        //by 손동욱
 
         if (enemyType == Type.Mage)
         {
@@ -62,7 +62,11 @@ public class Enemy : MonoBehaviour, ICharacter
 
     private void Start()
     {
-        target = GameObject.Find("Player").GetComponent<Transform>();
+        //10.11 수정. 이름으로 찾는 방식이 합칠 때마다 에러가 뜰 위험이 있어서 클래스를 찾는 방식으로 변경했습니다.
+        //target = GameObject.Find("Player").GetComponent<Transform>();
+        target = FindObjectOfType<Player>().transform;
+        //by 손동욱
+
         playerCharacter = target.GetComponent<ICharacter>();      //플레이어 캐릭터의 인터페이스 참조
         if(meleeAttack != null)
         {
@@ -201,6 +205,15 @@ public class Enemy : MonoBehaviour, ICharacter
         anim.SetTrigger("doDie");
         yield return new WaitForSeconds(1.5f);
 
+        //10.11 추가
+        //메인 매니저에게 죽은 몬스터 수를 갱신
+        mainManager.numOfDieEnemy++;
+        if (mainManager.numOfDieEnemy == mainManager.numOfStageEnemy)
+        {
+            mainManager.StageClear();
+        }
+        //by 손동욱
+
         Destroy(gameObject);
     }
 
@@ -227,10 +240,6 @@ public class Enemy : MonoBehaviour, ICharacter
     public void Die()
     {
         StartCoroutine(OnDead());
-
-        //10.11 추가 by 손동욱
-        //메인 매니저에게 죽은 몬스터 수를 갱신
-        mainManager.numOfDieEnemy++;
     }
     public void Attacked(int damage)
     {

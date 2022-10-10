@@ -428,16 +428,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!65 &1023547945 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 5336290160097567610, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-  m_PrefabInstance: {fileID: 3584425799162875778}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1216966382 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 5336290160018144589, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-  m_PrefabInstance: {fileID: 3584425799162875778}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1220818684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -594,11 +584,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 8951615198892442797}
   offset: {x: 0, y: 12, z: -16}
---- !u!65 &1499217579 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3584425797966197033, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-  m_PrefabInstance: {fileID: 3584425799162875778}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3584425799162875778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,34 +591,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3432888516440096245, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3584425797966197033, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3584425797966197039, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: meleeArea
-      value: 
-      objectReference: {fileID: 1499217579}
     - target: {fileID: 5102339170002653589, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
-    - target: {fileID: 5102339170002653589, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5336290160018144585, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: meleeArea
-      value: 
-      objectReference: {fileID: 1216966382}
-    - target: {fileID: 5336290160097567614, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
-      propertyPath: meleeArea
-      value: 
-      objectReference: {fileID: 1023547945}
     - target: {fileID: 5585860869262248751, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
       propertyPath: m_RootOrder
       value: 6

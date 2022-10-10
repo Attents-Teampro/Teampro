@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-
-
     //생성할 몬스터 프리팹, 몬스터가 생성되는 위치 계산을 위한 벽 오브젝트
     public GameObject enemyObject, Wall;
 
@@ -25,11 +23,19 @@ public class Spawner : MonoBehaviour
     //몬스터 생성 위치가 올바를 때만 false가 되는 bool 변수
     bool resetPosition = true;
 
-    //몬스터가 죽을 때마다 +1이 될 변수. 이 변수가 numOfEnemy와 같아지면 포탈 활성화. 
-    //추가로 스테이지 클리어 UI가 있었으면 좋겠습니다. to 해인님 from 동욱
-    int count = 0;
+    //보스 몬스터인지 확인하고, 보스 몬스터면 위치 지정해주는 bool 변수
+    public bool isBoss = false;
+
+    //보스면 위치할 벡터
+    public Vector3 bossPosition;
     private void Start()
     {
+        StartCoroutine(SpawnerStart());
+    }
+
+    IEnumerator SpawnerStart()
+    {
+        yield return new WaitForSeconds(0.01f);
         //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
         if (mainManager == null)
         {
@@ -37,18 +43,25 @@ public class Spawner : MonoBehaviour
         }
         mainManager.numOfStageEnemy += numOfEnemy;
 
-        //차일드 0번부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
-        Vector3[] WallPosition; 
+        //보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
+        if (isBoss)
+        {
+            Instantiate(enemyObject, bossPosition, Quaternion.identity);
+            //return;
+            yield break;
+        }
+        //차일드 0번aa부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
+        Vector3[] WallPosition;
         WallPosition = new Vector3[Wall.transform.childCount];
 
         //Wall 오브젝트의 차일드 오브젝트 좌우위아래 대입
-        for(int i = 0; i < Wall.transform.childCount; i++)
+        for (int i = 0; i < Wall.transform.childCount; i++)
         {
             WallPosition[i] = Wall.transform.GetChild(i).position;
         }
 
         //몬스터 생성. 
-        for(int i= 0; i < numOfEnemy; i++)
+        for (int i = 0; i < numOfEnemy; i++)
         {
             //변수 초기화. 꼭 필요함
             resetPosition = true;
@@ -68,7 +81,7 @@ public class Spawner : MonoBehaviour
                     WallPosition[3].z > sizeOfGround.z)     //아래 벽
                 {
                     //얼마나 while문이 반복되었는지 알 수 있음. 추후 오차값을 줄이는 데 식별용으로 쓰일 예정
-                    Debug.Log("Enemy 오브젝트 위치 이탈. 재조정"); 
+                    Debug.Log("Enemy 오브젝트 위치 이탈. 재조정");
                 }
                 else
                 {
@@ -80,12 +93,4 @@ public class Spawner : MonoBehaviour
             }
         }
     }
-
-    //나중에 게임 매니저로 옮겨야 되는 함수. 
-    void ClearStage()
-    {
-        //portal.transform.position = 
-        //portal.gameObject.SetActive(true);
-    }
-
 }

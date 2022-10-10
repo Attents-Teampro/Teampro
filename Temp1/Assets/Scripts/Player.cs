@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICharacter
 {
+    //10.11 추가 by 손동욱
+    //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
+    public static Player instance;
+
     public float speed;
     public GameObject[] weapons;
     public bool[] hasWeapons;
+    public int pHP = 100;
+    public int damage =1;
+    int pDamage = 0;
+
+
+
 
     float hAxis;
     float vAxis;
@@ -40,6 +50,16 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+
+        //10.11 추가 
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        //by 손동욱 
     }
     void Start()
     {
@@ -52,7 +72,8 @@ public class Player : MonoBehaviour
         Move();
         Turn();
         Jump();
-        Attack();
+        //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
+        Attacking();
         Dodge();
         Swap();
         Interation();
@@ -103,24 +124,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Attack()
+    void Attacking()
     {
-
         if (equipWeapon == null)
-        return;
+            return;
 
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
 
-        if(fDown && isFireReady && !isDodge && !isSwap)
+        if (fDown && isFireReady && !isDodge && !isSwap)
         {
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             fireDelay = 0;
-            
+
         }
     }
-
 
     void Dodge()
     {
@@ -199,6 +218,22 @@ public class Player : MonoBehaviour
             anim.SetBool("isJump", false);
             isJump = false;
         }
+        //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
+        if(collision.gameObject.tag == "Enemy")
+        {
+            if(equipWeapon == null)
+            {
+                pDamage = damage;
+            }
+            else
+            {
+                pDamage = damage * equipWeapon.iDamage;
+            }
+            
+            Attack(collision.gameObject, pDamage);
+            Debug.Log("공격");
+        }
+        //by 손동욱
     }
 
     void OnTriggerStay(Collider other)
@@ -213,5 +248,24 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Weapon")
             nearObject = null;
+    }
+
+    //10.11 추가. ICharacter 적용
+    //프로토타입 제작을 위해서 임시로 플레이어 콜리더에 적 에너미가 들어오면 데미지를 받는 기능 추가
+    //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
+    public void Die()
+    {
+
+    }
+    public void Attacked(int d)
+    {
+        pHP -= d;
+    }
+    
+    public void Attack(GameObject target, int d)
+    {
+        ICharacter ic = target.GetComponent<ICharacter>();
+        ic.Attacked(d);
+        //Debug.Log($"{gameObject.name}가 {target.name}을 공격. {d}만큼의 피해를 입혔습니다.\n현재{target.name}의 HP는 {target.GetComponent<Enemy>().curHealth}");
     }
 }

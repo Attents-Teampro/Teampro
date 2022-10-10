@@ -751,9 +751,9 @@ GameObject:
   - component: {fileID: 3584425798095292414}
   - component: {fileID: 3584425798095292409}
   - component: {fileID: 3584425798095292408}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -810,7 +810,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3584425798095292409
 CapsuleCollider:
@@ -845,6 +845,8 @@ MonoBehaviour:
   - {fileID: 2627617994753038441}
   - {fileID: 8946174317851389052}
   hasWeapons: 01010101
+  pHP: 100
+  damage: 1
 --- !u!1 &5225322082342842490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1724,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7868819721327412036}
     m_Modifications:
+    - target: {fileID: 324606624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
+      propertyPath: meleeArea
+      value: 
+      objectReference: {fileID: 5336290160097567610}
     - target: {fileID: 3902788558152209826, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
       propertyPath: m_Name
       value: OHS11_Hammer
@@ -1776,6 +1782,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
+--- !u!65 &5336290160097567610 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 324606628, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
+  m_PrefabInstance: {fileID: 5336290159784507870}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8605502062562735814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4423288173768953624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
@@ -1866,7 +1877,7 @@ BoxCollider:
   m_GameObject: {fileID: 3432888516440096245}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.7, z: 0.1}
   m_Center: {x: 0, y: 0.7, z: 0}
@@ -1897,9 +1908,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 25
+  iDamage: 100
   rate: 0.5
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 3584425797966197033}
   arrowPos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!1001 &5336290160848179244
@@ -2081,7 +2092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage: 0
+  iDamage: 100
   rate: 0.5
   meleeArea: {fileID: 0}
   arrowPos: {fileID: 3584425798694049541}
@@ -2098,6 +2109,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7868819721327412036}
     m_Modifications:
+    - target: {fileID: 1409739538, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
+      propertyPath: meleeArea
+      value: 
+      objectReference: {fileID: 5336290160018144589}
     - target: {fileID: 6064316799571392590, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
       propertyPath: m_Name
       value: OHS10_Axe
@@ -2160,6 +2175,11 @@ Transform:
 --- !u!1 &2172573812823895573 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6064316799571392590, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
+  m_PrefabInstance: {fileID: 5336290161293383259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5336290160018144589 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1409739542, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
   m_PrefabInstance: {fileID: 5336290161293383259}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5949578739870726277

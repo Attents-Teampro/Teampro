@@ -46,5 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyObject: {fileID: 6259778561874722237, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
   Wall: {fileID: 7393079093931221304, guid: 309523499a6091e46a6e7b3b66641561, type: 3}
+  mainManager: {fileID: 2010157419725594000, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
   floor: {fileID: 1003601716, guid: b1b85b09ece97aa48941090e49cfe8d9, type: 3}
-  numOfEnemy: 5
+  numOfEnemy: 2
+  isBoss: 0
+  bossPosition: {x: 0, y: 0, z: 0}

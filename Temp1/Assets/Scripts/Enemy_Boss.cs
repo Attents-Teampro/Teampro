@@ -4,8 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy_Boss : MonoBehaviour
+public class Enemy_Boss : MonoBehaviour, ICharacter
 {
+    public MainManager mainManager;
+
     //public int curHealth;
     //public int maxHealth;
     public Transform target;            //플레이어 타겟
@@ -15,6 +17,8 @@ public class Enemy_Boss : MonoBehaviour
     public float targetRadius = 2.5f;   //sphere의 반지름 => 보스가 플레이어를 인식하는 공격 사거리로 이용
     public float targetRange = 0f; //sphere을 쏘아내는 거리(0으로 해서 리소스 아낌, 굳이 일직선으로 설정 안하는게 좋을 것 같음
     public float delayStart = 3f;
+    public int eHP = 100;
+    public int damage = 100;
 
     Vector3 targetDirection;
     //GameObject player;
@@ -32,10 +36,11 @@ public class Enemy_Boss : MonoBehaviour
     bool isAttack=false; //공격 중인지(플레이어가 사거리 안에 있어야만) 체크
     bool isDead=false; //HP가 0인지 체크
     bool isBattle = false; //전투(공격 중인지) 중인지 체크
-    
+    int eDamage = 0;
 
     private void Awake()
     {
+        mainManager = FindObjectOfType<MainManager>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         if(target == null)
@@ -131,11 +136,13 @@ public class Enemy_Boss : MonoBehaviour
 
         if (rayHits.Length > 0)
         {
-            StartCoroutine(Attack());
+            eDamage = damage;
+            Attack(rayHits[0].transform.gameObject, eDamage);
+            StartCoroutine(AniAttack());
         }
     }
 
-    IEnumerator Attack()
+    IEnumerator AniAttack()
     {
         isAttack = true;
         isChase = false;
@@ -183,6 +190,28 @@ public class Enemy_Boss : MonoBehaviour
         isAttack = false;
         anim.SetBool("isAttack", false);
 
+    }
+    public void Die()
+    {
+        mainManager.numOfDieEnemy++;
+        if (mainManager.numOfDieEnemy == mainManager.numOfStageEnemy)
+        {
+            mainManager.StageClear();
+        }
+        Destroy(gameObject);
+    }
+    public void Attacked(int d)
+    {
+        eHP -= d;
+        if(eHP <= 0)
+        {
+            Die();
+        }
+    }
+    public void Attack(GameObject target, int d)
+    {
+        ICharacter ic = target.GetComponent<ICharacter>();
+        ic.Attacked(d);
     }
 
 }

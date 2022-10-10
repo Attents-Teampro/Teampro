@@ -6,12 +6,15 @@ public class Weapon : MonoBehaviour
 {
     public enum Type { Melee, Range };  // 근거리 원거리
     public Type type;
-    public int damage;
+
+    //10.11 변수 이름 수정 by 손동욱
+    public int iDamage = 100;
+
     public float rate;  // 공격 속도
     public BoxCollider meleeArea;   // 공격 범위
     public Transform arrowPos;
     public GameObject arrow;
-
+    
 
     public void Use()
     {

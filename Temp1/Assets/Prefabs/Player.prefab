@@ -1435,7 +1435,7 @@ GameObject:
   - component: {fileID: 7799636797231995446}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1885,6 +1885,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.7, z: 0.1}
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!65 &7694391743373958508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6825763076235687243}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1.7, z: 0.1}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &227262872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,19 +1928,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   value: 0
---- !u!65 &7694391743373958508
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6825763076235687243}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.7, z: 0.1}
-  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &790193143896416202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,7 +2042,7 @@ PrefabInstance:
     - target: {fileID: 1409739538, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
       propertyPath: meleeArea
       value: 
-      objectReference: {fileID: 7191100791057715887}
+      objectReference: {fileID: 0}
     - target: {fileID: 6064316799571392590, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
       propertyPath: m_Name
       value: OHS10_Axe
@@ -2105,11 +2105,6 @@ GameObject:
 --- !u!4 &4371019702711016269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6873363103045821172, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
-  m_PrefabInstance: {fileID: 7191100790319118777}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7191100791057715887 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 1409739542, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
   m_PrefabInstance: {fileID: 7191100790319118777}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7191100790781067214
@@ -2413,7 +2408,7 @@ PrefabInstance:
     - target: {fileID: 324606624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
       propertyPath: meleeArea
       value: 
-      objectReference: {fileID: 7191100791515155608}
+      objectReference: {fileID: 0}
     - target: {fileID: 3902788558152209826, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
       propertyPath: m_Name
       value: OHS11_Hammer
@@ -2476,11 +2471,6 @@ GameObject:
 --- !u!4 &6821054825270925604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4423288173768953624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
-  m_PrefabInstance: {fileID: 7191100791226340924}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7191100791515155608 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 324606628, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
   m_PrefabInstance: {fileID: 7191100791226340924}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7191100791754815308

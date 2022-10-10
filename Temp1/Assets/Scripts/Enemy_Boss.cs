@@ -38,6 +38,10 @@ public class Enemy_Boss : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        if(target == null)
+        {
+            target = FindObjectOfType<Player>().transform;
+        }
         target = target.GetComponent<Transform>();
 
         //일정 시간이(deley변수) 지난 후에 보스가 액티브 되도록

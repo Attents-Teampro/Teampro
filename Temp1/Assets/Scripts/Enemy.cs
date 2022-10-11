@@ -11,7 +11,8 @@ public class Enemy : MonoBehaviour, ICharacter
 {
     public enum Type { Orc, Skelleton, Mage, Shell, Boss }
     public Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
-    public int curHealth;               //현재 체력
+    public int eHp;               //현재 체력
+    //public int curHealth;               //현재 체력
     public int maxHealth;               //최대 체력
     public int minDamage;               //최소 공격 데미지
     public int maxDamage;               //최대 공격 데미지
@@ -224,11 +225,11 @@ public class Enemy : MonoBehaviour, ICharacter
     /// <returns></returns>
     IEnumerator OnGetHit()
     {
-        curHealth -= 50; // 테스트용 데미지 값
+        eHp -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
-        if (curHealth < 0)
+        if (eHp < 0)
         {
             Die();
         }
@@ -243,7 +244,7 @@ public class Enemy : MonoBehaviour, ICharacter
     }
     public void Attacked(int damage)
     {
-        curHealth -= damage;
+        eHp -= damage;
         StartCoroutine(OnGetHit());
     }
 

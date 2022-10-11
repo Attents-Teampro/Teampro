@@ -18,16 +18,17 @@ public class Projectile : MonoBehaviour, ICharacter
     {
         rb = GetComponent<Rigidbody>();
 
-        //10.11 ¼öÁ¤. 
-        //±âÁ¸ÀÇ Player¸¦ ¿ÀºêÁ§Æ® ÀÌ¸§À¸·Î Ã£´Â ¹æ½ÄÀÌ 
-        //¾÷µ¥ÀÌÆ®¸¶´Ù ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§ÀÌ º¯°æµÉ ½Ã ¿¡·¯°¡ ¶ã À§ÇèÀÌ ÀÖ°í Áö±İµµ ¶ß°í ÀÖ¾î¼­
-        //Å¬·¡½º¸¦ Ã£´Â ¹æ½ÄÀ¸·Î º¯°æÇß½À´Ï´Ù.
-        //±âÁ¸ ÄÚµå player = GameObject.Find("Player").GetComponent<Transform>();
-        player = FindObjectOfType<Player>().transform;//¼öÁ¤ÄÚµå
-        //by ¼Õµ¿¿í
+        //10.11 ìˆ˜ì •. 
+        //ê¸°ì¡´ì˜ Playerë¥¼ ì˜¤ë¸Œì íŠ¸ ì´ë¦„ìœ¼ë¡œ ì°¾ëŠ” ë°©ì‹ì´ 
+        //ì—…ë°ì´íŠ¸ë§ˆë‹¤ í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ì´ ë³€ê²½ë  ì‹œ ì—ëŸ¬ê°€ ëœ° ìœ„í—˜ì´ ìˆê³  ì§€ê¸ˆë„ ëœ¨ê³  ìˆì–´ì„œ
+        //í´ë˜ìŠ¤ë¥¼ ì°¾ëŠ” ë°©ì‹ìœ¼ë¡œ ë³€ê²½í–ˆìŠµë‹ˆë‹¤.
+        //ê¸°ì¡´ ì½”ë“œ player = GameObject.Find("Player").GetComponent<Transform>();
+        player = FindObjectOfType<Player>().transform;//ìˆ˜ì •ì½”ë“œ
+        //by ì†ë™ìš±
 
         playerCharacter = player.GetComponent<ICharacter>();
         targetPoint = player.position + new Vector3(0, 1f, 0);
+        Destroy(gameObject, 2f);
     }
 
     // Update is called once per frame

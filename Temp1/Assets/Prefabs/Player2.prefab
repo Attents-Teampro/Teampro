@@ -1725,6 +1725,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7868819721327412036}
     m_Modifications:
     - target: {fileID: 324606624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
+      propertyPath: rate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 324606624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
       propertyPath: meleeArea
       value: 
       objectReference: {fileID: 5336290160097567610}

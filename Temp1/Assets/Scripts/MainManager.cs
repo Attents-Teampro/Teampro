@@ -29,6 +29,8 @@ public class MainManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        numOfDieEnemy = 0;
+        numOfStageEnemy = 0;
         instance = this;
 
         //씬 이동시 삭제되지 않게 해주는 함수

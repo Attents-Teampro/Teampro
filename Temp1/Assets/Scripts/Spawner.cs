@@ -35,12 +35,10 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnerStart()
     {
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(Time.deltaTime * 5);
         //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
-        if (mainManager == null)
-        {
-            mainManager = FindObjectOfType<MainManager>();
-        }
+        
+        mainManager = FindObjectOfType<MainManager>();
         mainManager.numOfStageEnemy += numOfEnemy;
 
         //보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
@@ -74,7 +72,7 @@ public class Spawner : MonoBehaviour
                 //이 식으로 바닥 콜리더 크기에 맞게 위치값을 계산.. 그런데 콜리더 크기가 더 커서 그런지 자꾸 벽을 넘어감
                 //그래서 바로 아래에 if문으로 벽 안에 있는지 판독하게 만들었음.
                 //아마 콜리더 크기가 더 큰게 콜리더 /2를 하면 해결 될지도 모르겠음 일단 if문으로 해결하고 나중에 확인할 예정
-                sizeOfGround = new Vector3(floor.size.x * Random.value, floor.size.y, floor.size.z * Random.value);
+                sizeOfGround = new Vector3(Random.Range(-floor.size.x, floor.size.x), floor.size.y, Random.Range(-floor.size.z, floor.size.z));
                 if (WallPosition[0].x < sizeOfGround.x ||   //오른쪽 벽
                     WallPosition[1].x > sizeOfGround.x ||   //왼쪽 벽
                     WallPosition[2].z < sizeOfGround.z ||   //윗 벽

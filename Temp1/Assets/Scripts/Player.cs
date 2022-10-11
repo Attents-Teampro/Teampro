@@ -17,8 +17,6 @@ public class Player : MonoBehaviour, ICharacter
     int pDamage = 0;
 
 
-
-
     float hAxis;
     float vAxis;
 
@@ -45,6 +43,8 @@ public class Player : MonoBehaviour, ICharacter
     Weapon equipWeapon;
     int equipWeaponIndex = -1;
     float fireDelay;
+
+    
 
     private void Awake()
     {
@@ -77,6 +77,7 @@ public class Player : MonoBehaviour, ICharacter
         Dodge();
         Swap();
         Interation();
+        AttackPos();
     }
 
     void GetInput()
@@ -137,6 +138,25 @@ public class Player : MonoBehaviour, ICharacter
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             fireDelay = 0;
+
+        }
+    }
+
+    void AttackPos()    // 마우스 방향으로 시야 움직임과 공격
+    {
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
+
+        float rayLength;
+
+        if (GroupPlane.Raycast(cameraRay, out rayLength))
+
+        {
+
+            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
+
+            transform.LookAt(new Vector3(pointTolook.x, transform.position.y, pointTolook.z));
 
         }
     }

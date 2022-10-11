@@ -42,8 +42,8 @@ public class Projectile : MonoBehaviour, ICharacter
         if (other.CompareTag("Player"))
         {
             Destroy(this.gameObject);
-            //playerCharacter.Attacked(attackDamage);
-            Debug.Log("MageAttack");
+            playerCharacter.Attacked(attackDamage);
+            //Debug.Log("MageAttack");
         }
     }
 

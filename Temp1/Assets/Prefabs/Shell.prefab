@@ -903,7 +903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4160692353078115664
 Transform:
   m_ObjectHideFlags: 0
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  curHealth: 80
+  eHp: 0
   maxHealth: 80
   minDamage: 50
   maxDamage: 50
@@ -997,6 +997,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}
   anim: {fileID: 0}
+  mainManager: {fileID: 0}
   isChase: 0
   isAttack: 0
   isDead: 0

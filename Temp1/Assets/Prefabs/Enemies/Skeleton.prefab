@@ -145,7 +145,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &250921514
 MonoBehaviour:
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  eHp: 0
+  eHp: 150
   maxHealth: 150
   minDamage: 50
   maxDamage: 50
@@ -168,7 +168,7 @@ MonoBehaviour:
   moveSpeed: 15
   rotSpeed: 2
   projectile: {fileID: 0}
-  meleeAttack: {fileID: 0}
+  meleeAttack: {fileID: 2797694296825776882}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}

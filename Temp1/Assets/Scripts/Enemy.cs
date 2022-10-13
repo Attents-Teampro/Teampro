@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour, ICharacter
 
                 case Type.Mage:
                     targetRadius = 0.5f;
-                    targetRange = 10f;
+                    targetRange = 8f;
                     break;
 
                 case Type.Shell:

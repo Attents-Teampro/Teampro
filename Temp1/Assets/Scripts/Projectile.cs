@@ -39,11 +39,14 @@ public class Projectile : MonoBehaviour, ICharacter
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Enemy"))
         {
             Destroy(this.gameObject);
+        }
+        else if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player Attacked");
             playerCharacter.Attacked(attackDamage);
-            //Debug.Log("MageAttack");
         }
     }
 

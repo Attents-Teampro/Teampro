@@ -44,6 +44,9 @@ public class Weapon : MonoBehaviour
         GameObject intantArrow = Instantiate(arrow, arrowPos.position, arrowPos.rotation);
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = arrowPos.forward * 50;
+        //Debug.Log(arrowPos.forward);
+        //Time.timeScale = 0;
         yield return null;
+
     }
 }

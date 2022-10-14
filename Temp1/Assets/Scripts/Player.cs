@@ -70,7 +70,7 @@ public class Player : MonoBehaviour, ICharacter
     {
         GetInput();
         Move();
-        Turn();
+        //Turn();
         Jump();
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
@@ -135,6 +135,7 @@ public class Player : MonoBehaviour, ICharacter
 
         if (fDown && isFireReady && !isDodge && !isSwap)
         {
+
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             fireDelay = 0;

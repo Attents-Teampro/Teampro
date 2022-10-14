@@ -133,21 +133,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   value: 2
---- !u!114 &-3769212372730438548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 241737473893427511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c3fcf32824a1344bafaccd9010208d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  iDamage: 100
-  rate: 0
-  meleeArea: {fileID: 3664363133274142952}
-  arrowPos: {fileID: 0}
-  arrow: {fileID: 0}

@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 3967873673742646567}
   - component: {fileID: 1528746927394807698}
   - component: {fileID: 250921515}
-  - component: {fileID: 250921514}
+  - component: {fileID: 7101016621986465585}
   m_Layer: 3
   m_Name: Skeleton
   m_TagString: Enemy
@@ -147,7 +147,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &250921514
+--- !u!114 &7101016621986465585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,18 +156,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3909837000738111945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
+  m_Script: {fileID: 11500000, guid: 780c6f692abc6844a984f88807bc019a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 1
-  eHp: 150
-  maxHealth: 150
-  minDamage: 50
-  maxDamage: 50
+  enemyData: {fileID: 11400000, guid: d09d871bdaceeb743888940ad8ce73df, type: 2}
   target: {fileID: 0}
-  moveSpeed: 15
-  rotSpeed: 2
-  projectile: {fileID: 0}
   meleeAttack: {fileID: 2797694296825776882}
   nav: {fileID: 0}
   rb: {fileID: 0}

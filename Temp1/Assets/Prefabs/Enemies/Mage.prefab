@@ -1870,14 +1870,14 @@ GameObject:
   - component: {fileID: 6307400470661508993}
   - component: {fileID: 2970882173640018654}
   - component: {fileID: 252084202}
-  - component: {fileID: 252084201}
+  - component: {fileID: 952265568}
   m_Layer: 3
   m_Name: Mage
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6256739830325471373
 Transform:
   m_ObjectHideFlags: 0
@@ -1946,7 +1946,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &252084201
+--- !u!114 &952265568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1955,19 +1955,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6259778561874722237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
+  m_Script: {fileID: 11500000, guid: 62a9c94714f60c84789d98f1d86bcdd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 2
-  eHp: 100
-  maxHealth: 100
-  minDamage: 0
-  maxDamage: 0
+  enemyData: {fileID: 11400000, guid: 0c4743a3ae2a95b47a10963532bc7506, type: 2}
   target: {fileID: 0}
-  moveSpeed: 8
-  rotSpeed: 1
   projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
-  meleeAttack: {fileID: 0}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}

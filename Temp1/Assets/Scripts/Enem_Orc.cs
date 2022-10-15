@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enem_Orc : MonoBehaviour
+public class Enem_Orc : MonoBehaviour, ICharacter
 {
     public EnemyData enemyData;
     public Transform target;            //플레이어 타겟

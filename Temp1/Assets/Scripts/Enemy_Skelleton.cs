@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy_Skelleton : MonoBehaviour
+public class Enemy_Skelleton : MonoBehaviour, ICharacter
 {
     public EnemyData enemyData;
     public Transform target;            //플레이어 타겟

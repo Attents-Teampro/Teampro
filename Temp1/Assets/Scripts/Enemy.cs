@@ -9,7 +9,6 @@ using static UnityEngine.UI.Image;
 
 public class Enemy : MonoBehaviour, ICharacter
 {
-    public EnemyData enemyData;
     public enum Type { Orc, Skelleton, Mage, Shell, Boss }
     public Type enemyType;              //Attack 메서드에서 공격 타입을 설정하기 위해
     public int eHp;               //현재 체력

@@ -896,7 +896,7 @@ GameObject:
   - component: {fileID: 4100327859133898836}
   - component: {fileID: 876758314443041566}
   - component: {fileID: 446608348}
-  - component: {fileID: 8928288851426706284}
+  - component: {fileID: 446608347}
   m_Layer: 0
   m_Name: Shell
   m_TagString: Untagged
@@ -971,7 +971,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &8928288851426706284
+--- !u!114 &446608347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -980,12 +980,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4158859801316043186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07afd6b7ccdccfd4b90d5877e659af93, type: 3}
+  m_Script: {fileID: 11500000, guid: e2b1d29051af86648bd1908be1baf611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: ee9d08b45292f2a469fba38a12f6b083, type: 2}
+  enemyType: 3
+  eHp: 80
+  maxHealth: 80
+  minDamage: 50
+  maxDamage: 50
   target: {fileID: 0}
-  meleeAttack: {fileID: 7439093976231094879}
+  moveSpeed: 8
+  rotSpeed: 1
+  projectile: {fileID: 0}
+  meleeAttack: {fileID: 0}
   nav: {fileID: 0}
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}
@@ -1195,7 +1202,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5461404118967246669}
   - component: {fileID: 4886646089270077993}
-  - component: {fileID: 1868842818035033443}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -1231,15 +1237,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1868842818035033443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7439093976231094879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7c1879b7309914584771a088704749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

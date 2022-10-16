@@ -67,6 +67,7 @@ public class Enemy_Mage : MonoBehaviour, ICharacter
         //{
         //    meleeAttack.SetActive(false);
         //}
+        currentHP = enemyData.EHP;
     }
 
     private void Update()
@@ -219,7 +220,7 @@ public class Enemy_Mage : MonoBehaviour, ICharacter
     /// <returns></returns>
     IEnumerator OnGetHit()
     {
-        currentHP = enemyData.EHP;
+        //currentHP = enemyData.EHP;
         currentHP -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;

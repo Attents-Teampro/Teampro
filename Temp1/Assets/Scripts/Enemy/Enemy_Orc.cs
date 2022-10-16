@@ -43,6 +43,7 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
         target = GameObject.Find("Player").GetComponent<Transform>();
         //target = FindObjectOfType<Player>().transform;
         playerCharacter = target.GetComponent<ICharacter>();
+        currentHP = enemyData.EHP;
     }
 
     private void Update()
@@ -117,7 +118,6 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
 
     IEnumerator OnGetHit()
     {
-        currentHP = enemyData.EHP;
         currentHP -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;

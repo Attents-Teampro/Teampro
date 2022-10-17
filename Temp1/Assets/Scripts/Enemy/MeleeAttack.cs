@@ -5,11 +5,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class MeleeAttack : MonoBehaviour, ICharacter
 {
-    Enemy enemy;
+    EnemyData enemyData;
 
     private void Awake()
     {
-        enemy = GetComponent<Enemy>();
+        enemyData = GetComponent<EnemyData>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -17,6 +17,7 @@ public class MeleeAttack : MonoBehaviour, ICharacter
         {
             Debug.Log("Attack");
             //Attack(enemy.target.gameObject,enemy.maxDamage);
+            Attacked(enemyData.EDamage);
         }
     }
 
@@ -26,6 +27,7 @@ public class MeleeAttack : MonoBehaviour, ICharacter
 
     public void Attacked(int damage)
     {
+        
     }
 
     public void Die()

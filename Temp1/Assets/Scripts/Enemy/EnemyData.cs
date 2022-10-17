@@ -14,8 +14,8 @@ public class EnemyData : ScriptableObject
     public int EHP { get { return eHP; }}
 
     [SerializeField]
-    int damage;
-    public int Damage { get { return damage; }}
+    int eDamage;
+    public int EDamage { get { return eDamage; }}
 
     [SerializeField]
     float moveSpeed;

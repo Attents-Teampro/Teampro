@@ -5,11 +5,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class MeleeAttack : MonoBehaviour, ICharacter
 {
-    EnemyData enemyData;
+    public EnemyData enemyData;
 
     private void Awake()
     {
-        enemyData = GetComponent<EnemyData>();
+        enemyData = gameObject.GetComponentInParent<EnemyData>();
     }
     private void OnTriggerEnter(Collider other)
     {

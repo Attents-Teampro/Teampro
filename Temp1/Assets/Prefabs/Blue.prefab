@@ -2164,7 +2164,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 100
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &1168060383
 MonoBehaviour:
@@ -2178,12 +2178,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65b18c48c0a5f8469ccb9452bde8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainManager: {fileID: 0}
   target: {fileID: 0}
-  moveSpeed: 5
-  targetRadiusSleeping: 15
-  targetRadius: 2.5
+  moveSpeed: 12.05
+  targetRadiusSleeping: 8.4
+  targetRadius: 4.31
   targetRange: 0
   delayStart: 3
+  eHP: 100
+  damage: 100
 --- !u!65 &3030028019975351063
 BoxCollider:
   m_ObjectHideFlags: 0

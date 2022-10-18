@@ -146,7 +146,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         isAttack = true;
         isChase = false;
-        anim.SetBool("isWalk", false);
+        //anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
         //랜덤변수에 따라서 isBasicAttack, isTailAttack, 파이어볼애니메이션(발사체현재없음), 슈팅스타어택 애니메이션 등의 트리거 조절 예정
         //현재는 그냥 basicattack으로

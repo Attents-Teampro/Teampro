@@ -89,7 +89,7 @@ public class Enemy_Skelleton : MonoBehaviour, ICharacter
     {
         isChase = false;
         isAttack = true;
-        anim.SetBool("isWalk", false);
+        //anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
         meleeAttack.SetActive(true);
         yield return new WaitForSeconds(1f);

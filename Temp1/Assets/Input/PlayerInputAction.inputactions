@@ -1,0 +1,155 @@
+{
+    "name": "PlayerInputAction",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "46f4ff35-c2a2-496a-92f6-987b39b10422",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c583bfaa-27ba-4a3e-9002-2e2b1d7208fb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "9cc230df-c8b6-41ad-9997-ae47671e7b36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "70f39246-1128-4ba0-a667-c6a9073b7201",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Swap",
+                    "type": "Button",
+                    "id": "016b128e-f88d-4a19-83cf-3b3b38cacb93",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8f4d24d2-0423-429e-ab48-b27ab8ab4074",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "WASD",
+                    "id": "de54a670-cf6c-44a6-aea0-9fed72408354",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "1836a1e8-d823-40c3-8449-b982d0401ba5",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "a333fb8b-a456-4b59-ae9f-4120d79c6d7d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "07db2480-55c2-49cb-8460-8019c30d2600",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "fd0c23be-90f0-4c7b-8468-9d44c4cb8f3c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b0d184d3-8af9-4190-b030-5e2ae08944b2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4aaaca93-14fc-4e10-b5bf-3c9365c0d5f5",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Swap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "KM",
+            "bindingGroup": "KM",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

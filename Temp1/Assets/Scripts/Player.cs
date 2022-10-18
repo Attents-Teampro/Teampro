@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour, ICharacter
@@ -8,6 +9,9 @@ public class Player : MonoBehaviour, ICharacter
     //10.11 추가 by 손동욱
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
     public static Player instance;
+
+    public float moveSpeed = 3.0f;
+    public float turnSpeed = 10.0f;
 
     public float speed;
     public GameObject[] weapons;
@@ -36,6 +40,11 @@ public class Player : MonoBehaviour, ICharacter
     Vector3 moveVec;
     Vector3 dodgeVec;
 
+    Vector3 inputDir = Vector3.zero;
+    Quaternion targetRotation = Quaternion.identity;
+
+    PlayerInputAction inputActions;
+
     Rigidbody rigid;
     Animator anim;
 
@@ -48,6 +57,7 @@ public class Player : MonoBehaviour, ICharacter
 
     private void Awake()
     {
+        inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
 
@@ -63,21 +73,68 @@ public class Player : MonoBehaviour, ICharacter
     }
     void Start()
     {
-        
+        equipWeaponIndex = 0;
+        equipWeapon = weapons[0].GetComponent<Weapon>();
+        equipWeapon.gameObject.SetActive(true);
     }
 
     void Update()
     {
         GetInput();
-        Move();
-        //Turn();
-        Jump();
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
-        Dodge();
         Swap();
         Interation();
         AttackPos();
+
+        if (isFireReady && !isSwap)
+        {
+            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
+        }
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
+        inputActions.Player.Dodge.performed += OnDodge;
+        inputActions.Player.Attack.performed += OnAttacking;
+    }
+
+
+
+    private void OnDisable()
+    {
+        inputActions.Player.Attack.performed -= OnAttacking;
+        inputActions.Player.Dodge.performed -= OnDodge;
+        inputActions.Player.Move.canceled -= OnMove;
+        inputActions.Player.Move.performed -= OnMove;
+        inputActions.Player.Disable();
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        if (isDodge)
+            inputDir = dodgeVec;
+
+        if (isSwap)
+            moveVec = Vector3.zero;
+
+        Vector2 input = context.ReadValue<Vector2>();
+        inputDir.x = input.x;
+        inputDir.y = 0.0f;
+        inputDir.z = input.y;
+
+        if (!context.canceled)
+        {
+            Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+            inputDir = cameraYRotation * inputDir;
+
+            targetRotation = Quaternion.LookRotation(inputDir);
+        }
+        anim.SetBool("isRun", !context.canceled);
     }
 
     void GetInput()
@@ -85,64 +142,32 @@ public class Player : MonoBehaviour, ICharacter
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
-        jDown = Input.GetButtonDown("Jump");
-        fDown = Input.GetButtonDown("Fire1");
         iDown = Input.GetButtonDown("Interation");
         sDown1 = Input.GetButtonDown("Swap1");
         sDown2 = Input.GetButtonDown("Swap2");
         sDown3 = Input.GetButtonDown("Swap3");
     }
 
-    void Move()
+    private void OnAttacking(InputAction.CallbackContext obj)
     {
-        moveVec = new Vector3(hAxis, 0, vAxis).normalized;
-
-        if (isDodge)
-            moveVec = dodgeVec;
-
-        if (isSwap)
-            moveVec = Vector3.zero;
-
-        transform.position += moveVec * speed * (wDown ? 0.3f : 1f) * Time.deltaTime;  // 삼항연산자
-
-        anim.SetBool("isRun", moveVec != Vector3.zero);
-        anim.SetBool("isWalk", wDown);
-    }
-
-    void Turn()
-    {
-        transform.LookAt(transform.position + moveVec);
-    }
-
-    void Jump()
-    {
-        if (jDown && moveVec == Vector3.zero && !isJump && !isDodge && !isSwap)
+        if (isFireReady && !isDodge && !isSwap)
         {
-            rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
-            anim.SetBool("isJump", true);
-            anim.SetTrigger("doJump");
-            isJump = true;
+            equipWeapon.Use();
+            anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
+            fireDelay = 0;
         }
     }
 
     void Attacking()
     {
+
         if (equipWeapon == null)
             return;
 
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
 
-        if (fDown && isFireReady && !isDodge && !isSwap)
-        {
-
-            equipWeapon.Use();
-            anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
-            fireDelay = 0;
-
-        }
     }
-
     void AttackPos()    // 마우스 방향으로 시야 움직임과 공격
     {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -162,23 +187,15 @@ public class Player : MonoBehaviour, ICharacter
         }
     }
 
-    void Dodge()
+    void OnDodge(InputAction.CallbackContext context)
     {
-        if (jDown && moveVec != Vector3.zero && !isJump && !isDodge && !isSwap)
+        if (inputDir != Vector3.zero)
         {
-            dodgeVec = moveVec;
+            dodgeVec = inputDir;
             speed *= 2;
             anim.SetTrigger("doDodge");
-            isDodge = true;
-
-            Invoke("DodgeOut", 0.5f);
+            Debug.Log("dd");
         }
-    }
-
-    void DodgeOut()
-    {
-        speed *= 0.5f;
-        isDodge = false;
     }
 
     void Swap()

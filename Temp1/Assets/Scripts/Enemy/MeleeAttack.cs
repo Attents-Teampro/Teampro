@@ -9,7 +9,7 @@ public class MeleeAttack : MonoBehaviour, ICharacter
 
     private void Awake()
     {
-        enemyData = gameObject.GetComponentInParent<EnemyData>();
+        //enemyData = GetComponent<EnemyData>();
     }
     private void OnTriggerEnter(Collider other)
     {

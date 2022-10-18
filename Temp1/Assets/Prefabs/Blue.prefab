@@ -2180,11 +2180,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainManager: {fileID: 0}
   target: {fileID: 0}
-  moveSpeed: 12.05
+  moveSpeed: 6
+  attackSpeed: 2.1
   targetRadiusSleeping: 8.4
   targetRadius: 4.31
   targetRange: 0
-  delayStart: 3
+  delayStart: 1.02
   eHP: 100
   damage: 100
 --- !u!65 &3030028019975351063

@@ -194,7 +194,7 @@ public class Player : MonoBehaviour, ICharacter
             dodgeVec = inputDir;
             speed *= 2;
             anim.SetTrigger("doDodge");
-            Debug.Log("dd");
+            //Debug.Log("dd");
         }
     }
 
@@ -256,6 +256,7 @@ public class Player : MonoBehaviour, ICharacter
             anim.SetBool("isJump", false);
             isJump = false;
         }
+        
         //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
         if(collision.gameObject.tag == "Enemy")
         {
@@ -269,9 +270,10 @@ public class Player : MonoBehaviour, ICharacter
             }
             
             Attack(collision.gameObject, pDamage);
-            Debug.Log("공격");
+            //Debug.Log("공격");
         }
         //by 손동욱
+        
     }
 
     void OnTriggerStay(Collider other)
@@ -298,6 +300,10 @@ public class Player : MonoBehaviour, ICharacter
     public void Attacked(int d)
     {
         pHP -= d;
+        if(pHP <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     
     public void Attack(GameObject target, int d)

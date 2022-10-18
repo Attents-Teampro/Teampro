@@ -120,7 +120,7 @@ public class Enemy_Skelleton : MonoBehaviour, ICharacter
     IEnumerator OnGetHit()
     {
         currentHP -= 50; // 테스트용 데미지 값
-        anim.SetBool("isWalk", false);
+        //anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
         if (currentHP < 0)

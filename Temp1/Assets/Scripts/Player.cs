@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour, ICharacter
         equipWeapon.gameObject.SetActive(true);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         GetInput();
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
@@ -174,18 +175,21 @@ public class Player : MonoBehaviour, ICharacter
 
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
 
-        float rayLength;
+        //float rayLength;
 
-        if (GroupPlane.Raycast(cameraRay, out rayLength))
+        RaycastHit hit;
 
+        //if (GroupPlane.Raycast(cameraRay, out rayLength))
+        if (Physics.Raycast(cameraRay, out hit, 1000, LayerMask.GetMask("floor")))
         {
+            Vector3 pointTolook = hit.point;
+            Vector3 dir = pointTolook - transform.position;
+            dir.y = 0;
 
-            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-
-            transform.LookAt(new Vector3(pointTolook.x, transform.position.y, pointTolook.z));
-
+            transform.rotation = Quaternion.LookRotation(dir);
         }
     }
+
 
     void OnDodge(InputAction.CallbackContext context)
     {
@@ -251,11 +255,11 @@ public class Player : MonoBehaviour, ICharacter
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
-        {
-            anim.SetBool("isJump", false);
-            isJump = false;
-        }
+        //if (collision.gameObject.tag == "Floor")
+        //{
+        //    anim.SetBool("isJump", false);
+        //    isJump = false;
+        //}
         //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
         if(collision.gameObject.tag == "Enemy")
         {

@@ -8,71 +8,29 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
-public class Enemy_Mage : MonoBehaviour, ICharacter
+public class Enemy_Mage : EnemyBase, ICharacter
 {
-    public EnemyData enemyData;
-    public Transform target;            //플레이어 타겟
+    public GameObject projectile;
     int currentHP;
-
     Vector3 targetDirection;
-
-    public GameObject projectile;       //원거리용 발사체
-    //public GameObject meleeAttack;     //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
-    public NavMeshAgent nav;            //네비 매쉬를 사용
-    public Rigidbody rb;
-    public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
-    public Animator anim;
-    public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
-
-    public bool isChase;                //타겟을 향해 이동중
-    public bool isAttack;
-    public bool isDead;
-    public bool isGetHit = false;
 
     ICharacter playerCharacter;
 
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
 
-    private void Awake()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-        nav = GetComponent<NavMeshAgent>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
-
-        //10.11 추가
-        if (mainManager == null)
-        {
-            mainManager = FindObjectOfType<MainManager>();
-        }
-        //by 손동욱
-
-        //if (enemyType == Type.Mage)
-        //{
-            mageStaff = transform.GetChild(2);
-            mageBulletPosition = mageStaff.GetChild(0);
-        //}
-    }
-
-    private void Start()
-    {
-        //10.11 수정. 이름으로 찾는 방식이 합칠 때마다 에러가 뜰 위험이 있어서 클래스를 찾는 방식으로 변경했습니다.
-        //target = GameObject.Find("Player").GetComponent<Transform>();
-        target = FindObjectOfType<Player>().transform;
-        //by 손동욱
-
-        playerCharacter = target.GetComponent<ICharacter>();      //플레이어 캐릭터의 인터페이스 참조
-        //if (meleeAttack != null)
-        //{
-        //    meleeAttack.SetActive(false);
-        //}
+        base.Start();
+        playerCharacter = target.GetComponent<ICharacter>();
         currentHP = enemyData.EHP;
+        mageStaff = transform.GetChild(2);
+        mageBulletPosition = mageStaff.GetChild(0);
     }
 
     private void Update()
     {
-        if (!isAttack)
+        if (!isAttack && !isDead)
         {
             MoveToTarget();                     // 타겟을 향이 이동하는 메소드
             Targeting();
@@ -99,35 +57,7 @@ public class Enemy_Mage : MonoBehaviour, ICharacter
 
     void Targeting()
     {
-        //float targetRadius = default;   //sphere의 반지름
-        //float targetRange = default;    //최대 길이
-
-        if (!isDead)
-        {
-            //switch (enemyData.EnemyType)
-            //{
-            //    case EnemyType.Orc:
-            //        targetRadius = 1.5f;
-            //        targetRange = 1f;
-            //        break;
-
-            //    case Type.Skelleton:
-            //        targetRadius = 1.5f;
-            //        targetRange = 1f;
-            //        break;
-
-            //    case Type.Mage:
-            //        targetRadius = 0.5f;
-            //        targetRange = 8f;
-            //        break;
-
-            //    case Type.Shell:
-            //        targetRadius = 0.5f;
-            //        targetRange = 7f;
-            //        break;
-            //}
-        }
-
+        
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
@@ -150,44 +80,13 @@ public class Enemy_Mage : MonoBehaviour, ICharacter
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        //Debug.Log("Attack");
-
-        //switch (enemyType)
-        //{
-        //    case Type.Orc:
-        //        anim.SetTrigger("doAttack");
-        //        meleeAttack.SetActive(true);
-        //        yield return new WaitForSeconds(1f);
-        //        isAttack = false;
-        //        meleeAttack.SetActive(false);
-        //        break;
-
-        //    case Type.Skelleton:
-        //anim.SetTrigger("doAttack");
-        //meleeAttack.SetActive(true);
-        //yield return new WaitForSeconds(0.6f);
-        //isAttack = false;
-        //meleeAttack.SetActive(false);
-        //        break;
-
-        //    case Type.Mage:
+        
         anim.SetTrigger("doAttack");
         yield return new WaitForSeconds(0.4f);
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
         yield return new WaitForSeconds(1.1f);
         isAttack = false;
-        //        break;
-
-        //    case Type.Shell:
-        //        anim.SetTrigger("doAttack");
-        //        meleeAttack.SetActive(true);
-        //        transform.position = target.position;
-        //        yield return new WaitForSeconds(0.5f);
-        //        isAttack = false;
-        //        meleeAttack.SetActive(false);
-        //        break;
-        //}
-
+        
         isChase = true;
 
         yield return new WaitForSeconds(1f);

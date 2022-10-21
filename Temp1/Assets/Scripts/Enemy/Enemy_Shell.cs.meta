@@ -3,7 +3,15 @@ guid: 07afd6b7ccdccfd4b90d5877e659af93
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemyData: {fileID: 11400000, guid: ee9d08b45292f2a469fba38a12f6b083, type: 2}
+  - target: {instanceID: 0}
+  - meleeAttack: {instanceID: 0}
+  - nav: {instanceID: 0}
+  - rb: {instanceID: 0}
+  - capsuleCollider: {instanceID: 0}
+  - anim: {instanceID: 0}
+  - mainManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

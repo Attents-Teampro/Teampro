@@ -23,17 +23,15 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     public int damage = 100;
     public float godTime = 0.1f; //피격 시 무적인 시간
 
-    Vector3 targetDirection;
     //GameObject player;
-
     //public GameObject projectile;       //원거리용 발사체
     //public BoxCollider meleeAttack;     //밀리 어택용 컬리젼 박스
     //public NavMeshAgent nav;            //네비 매쉬를 사용
-    Rigidbody rb;
     //public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
+    Rigidbody rb;
     Animator anim;
     RaycastHit[] rayHits;
-
+    Vector3 targetDirection;
     bool isSleeping = false; //보스 전투 전 상태 체크
     bool isActive = false; //인트로(포효) 끝났는지 체크
     bool isChase = false;  //이동 체크
@@ -66,8 +64,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         isSleeping = true;
         //Debug.Log("보스 시작");
     }
-
-
     private void Update()
     {
 
@@ -106,7 +102,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         }
 
     }
-
     private void MoveToTarget()
     {
         targetDirection = (target.position - transform.position).normalized;
@@ -122,7 +117,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
 
     }
     //공격범위*100안에 들어온 상태 + 시작 딜레이시간이 지나기 전에는 자는 상태
-
     IEnumerator AniAttack()
     {
         int randomType = 0;
@@ -182,7 +176,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         if (isGod)
         {
-
         }
         else
         {
@@ -198,15 +191,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 anim.SetTrigger("isGetHit");
             }
         }
-        
-
     }
     public void Attack(GameObject target, int d)
     {
         ICharacter ic = target.GetComponent<ICharacter>();
         ic.Attacked(d);
     }
-
     void SleepBoss()
     {
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadiusSleeping,
@@ -244,7 +234,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 yield break;
             }
         }
-        
         isAttacked = false;
         isAttack = false;
         //공격 및 이동이 가능하게 해주는 false 대입
@@ -256,4 +245,5 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         yield return new WaitForSeconds(godTime);
         isGod = false;
     }
+
 }

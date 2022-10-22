@@ -11,35 +11,35 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
 
     //public int curHealth;
     //public int maxHealth;
-    public Transform target;            //ÇÃ·¹ÀÌ¾î Å¸°Ù
-    public float moveSpeed = default;             //ÀÌµ¿ ¼Óµµ
+    public Transform target;            //í”Œë ˆì´ì–´ íƒ€ê²Ÿ
+    public float moveSpeed = default;             //ì´ë™ ì†ë„
     public float attackSpeed = 3f;
     //public float rotSpeed = 1.0f;
-    public float targetRadiusSleeping = 15f; //º¸½º°¡ ÀÚ´Â »óÅÂ¿¡¼­ ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏ´Â ¿øÀÇ ¹İÁö¸§ °Å¸®
-    public float targetRadius = 2.5f;   //sphereÀÇ ¹İÁö¸§ => º¸½º°¡ ÇÃ·¹ÀÌ¾î¸¦ ÀÎ½ÄÇÏ´Â °ø°İ »ç°Å¸®·Î ÀÌ¿ë
-    public float targetRange = 0f; //sphereÀ» ½î¾Æ³»´Â °Å¸®(0À¸·Î ÇØ¼­ ¸®¼Ò½º ¾Æ³¦, ±»ÀÌ ÀÏÁ÷¼±À¸·Î ¼³Á¤ ¾ÈÇÏ´Â°Ô ÁÁÀ» °Í °°À½
+    public float targetRadiusSleeping = 15f; //ë³´ìŠ¤ê°€ ìëŠ” ìƒíƒœì—ì„œ í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•˜ëŠ” ì›ì˜ ë°˜ì§€ë¦„ ê±°ë¦¬
+    public float targetRadius = 2.5f;   //sphereì˜ ë°˜ì§€ë¦„ => ë³´ìŠ¤ê°€ í”Œë ˆì´ì–´ë¥¼ ì¸ì‹í•˜ëŠ” ê³µê²© ì‚¬ê±°ë¦¬ë¡œ ì´ìš©
+    public float targetRange = 0f; //sphereì„ ì˜ì•„ë‚´ëŠ” ê±°ë¦¬(0ìœ¼ë¡œ í•´ì„œ ë¦¬ì†ŒìŠ¤ ì•„ë‚Œ, êµ³ì´ ì¼ì§ì„ ìœ¼ë¡œ ì„¤ì • ì•ˆí•˜ëŠ”ê²Œ ì¢‹ì„ ê²ƒ ê°™ìŒ
     public float delayStart = 3f;
     public int eHP = 100;
     public int damage = 100;
-    public float godTime = 0.1f; //ÇÇ°İ ½Ã ¹«ÀûÀÎ ½Ã°£
+    public float godTime = 0.1f; //í”¼ê²© ì‹œ ë¬´ì ì¸ ì‹œê°„
 
     //GameObject player;
-    //public GameObject projectile;       //¿ø°Å¸®¿ë ¹ß»çÃ¼
-    //public BoxCollider meleeAttack;     //¹Ğ¸® ¾îÅÃ¿ë ÄÃ¸®Á¯ ¹Ú½º
-    //public NavMeshAgent nav;            //³×ºñ ¸Å½¬¸¦ »ç¿ë
-    //public CapsuleCollider capsuleCollider;     //ÇÇ°İ¿¡ »ç¿ëµÇ´Â ±âº» ÄÃ¸®Á¯
+    //public GameObject projectile;       //ì›ê±°ë¦¬ìš© ë°œì‚¬ì²´
+    //public BoxCollider meleeAttack;     //ë°€ë¦¬ ì–´íƒìš© ì»¬ë¦¬ì ¼ ë°•ìŠ¤
+    //public NavMeshAgent nav;            //ë„¤ë¹„ ë§¤ì‰¬ë¥¼ ì‚¬ìš©
+    //public CapsuleCollider capsuleCollider;     //í”¼ê²©ì— ì‚¬ìš©ë˜ëŠ” ê¸°ë³¸ ì»¬ë¦¬ì ¼
     Rigidbody rb;
     Animator anim;
     RaycastHit[] rayHits;
     Vector3 targetDirection;
-    bool isSleeping = false; //º¸½º ÀüÅõ Àü »óÅÂ Ã¼Å©
-    bool isActive = false; //ÀÎÆ®·Î(Æ÷È¿) ³¡³µ´ÂÁö Ã¼Å©
-    bool isChase = false;  //ÀÌµ¿ Ã¼Å©
-    bool isAttack = false; //°ø°İ ÁßÀÎÁö(ÇÃ·¹ÀÌ¾î°¡ »ç°Å¸® ¾È¿¡ ÀÖ¾î¾ß¸¸) Ã¼Å©
-    bool isDead = false; //HP°¡ 0ÀÎÁö Ã¼Å©
-    bool isBattle = false; //ÀüÅõ(°ø°İ ÁßÀÎÁö) ÁßÀÎÁö Ã¼Å©
+    bool isSleeping = false; //ë³´ìŠ¤ ì „íˆ¬ ì „ ìƒíƒœ ì²´í¬
+    bool isActive = false; //ì¸íŠ¸ë¡œ(í¬íš¨) ëë‚¬ëŠ”ì§€ ì²´í¬
+    bool isChase = false;  //ì´ë™ ì²´í¬
+    bool isAttack = false; //ê³µê²© ì¤‘ì¸ì§€(í”Œë ˆì´ì–´ê°€ ì‚¬ê±°ë¦¬ ì•ˆì— ìˆì–´ì•¼ë§Œ) ì²´í¬
+    bool isDead = false; //HPê°€ 0ì¸ì§€ ì²´í¬
+    bool isBattle = false; //ì „íˆ¬(ê³µê²© ì¤‘ì¸ì§€) ì¤‘ì¸ì§€ ì²´í¬
     bool isAttacked = false;
-    bool isGod = false; //ÀüÅõ Áß ÇÇ°İ ½Ã ÇÇ°İ¹«Àû Ã¼Å©
+    bool isGod = false; //ì „íˆ¬ ì¤‘ í”¼ê²© ì‹œ í”¼ê²©ë¬´ì  ì²´í¬
     int eDamage = 0;
     float attackTimer = 0;
 
@@ -54,7 +54,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         }
         target = target.GetComponent<Transform>();
 
-        //ÀÏÁ¤ ½Ã°£ÀÌ(deleyº¯¼ö) Áö³­ ÈÄ¿¡ º¸½º°¡ ¾×Æ¼ºê µÇµµ·Ï
+        //ì¼ì • ì‹œê°„ì´(deleyë³€ìˆ˜) ì§€ë‚œ í›„ì— ë³´ìŠ¤ê°€ ì•¡í‹°ë¸Œ ë˜ë„ë¡
         StartCoroutine(DelayStart());
 
     }
@@ -62,41 +62,41 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         yield return new WaitForSeconds(delayStart);
         isSleeping = true;
-        //Debug.Log("º¸½º ½ÃÀÛ");
+        //Debug.Log("ë³´ìŠ¤ ì‹œì‘");
     }
     private void Update()
     {
 
-        if (!isAttack && isActive && !isAttacked) // idle »óÅÂ
+        if (!isAttack && isActive && !isAttacked) // idle ìƒíƒœ
         {
             transform.LookAt(target);
             rayHits = Physics.SphereCastAll(transform.position, targetRadius,
                 transform.forward, targetRange, LayerMask.GetMask("Player"));
 
-            if (rayHits.Length != 0 && !isAttacked) // Àû °¨Áö, °ø°İ
+            if (rayHits.Length != 0 && !isAttacked) // ì  ê°ì§€, ê³µê²©
             {
-                eDamage = damage;//Æ¯º°ÇÏ°Ô µ¥¹ÌÁö Ãß°¡°¡ ¾øÀ¸¸é publicÀ¸·Î ¼³Á¤ÇÑ damage¸¦ eDmage¿¡ ´ëÀÔ
+                eDamage = damage;//íŠ¹ë³„í•˜ê²Œ ë°ë¯¸ì§€ ì¶”ê°€ê°€ ì—†ìœ¼ë©´ publicìœ¼ë¡œ ì„¤ì •í•œ damageë¥¼ eDmageì— ëŒ€ì…
                 isAttack = true;
                 attackTimer = 0;
                 StartCoroutine(AniAttack());
             }
-            else // ÀûÀ» ¦i¾Æ¼­ ÀÌµ¿
+            else // ì ì„ iì•„ì„œ ì´ë™
             {
-                MoveToTarget();  // Å¸°ÙÀ» ÇâÇØ¼­ ÀÌµ¿ÇÏ´Â ¸Ş¼Òµå
+                MoveToTarget();  // íƒ€ê²Ÿì„ í–¥í•´ì„œ ì´ë™í•˜ëŠ” ë©”ì†Œë“œ
             }
         }
         else if (isSleeping)
         {
             SleepBoss();
         }
-        if (isAttack && isActive) // °ø°İ Áß
+        if (isAttack && isActive) // ê³µê²© ì¤‘
         {
             transform.LookAt(target);
             attackTimer += Time.deltaTime;
             if (attackSpeed < attackTimer)
             { 
                 isAttack = false;
-                Debug.Log("isAttackÀº Æú½º °ªÀ¸·Îº¯°æ");
+                Debug.Log("isAttackì€ í´ìŠ¤ ê°’ìœ¼ë¡œë³€ê²½");
             }
 
         }
@@ -107,20 +107,20 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         targetDirection = (target.position - transform.position).normalized;
 
 
-        //¹°¸®ÈûÀ» Áà¼­ ÀÌµ¿ÇÏ´Â velocity, MovePosition, AddForce´Â ÇÃ·¹ÀÌ¾î ¸®Áöµå¹Ùµğ¿Í Ãæµ¹ÇØ¼­ °è¼Ó ÀÌ»óÇÏ°Ô ¿òÁ÷¿©Áü
-        //±×·¡¼­ À§Ä¡(position) ÀÌµ¿ ¹æ½Ä »ç¿ë by ¼Õµ¿¿í 10.19
+        //ë¬¼ë¦¬í˜ì„ ì¤˜ì„œ ì´ë™í•˜ëŠ” velocity, MovePosition, AddForceëŠ” í”Œë ˆì´ì–´ ë¦¬ì§€ë“œë°”ë””ì™€ ì¶©ëŒí•´ì„œ ê³„ì† ì´ìƒí•˜ê²Œ ì›€ì§ì—¬ì§
+        //ê·¸ë˜ì„œ ìœ„ì¹˜(position) ì´ë™ ë°©ì‹ ì‚¬ìš© by ì†ë™ìš± 10.19
         transform.position += targetDirection * Time.deltaTime * moveSpeed;
-        //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //¸®Áöµå¹Ùµğ¸¦ »ç¿ëÇÏ¿© Å¸°ÙÀ¸·Î ÀÌµ¿
+        //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //ë¦¬ì§€ë“œë°”ë””ë¥¼ ì‚¬ìš©í•˜ì—¬ íƒ€ê²Ÿìœ¼ë¡œ ì´ë™
         //rb.velocity += targetDirection * Time.deltaTime * moveSpeed;
         anim.SetBool("isWalk", true);
 
 
     }
-    //°ø°İ¹üÀ§*100¾È¿¡ µé¾î¿Â »óÅÂ + ½ÃÀÛ µô·¹ÀÌ½Ã°£ÀÌ Áö³ª±â Àü¿¡´Â ÀÚ´Â »óÅÂ
+    //ê³µê²©ë²”ìœ„*100ì•ˆì— ë“¤ì–´ì˜¨ ìƒíƒœ + ì‹œì‘ ë”œë ˆì´ì‹œê°„ì´ ì§€ë‚˜ê¸° ì „ì—ëŠ” ìëŠ” ìƒíƒœ
     IEnumerator AniAttack()
     {
         int randomType = 0;
-        //+randomType º¯¼ö¸¦ ·£´ıÇÏ°Ô ÁöÁ¤, ·£´ı ÆĞÅÏÀ¸·Î °ø°İÇÒ ¼ö ÀÖµµ·Ï º¯°æ ¿¹Á¤ by ¼Õµ¿¿í 10.19
+        //+randomType ë³€ìˆ˜ë¥¼ ëœë¤í•˜ê²Œ ì§€ì •, ëœë¤ íŒ¨í„´ìœ¼ë¡œ ê³µê²©í•  ìˆ˜ ìˆë„ë¡ ë³€ê²½ ì˜ˆì • by ì†ë™ìš± 10.19
         string aniType = "";
         switch (randomType)
         {
@@ -131,34 +131,34 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 aniType = "isTailAttack";
                 break;
             case 2:
-                aniType = "isFireball";//¹ß»çÃ¼ ÇöÀç ¹ÌÁöÁ¤
+                aniType = "isFireball";//ë°œì‚¬ì²´ í˜„ì¬ ë¯¸ì§€ì •
                 break;
             default:
-                Debug.Log($"ÀÎµ¦½º¿¡·¯, ÀÔ·Â ÀÎµ¦½º : {randomType}");
+                Debug.Log($"ì¸ë±ìŠ¤ì—ëŸ¬, ì…ë ¥ ì¸ë±ìŠ¤ : {randomType}");
                 break;
         }
         anim.SetTrigger(name: aniType.ToString());
         yield return new WaitForSeconds(attackSpeed*0.5f);
         if (!isAttacked && isAttack)
         {
-            Attack(rayHits[0].transform.gameObject, eDamage); //½ÇÁ¦ µ¥¹ÌÁö Àû¿ë
-            Debug.Log("°ø°İ");
+            Attack(rayHits[0].transform.gameObject, eDamage); //ì‹¤ì œ ë°ë¯¸ì§€ ì ìš©
+            Debug.Log("ê³µê²©");
         }
         anim.SetBool("isWalk", false);
 
         //isAttack = true;
-        //Debug.Log("isAttackÀº Æ®·ç °ªÀ¸·Îº¯°æ");
+        //Debug.Log("isAttackì€ íŠ¸ë£¨ ê°’ìœ¼ë¡œë³€ê²½");
 
         //anim.SetBool(`", true);
-        //·£´ıº¯¼ö¿¡ µû¶ó¼­ isBasicAttack, isTailAttack, ÆÄÀÌ¾îº¼¾Ö´Ï¸ŞÀÌ¼Ç(¹ß»çÃ¼ÇöÀç¾øÀ½), ½´ÆÃ½ºÅ¸¾îÅÃ ¾Ö´Ï¸ŞÀÌ¼Ç µîÀÇ Æ®¸®°Å Á¶Àı ¿¹Á¤
-        //ÇöÀç´Â ±×³É basicattackÀ¸·Î
+        //ëœë¤ë³€ìˆ˜ì— ë”°ë¼ì„œ isBasicAttack, isTailAttack, íŒŒì´ì–´ë³¼ì• ë‹ˆë©”ì´ì…˜(ë°œì‚¬ì²´í˜„ì¬ì—†ìŒ), ìŠˆíŒ…ìŠ¤íƒ€ì–´íƒ ì• ë‹ˆë©”ì´ì…˜ ë“±ì˜ íŠ¸ë¦¬ê±° ì¡°ì ˆ ì˜ˆì •
+        //í˜„ì¬ëŠ” ê·¸ëƒ¥ basicattackìœ¼ë¡œ
         //=>anim.SetBool("isBasicAttack", true);
         //anim.SetBool(name: aniType.ToString(), value: true);
         //anim.SetBool(name: aniType.ToString(), value: true);
         //anim.SetBool(name: aniType.ToString(), value: false);
         //anim.SetBool("isAttack", false);
-        //°ø°İÀÌ ÇÃ·¹ÀÌ¾î¿¡°Ô ½ÇÀû¿ëµÇ´Â µô·¹ÀÌ
-        //ÀÌÀ¯ : ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ°ú µ¿½Ã¿¡ µ¥¹ÌÁö°¡ µé¾î°¡¸é ºÎÀÚ¿¬½º·¯¿òÀ¸·Î µô·¹ÀÌ¸¦ ¼öµ¿À¸·Î ÁÖ¾úÀ½//ÀÌÀü ÄÚµå
+        //ê³µê²©ì´ í”Œë ˆì´ì–´ì—ê²Œ ì‹¤ì ìš©ë˜ëŠ” ë”œë ˆì´
+        //ì´ìœ  : ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘ê³¼ ë™ì‹œì— ë°ë¯¸ì§€ê°€ ë“¤ì–´ê°€ë©´ ë¶€ìì—°ìŠ¤ëŸ¬ì›€ìœ¼ë¡œ ë”œë ˆì´ë¥¼ ìˆ˜ë™ìœ¼ë¡œ ì£¼ì—ˆìŒ//ì´ì „ ì½”ë“œ
 
     }
     public void Die()
@@ -179,8 +179,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         }
         else
         {
-            StartCoroutine(CanHit()); //isGod °è»ê ÄÚ·çÆ¾
-            StartCoroutine(DelayAttacked(0.87f)); //isAttacked ÄÁÆ®·Ñ ¿ë ÄÚ·çÆ¾
+            StartCoroutine(CanHit()); //isGod ê³„ì‚° ì½”ë£¨í‹´
+            StartCoroutine(DelayAttacked(0.87f)); //isAttacked ì»¨íŠ¸ë¡¤ ìš© ì½”ë£¨í‹´
             eHP -= d;
             if (eHP <= 0)
             {
@@ -211,20 +211,20 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     IEnumerator SleepAwake()
     {
-        //ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸±â
-        transform.LookAt(target); //³ªÁß¿¡ ·¥ÇÁ·Î ÇÏ¸é ºÎµå·´°Ô È¸ÀüÇÒ µí by ¼Õµ¿¿í 10.18
-        //Æ÷È¿ÇÏ±â
+        //í”Œë ˆì´ì–´ ë°”ë¼ë³´ê¸°
+        transform.LookAt(target); //ë‚˜ì¤‘ì— ë¨í”„ë¡œ í•˜ë©´ ë¶€ë“œëŸ½ê²Œ íšŒì „í•  ë“¯ by ì†ë™ìš± 10.18
+        //í¬íš¨í•˜ê¸°
         anim.SetBool("isActive", true);
-        //Æ÷È¿³¡³ª´Â°Å ±â´Ù¸®°í(¹Ø Waitforseconds¸¸Å­ ±â´Ù¸®±â), ¿Ï·áµÇ¸é MoveToTarget Á¶°Ç ¼º¸³ÇØÁÖ±â(isActive)
-        //Æ÷È¿ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³ª´Â ½Ã°£, ÀÌ ÈÄ¿¡ º¸½º°¡ ¿òÁ÷ÀÓ
+        //í¬íš¨ëë‚˜ëŠ”ê±° ê¸°ë‹¤ë¦¬ê³ (ë°‘ Waitforsecondsë§Œí¼ ê¸°ë‹¤ë¦¬ê¸°), ì™„ë£Œë˜ë©´ MoveToTarget ì¡°ê±´ ì„±ë¦½í•´ì£¼ê¸°(isActive)
+        //í¬íš¨ ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚˜ëŠ” ì‹œê°„, ì´ í›„ì— ë³´ìŠ¤ê°€ ì›€ì§ì„
         
         yield return new WaitForSeconds(3f);
         isActive = true;
     }
-    //isAttacked ÄÁÆ®·Ñ ¿ë ÄÚ·çÆ¾
+    //isAttacked ì»¨íŠ¸ë¡¤ ìš© ì½”ë£¨í‹´
     IEnumerator DelayAttacked(float time=1f)
     {
-        isActive = true; //º¸½º ½½¸³ »óÅÂ¿¡¼­ °ø°İ ¹ŞÀ» ½Ã¸¦ À§ÇÑ true
+        isActive = true; //ë³´ìŠ¤ ìŠ¬ë¦½ ìƒíƒœì—ì„œ ê³µê²© ë°›ì„ ì‹œë¥¼ ìœ„í•œ true
         isAttacked = true;
         yield return new WaitForSeconds(time);
         if(time > godTime)
@@ -236,14 +236,13 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         }
         isAttacked = false;
         isAttack = false;
-        //°ø°İ ¹× ÀÌµ¿ÀÌ °¡´ÉÇÏ°Ô ÇØÁÖ´Â false ´ëÀÔ
+        //ê³µê²© ë° ì´ë™ì´ ê°€ëŠ¥í•˜ê²Œ í•´ì£¼ëŠ” false ëŒ€ì…
     }
-    //ÇÇ°İ ½Ã ¹«Àû ½Ã°£ °è»ê ÄÚ·çÆ¾
+    //í”¼ê²© ì‹œ ë¬´ì  ì‹œê°„ ê³„ì‚° ì½”ë£¨í‹´
     IEnumerator CanHit()
     {
         isGod = true;
         yield return new WaitForSeconds(godTime);
         isGod = false;
     }
-
 }

@@ -196,6 +196,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         ICharacter ic = target.GetComponent<ICharacter>();
         ic.Attacked(d);
+        //현재 플레이어가 보스 공격에 죽으면 바로 프리팹이 사라져서 보스 몬스터의 move함수가 에러 생성(target이 null이 되었으니..) 
+        //나중에 HP를 구하던가 일시정지를 하던가 해야함
     }
     void SleepBoss()
     {

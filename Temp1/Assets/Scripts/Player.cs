@@ -254,16 +254,16 @@ public class Player : MonoBehaviour, ICharacter
     }
 
     private void OnCollisionEnter(Collision collision)
-    
+    {
         if (collision.gameObject.tag == "Floor")
         {
             anim.SetBool("isJump", false);
             isJump = false;
         }
         //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
-            if(equipWeapon == null)
+            if (equipWeapon == null)
             {
                 pDamage = damage;
             }
@@ -271,13 +271,15 @@ public class Player : MonoBehaviour, ICharacter
             {
                 pDamage = damage * equipWeapon.iDamage;
             }
-            
+
             Attack(collision.gameObject, pDamage);
             //Debug.Log("공격");
         }
         //by 손동욱
-        
     }
+
+
+
 
     void OnTriggerStay(Collider other)
     {

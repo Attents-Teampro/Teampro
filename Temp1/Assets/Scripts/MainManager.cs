@@ -23,9 +23,9 @@ public class MainManager : MonoBehaviour
         {
             //삭제 전 포탈 오브젝트와 전체 스테이지 에너미 수를 가져온다.
             instance.portalObject = this.portalObject;
-            Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
+            //Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
             instance.numOfStageEnemy = this.numOfStageEnemy;
-            Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
+            //Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
             Destroy(gameObject);
             return;
         }

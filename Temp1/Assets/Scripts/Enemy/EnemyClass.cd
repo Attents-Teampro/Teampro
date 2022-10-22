@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Enemy_Mage">
+    <Position X="2.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgCAlAACAAAAAgIgAEgACAAIAAAIAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy_Mage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Enemy_Orc">
+    <Position X="5.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAlAACAAAAAgAAAEgACAAIAAAIAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy_Orc.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Enemy_Shell">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAlAACAAAAAgAAAEgACAAIAAAIAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy_Shell.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Enemy_Skelleton">
+    <Position X="4" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAlAACAAAAAgAAAEgACAAIAAAIAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy_Skelleton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EnemyBase">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEBAgAABECAAgAAEIAAAAAAAAJAAAAAAAQAAABAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyData">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAASABBAAgAAQAAEAAAAAAAAAABAARAEQAE=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeleeAttack" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAgAAAEAAAAAKAAgAABQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\MeleeAttack.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Projectile" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAACAAABAkAAQEEAAAAIAAAAABQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Projectile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

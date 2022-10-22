@@ -3,57 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy_Orc : MonoBehaviour, ICharacter
+public class Enemy_Orc : EnemyBase, ICharacter
 {
-    public EnemyData enemyData;
-    public Transform target;            //플레이어 타겟
+
     int currentHP;
-
     Vector3 targetDirection;
-
-    public GameObject meleeAttack;     //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
-    public NavMeshAgent nav;            //네비 매쉬를 사용
-    public Rigidbody rb;
-    public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
-    public Animator anim;
-    public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
-
-    public bool isChase;                //타겟을 향해 이동중
-    public bool isAttack;
-    public bool isDead;
-    public bool isGetHit = false;
-
     ICharacter playerCharacter;
 
-    private void Awake()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-        nav = GetComponent<NavMeshAgent>();
-        capsuleCollider = GetComponent<CapsuleCollider>(); 
-        
-        if (mainManager == null)
-        {
-            mainManager = FindObjectOfType<MainManager>();
-        }
-    }
-
-    private void Start()
-    {
-        target = GameObject.Find("Player").GetComponent<Transform>();
-        //target = FindObjectOfType<Player>().transform;
+        base.Start();
         playerCharacter = target.GetComponent<ICharacter>();
         currentHP = enemyData.EHP;
     }
 
-    private void Update()
+    void Update()
     {
-        if (!isAttack)
+        if (!isAttack && !isDead)
         {
             MoveToTarget();                     // 타겟을 향이 이동하는 메소드
             Targeting();
         }
     }
+
     private void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
@@ -68,7 +40,6 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
             anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
         }
     }
-
     void Targeting()
     {
         //https://ssabi.tistory.com/29
@@ -92,7 +63,7 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
         anim.SetTrigger("doAttack");
         meleeAttack.SetActive(true);
         yield return new WaitForSeconds(1f);
-        
+
         isAttack = false;
         meleeAttack.SetActive(false);
         isChase = true;
@@ -102,6 +73,7 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
     IEnumerator OnDead()
     {
         anim.SetTrigger("doDie");
+        isDead = true;
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -129,7 +101,6 @@ public class Enemy_Orc : MonoBehaviour, ICharacter
         yield return new WaitForSeconds(0.8f);
         isGetHit = false;
     }
-
 
     public void Die()
     {

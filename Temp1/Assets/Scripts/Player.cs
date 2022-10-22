@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour, ICharacter
 {
-    //10.11 Ãß°¡ by ¼Õµ¿¿í
-    //¾À ÀÌµ¿ÇØµµ ÇÃ·¹ÀÌ¾î À¯Áö ¹× Áßº¹µÇ¸é Áßº¹ ¿ÀºêÁ§Æ®¸¦ »èÁ¦ÇÏ±â À§ÇÑ ÄÚµå
+    //10.11 ì¶”ê°€ by ì†ë™ìš±
+    //ì”¬ ì´ë™í•´ë„ í”Œë ˆì´ì–´ ìœ ì§€ ë° ì¤‘ë³µë˜ë©´ ì¤‘ë³µ ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚­ì œí•˜ê¸° ìœ„í•œ ì½”ë“œ
     public static Player instance;
 
     public float moveSpeed = 3.0f;
@@ -24,10 +25,10 @@ public class Player : MonoBehaviour, ICharacter
     float hAxis;
     float vAxis;
 
-    bool wDown; //°È±â
-    bool jDown; // Á¡ÇÁ
-    bool fDown; // °ø°İ
-    bool iDown; // ¾ÆÀÌÅÛ¸Ô±â
+    bool wDown; //ê±·ê¸°
+    bool jDown; // ì í”„
+    bool fDown; // ê³µê²©
+    bool iDown; // ì•„ì´í…œë¨¹ê¸°
     bool sDown1;
     bool sDown2;
     bool sDown3;
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour, ICharacter
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
 
-        //10.11 Ãß°¡ 
+        //10.11 ì¶”ê°€ 
         if (instance != null)
         {
             Destroy(gameObject);
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour, ICharacter
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        //by ¼Õµ¿¿í 
+        //by ì†ë™ìš± 
     }
     void Start()
     {
@@ -78,10 +79,10 @@ public class Player : MonoBehaviour, ICharacter
         equipWeapon.gameObject.SetActive(true);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         GetInput();
-        //10.11 ¼öÁ¤. ±âÁ¸ Attack ÇÔ¼ö°¡ ICharacterÀÇ AttackÇÔ¼ö¿Í ÀÌ¸§ µ¿ÀÏÇÏ¿© ±âÁ¸ AttackÇÔ¼ö¸¦ AttackingÀ¸·Î ¼öÁ¤
+        //10.11 ìˆ˜ì •. ê¸°ì¡´ Attack í•¨ìˆ˜ê°€ ICharacterì˜ Attackí•¨ìˆ˜ì™€ ì´ë¦„ ë™ì¼í•˜ì—¬ ê¸°ì¡´ Attackí•¨ìˆ˜ë¥¼ Attackingìœ¼ë¡œ ìˆ˜ì •
         Attacking();
         Swap();
         Interation();
@@ -90,7 +91,7 @@ public class Player : MonoBehaviour, ICharacter
         if (isFireReady && !isSwap)
         {
             transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // È¸Àü ¹æÇâ ÀÚ¿¬½º·´°Ô
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // íšŒì „ ë°©í–¥ ìì—°ìŠ¤ëŸ½ê²Œ
         }
     }
 
@@ -168,24 +169,27 @@ public class Player : MonoBehaviour, ICharacter
         isFireReady = equipWeapon.rate < fireDelay;
 
     }
-    void AttackPos()    // ¸¶¿ì½º ¹æÇâÀ¸·Î ½Ã¾ß ¿òÁ÷ÀÓ°ú °ø°İ
+    void AttackPos()    // ë§ˆìš°ìŠ¤ ë°©í–¥ìœ¼ë¡œ ì‹œì•¼ ì›€ì§ì„ê³¼ ê³µê²©
     {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
 
-        float rayLength;
+        //float rayLength;
 
-        if (GroupPlane.Raycast(cameraRay, out rayLength))
+        RaycastHit hit;
 
+        //if (GroupPlane.Raycast(cameraRay, out rayLength))
+        if (Physics.Raycast(cameraRay, out hit, 1000, LayerMask.GetMask("floor")))
         {
+            Vector3 pointTolook = hit.point;
+            Vector3 dir = pointTolook - transform.position;
+            dir.y = 0;
 
-            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-
-            transform.LookAt(new Vector3(pointTolook.x, transform.position.y, pointTolook.z));
-
+            transform.rotation = Quaternion.LookRotation(dir);
         }
     }
+
 
     void OnDodge(InputAction.CallbackContext context)
     {
@@ -250,14 +254,13 @@ public class Player : MonoBehaviour, ICharacter
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
+    
         if (collision.gameObject.tag == "Floor")
         {
             anim.SetBool("isJump", false);
             isJump = false;
         }
-        
-        //10.11 ÀÓ½Ã Ãß°¡. ÃßÈÄ °ø°İ ¸ğ¼Ç¿¡ Àû¿ëÇÏ¼Å¾ß ¸ó½ºÅÍ °ø°İÀÌ ½ÇÇàµÉ °Í °°½À´Ï´Ù.
+        //10.11 ì„ì‹œ ì¶”ê°€. ì¶”í›„ ê³µê²© ëª¨ì…˜ì— ì ìš©í•˜ì…”ì•¼ ëª¬ìŠ¤í„° ê³µê²©ì´ ì‹¤í–‰ë  ê²ƒ ê°™ìŠµë‹ˆë‹¤.
         if(collision.gameObject.tag == "Enemy")
         {
             if(equipWeapon == null)
@@ -270,9 +273,9 @@ public class Player : MonoBehaviour, ICharacter
             }
             
             Attack(collision.gameObject, pDamage);
-            //Debug.Log("°ø°İ");
+            //Debug.Log("ê³µê²©");
         }
-        //by ¼Õµ¿¿í
+        //by ì†ë™ìš±
         
     }
 
@@ -290,9 +293,9 @@ public class Player : MonoBehaviour, ICharacter
             nearObject = null;
     }
 
-    //10.11 Ãß°¡. ICharacter Àû¿ë
-    //ÇÁ·ÎÅäÅ¸ÀÔ Á¦ÀÛÀ» À§ÇØ¼­ ÀÓ½Ã·Î ÇÃ·¹ÀÌ¾î Äİ¸®´õ¿¡ Àû ¿¡³Ê¹Ì°¡ µé¾î¿À¸é µ¥¹ÌÁö¸¦ ¹Ş´Â ±â´É Ãß°¡
-    //ÃßÈÄ °ø°İ Äİ¸®´õ¿¡ Àû¿ëÇÏ°Å³ª ÇØ¾ß µÉ °Í °°½À´Ï´Ù.
+    //10.11 ì¶”ê°€. ICharacter ì ìš©
+    //í”„ë¡œí† íƒ€ì… ì œì‘ì„ ìœ„í•´ì„œ ì„ì‹œë¡œ í”Œë ˆì´ì–´ ì½œë¦¬ë”ì— ì  ì—ë„ˆë¯¸ê°€ ë“¤ì–´ì˜¤ë©´ ë°ë¯¸ì§€ë¥¼ ë°›ëŠ” ê¸°ëŠ¥ ì¶”ê°€
+    //ì¶”í›„ ê³µê²© ì½œë¦¬ë”ì— ì ìš©í•˜ê±°ë‚˜ í•´ì•¼ ë  ê²ƒ ê°™ìŠµë‹ˆë‹¤.
     public void Die()
     {
 
@@ -310,6 +313,6 @@ public class Player : MonoBehaviour, ICharacter
     {
         ICharacter ic = target.GetComponent<ICharacter>();
         ic.Attacked(d);
-        //Debug.Log($"{gameObject.name}°¡ {target.name}À» °ø°İ. {d}¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\nÇöÀç{target.name}ÀÇ HP´Â {target.GetComponent<Enemy>().curHealth}");
+        //Debug.Log($"{gameObject.name}ê°€ {target.name}ì„ ê³µê²©. {d}ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\ní˜„ì¬{target.name}ì˜ HPëŠ” {target.GetComponent<Enemy>().curHealth}");
     }
 }

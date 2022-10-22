@@ -213,5 +213,5 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         ICharacter ic = target.GetComponent<ICharacter>();
         ic.Attacked(d);
     }
-
+    //¼öÁ¤
 }

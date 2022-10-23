@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour, ICharacter
     //public int curHealth;               //현재 체력
     public int maxHealth;               //최대 체력
     public int minDamage;               //최소 공격 데미지
-    public int maxDamage;               //최대 공격 데미지
     public Transform target;            //플레이어 타겟
     public float moveSpeed = default;   //이동 속도
     public float rotSpeed = 1.0f;

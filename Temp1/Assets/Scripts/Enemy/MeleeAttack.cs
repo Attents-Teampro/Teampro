@@ -23,13 +23,13 @@ public class MeleeAttack : MonoBehaviour, ICharacter
         {
             if (orc != null)
             {
-                Debug.Log($"{orc.name}Attack : {enemyData.EDamage}");
+                Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
                 Attack(other.gameObject, orc.enemyData.EDamage);
 
             }
             else if (skelleton != null)
             {
-                Debug.Log($"{orc.name}Attack : {enemyData.EDamage}");
+                Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
                 Attack(other.gameObject, skelleton.enemyData.EDamage);
             }
         }

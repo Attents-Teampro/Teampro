@@ -115,7 +115,5 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     public void Attack(GameObject target, int damage)
     {
-        //StartCoroutine(enemyAttack());
-        // playerCharacter.Attacked(maxDamage);
     }
 }

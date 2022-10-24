@@ -9,8 +9,6 @@ public class Projectile : MonoBehaviour, ICharacter
     private float projectileSpeed = 10f;
     Vector3 targetPoint;
 
-    ICharacter iPlayer;
-
     Rigidbody rb;
     GameObject player;
    
@@ -26,8 +24,7 @@ public class Projectile : MonoBehaviour, ICharacter
         //기존 코드 player = GameObject.Find("Player").GetComponent<Transform>();
         player = FindObjectOfType<Player>().gameObject;//수정코드
         //by 손동욱
-
-        iPlayer = player.GetComponent<ICharacter>();
+        
         targetPoint = player.transform.position + new Vector3(0, 1f, 0);
         Destroy(gameObject, 2f);
     }
@@ -40,29 +37,29 @@ public class Projectile : MonoBehaviour, ICharacter
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Enemy"))
-        {
-            Destroy(this.gameObject);
-        }
-        else if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             Debug.Log("Player Attacked");
             Attack(other.gameObject, attackDamage);
         }
+        else if (!other.CompareTag("Enemy"))
+        {
+        }
+            Destroy(this.gameObject);
     }
 
     public void Die()
     {
     }
     public void Attacked(int damage)
-    {
-        //iPlayer.pHP -= damage;
+    {        
     }
 
     public void Attack(GameObject target, int damage)
     {
+        ICharacter iPlayer = target.GetComponent<ICharacter>();
         Debug.Log($"{transform.root.name}가 {target.name}을 공격. {damage}만큼의 피해를 입혔습니다.\n" +
            $"현재{target.name}의 HP는 {target.GetComponent<Player>().pHP}");
-        Attacked(damage);
+        iPlayer.Attacked(damage);
     }
 }

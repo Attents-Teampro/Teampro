@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Enemy_Boss">
+    <Position X="8.5" Y="0.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AEQDAIFBEAACgBI0IAEEQBAFCLAAAAIAIQAAAJAAAEE=</HashCode>
+      <FileName>Assets\Scripts\Enemy_Boss.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

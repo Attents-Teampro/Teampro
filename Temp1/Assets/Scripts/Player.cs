@@ -84,7 +84,7 @@ public class Player : MonoBehaviour, ICharacter
         GetInput();
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
-        Swap();
+        //Swap();
         Interation();
         AttackPos();
 
@@ -93,6 +93,10 @@ public class Player : MonoBehaviour, ICharacter
             transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
         }
+    }
+    private void Update()
+    {
+        Swap();
     }
 
     private void OnEnable()
@@ -204,6 +208,7 @@ public class Player : MonoBehaviour, ICharacter
 
     void Swap()
     {
+        Debug.Log(equipWeaponIndex);
         if (sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
             return;
         if (sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
@@ -215,11 +220,16 @@ public class Player : MonoBehaviour, ICharacter
         if (sDown1) weaponIndex = 0;
         if (sDown2) weaponIndex = 1;
         if (sDown3) weaponIndex = 2;
+        Debug.Log(weaponIndex);
+        Debug.Log($"{isJump}isjump, {isDodge}isDodge");
 
         if ((sDown1 || sDown2 || sDown3) && !isJump && !isDodge)
         {
+            Debug.Log("swap 실행");
+            Debug.Log(equipWeapon);
             if (equipWeapon != null)
                 equipWeapon.gameObject.SetActive(false);
+
 
             equipWeaponIndex = weaponIndex;
             equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();

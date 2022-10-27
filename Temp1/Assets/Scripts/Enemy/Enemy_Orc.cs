@@ -17,16 +17,21 @@ public class Enemy_Orc : EnemyBase, ICharacter
         currentHP = enemyData.EHP;
     }
 
-    void Update()
+    protected override void Update()
     {
-        if (!isAttack && !isDead)
-        {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-            Targeting();
-        }
+        base.Update();
+        //if (!isAttack && !isDead)
+        //{
+        //    MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+        //    Targeting();
+        //}
+    }
+    protected override void SearchPlayer()
+    {
+        base.SearchPlayer();
     }
 
-    private void MoveToTarget()
+    protected override void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
 
@@ -40,7 +45,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
             anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
         }
     }
-    void Targeting()
+    protected override void Targeting()
     {
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw

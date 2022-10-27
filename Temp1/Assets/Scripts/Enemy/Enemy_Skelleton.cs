@@ -17,15 +17,20 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         currentHP = enemyData.EHP;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!isAttack)
-        {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-            Targeting();
-        }
+        base .Update();
+        //if (!isAttack)
+        //{
+        //    MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+        //    Targeting();
+        //}
     }
-    private void MoveToTarget()
+    protected override void SearchPlayer()
+    {
+        base.SearchPlayer();
+    }
+    protected override void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
 
@@ -40,7 +45,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         }
     }
 
-    void Targeting()
+    protected override void Targeting()
     {
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw

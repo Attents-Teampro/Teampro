@@ -28,19 +28,25 @@ public class Enemy_Mage : EnemyBase, ICharacter
         mageBulletPosition = mageStaff.GetChild(0);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!isAttack && !isDead)
-        {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-            Targeting();
-        }
+        base.Update();
+        //if (!isAttack && !isDead)
+        //{
+        //    MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+        //    Targeting();
+        //}
+    }
+
+    protected override void SearchPlayer()
+    {
+        base.SearchPlayer();
     }
 
     /// <summary>
     /// 타겟을 향해 이동 : 추 후 타겟 거리를 보고 이동 targetDistance 변수로 처리 예정
     /// </summary>
-    private void MoveToTarget()
+    protected override void MoveToTarget()
     {
         isChase = true;                                                                     // 이동중임을 알리는 bool 값
 
@@ -55,7 +61,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
         }
     }
 
-    void Targeting()
+    protected override void Targeting()
     {
         
         //https://ssabi.tistory.com/29

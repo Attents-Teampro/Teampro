@@ -119,6 +119,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //공격범위*100안에 들어온 상태 + 시작 딜레이시간이 지나기 전에는 자는 상태
     IEnumerator AniAttack()
     {
+        anim.SetBool("isWalk", false);
         int randomType = 0;
         //+randomType 변수를 랜덤하게 지정, 랜덤 패턴으로 공격할 수 있도록 변경 예정 by 손동욱 10.19
         string aniType = "";
@@ -144,7 +145,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             Attack(rayHits[0].transform.gameObject, eDamage); //실제 데미지 적용
             Debug.Log("공격");
         }
-        anim.SetBool("isWalk", false);
+        
 
         //isAttack = true;
         //Debug.Log("isAttack은 트루 값으로변경");

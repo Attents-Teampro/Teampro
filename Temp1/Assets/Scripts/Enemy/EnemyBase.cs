@@ -83,7 +83,6 @@ public class EnemyBase : MonoBehaviour
             isPlaeyerFind = true;
         }
         //return result;
-        Debug.Log(isPlaeyerFind);
     }
 
     protected virtual void MoveToTarget()

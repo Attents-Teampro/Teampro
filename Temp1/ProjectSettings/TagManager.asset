@@ -8,6 +8,8 @@ TagManager:
   - Floor
   - Weapon
   - Enemy
+  - Heart Empty
+  - Heart Full
   layers:
   - Default
   - TransparentFX

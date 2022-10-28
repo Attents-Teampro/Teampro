@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class EnemyBase : MonoBehaviour
 {
     public EnemyData enemyData;
@@ -14,7 +17,7 @@ public class EnemyBase : MonoBehaviour
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
     public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
-    public float sightRange = 10f;
+    public float sightRange = 100f;
 
     public bool isChase;                //타겟을 향해 이동중
     public bool isAttack;
@@ -112,5 +115,10 @@ public class EnemyBase : MonoBehaviour
         //{
         //    StartCoroutine(enemyAttack());
         //}
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.DrawWireDisc(transform.position, transform.up, sightRange);
     }
 }

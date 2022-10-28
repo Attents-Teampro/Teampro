@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy_Orc : EnemyBase, ICharacter
 {
 
-    int currentHP;
+    public int currentHP;
     Vector3 targetDirection;
     ICharacter playerCharacter;
 
@@ -37,11 +37,11 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
         if (!isGetHit && !isAttack)
         {
-            targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
+            //targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
 
-            rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
-            transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-
+            //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
+            //transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
+            nav.SetDestination(target.position);
             anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
         }
     }
@@ -66,6 +66,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
+        rb.velocity = Vector3.zero;
         meleeAttack.SetActive(true);
         yield return new WaitForSeconds(1f);
 

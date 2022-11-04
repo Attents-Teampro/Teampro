@@ -62,6 +62,42 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DodgeUp"",
+                    ""type"": ""Value"",
+                    ""id"": ""fec367d9-a710-4962-9a3a-0617ce872605"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DodgeDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""ae928646-3311-4dfa-b464-b5c63ca1bbd5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DodgeLeft"",
+                    ""type"": ""Value"",
+                    ""id"": ""78ca00ee-a29b-4350-b686-351b92ea34b1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DodgeRight"",
+                    ""type"": ""Value"",
+                    ""id"": ""4c98421b-fe4d-40f3-87c8-ba99e2a194f9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +188,206 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""action"": ""Swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""f3b1177d-f029-4229-82f8-e72892793e58"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DodgeUp"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""c4e81938-af43-4dbe-8daf-b1c90bc042e6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""7bcb36db-d80d-4a25-83e1-aec28783b971"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""dc1286c8-2dfe-4c42-89c0-0f6546ab759f"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DodgeDown"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""5e601ece-45aa-49d0-8fce-fd186268d31f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""4b0a4973-1755-473c-bc71-dd0c3b1d540a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""d6632b14-7556-427d-ba24-ef8334bef5a4"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DodgeLeft"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""bc49cc9e-0df2-4bc5-8fb5-3e56e50842e4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""831f1756-1609-4eee-99fd-b1aa5a5711ba"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""87fbff61-fd19-4464-b97f-fdde92e5359c"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DodgeRight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""667eb43e-79c5-4a54-a60f-2e6d9ffc1084"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DodgeRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""7a307afc-770d-4f6f-ab0f-31db92be2386"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""DodgeRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Test"",
+            ""id"": ""d5412000-0ea3-4dac-a2f3-e8e2e8e951cf"",
+            ""actions"": [
+                {
+                    ""name"": ""Test1"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b9d51db-7a9d-49e7-ae7c-e6b70cd07bfe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Test2"",
+                    ""type"": ""Button"",
+                    ""id"": ""674e4713-b2b4-4782-9214-1fa80ae2fe7b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Test3"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8f602ae-d3f6-44da-93c1-d99f73840f80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c5633aa4-0a9d-4548-a809-68bd2c76b4b3"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Test1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7faf72e-6847-4440-8a41-132f93db1a5e"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Test2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15ced567-ce35-4525-92f3-7868603dd226"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Test3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +417,15 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Swap = m_Player.FindAction("Swap", throwIfNotFound: true);
+        m_Player_DodgeUp = m_Player.FindAction("DodgeUp", throwIfNotFound: true);
+        m_Player_DodgeDown = m_Player.FindAction("DodgeDown", throwIfNotFound: true);
+        m_Player_DodgeLeft = m_Player.FindAction("DodgeLeft", throwIfNotFound: true);
+        m_Player_DodgeRight = m_Player.FindAction("DodgeRight", throwIfNotFound: true);
+        // Test
+        m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
+        m_Test_Test1 = m_Test.FindAction("Test1", throwIfNotFound: true);
+        m_Test_Test2 = m_Test.FindAction("Test2", throwIfNotFound: true);
+        m_Test_Test3 = m_Test.FindAction("Test3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +489,10 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Swap;
+    private readonly InputAction m_Player_DodgeUp;
+    private readonly InputAction m_Player_DodgeDown;
+    private readonly InputAction m_Player_DodgeLeft;
+    private readonly InputAction m_Player_DodgeRight;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -252,6 +501,10 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Swap => m_Wrapper.m_Player_Swap;
+        public InputAction @DodgeUp => m_Wrapper.m_Player_DodgeUp;
+        public InputAction @DodgeDown => m_Wrapper.m_Player_DodgeDown;
+        public InputAction @DodgeLeft => m_Wrapper.m_Player_DodgeLeft;
+        public InputAction @DodgeRight => m_Wrapper.m_Player_DodgeRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,6 +526,18 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Swap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
                 @Swap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
                 @Swap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
+                @DodgeUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeUp;
+                @DodgeUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeUp;
+                @DodgeUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeUp;
+                @DodgeDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeDown;
+                @DodgeDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeDown;
+                @DodgeDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeDown;
+                @DodgeLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeLeft;
+                @DodgeLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeLeft;
+                @DodgeLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeLeft;
+                @DodgeRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeRight;
+                @DodgeRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeRight;
+                @DodgeRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodgeRight;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -289,10 +554,71 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Swap.started += instance.OnSwap;
                 @Swap.performed += instance.OnSwap;
                 @Swap.canceled += instance.OnSwap;
+                @DodgeUp.started += instance.OnDodgeUp;
+                @DodgeUp.performed += instance.OnDodgeUp;
+                @DodgeUp.canceled += instance.OnDodgeUp;
+                @DodgeDown.started += instance.OnDodgeDown;
+                @DodgeDown.performed += instance.OnDodgeDown;
+                @DodgeDown.canceled += instance.OnDodgeDown;
+                @DodgeLeft.started += instance.OnDodgeLeft;
+                @DodgeLeft.performed += instance.OnDodgeLeft;
+                @DodgeLeft.canceled += instance.OnDodgeLeft;
+                @DodgeRight.started += instance.OnDodgeRight;
+                @DodgeRight.performed += instance.OnDodgeRight;
+                @DodgeRight.canceled += instance.OnDodgeRight;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Test
+    private readonly InputActionMap m_Test;
+    private ITestActions m_TestActionsCallbackInterface;
+    private readonly InputAction m_Test_Test1;
+    private readonly InputAction m_Test_Test2;
+    private readonly InputAction m_Test_Test3;
+    public struct TestActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public TestActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Test1 => m_Wrapper.m_Test_Test1;
+        public InputAction @Test2 => m_Wrapper.m_Test_Test2;
+        public InputAction @Test3 => m_Wrapper.m_Test_Test3;
+        public InputActionMap Get() { return m_Wrapper.m_Test; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TestActions set) { return set.Get(); }
+        public void SetCallbacks(ITestActions instance)
+        {
+            if (m_Wrapper.m_TestActionsCallbackInterface != null)
+            {
+                @Test1.started -= m_Wrapper.m_TestActionsCallbackInterface.OnTest1;
+                @Test1.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnTest1;
+                @Test1.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnTest1;
+                @Test2.started -= m_Wrapper.m_TestActionsCallbackInterface.OnTest2;
+                @Test2.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnTest2;
+                @Test2.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnTest2;
+                @Test3.started -= m_Wrapper.m_TestActionsCallbackInterface.OnTest3;
+                @Test3.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnTest3;
+                @Test3.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnTest3;
+            }
+            m_Wrapper.m_TestActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Test1.started += instance.OnTest1;
+                @Test1.performed += instance.OnTest1;
+                @Test1.canceled += instance.OnTest1;
+                @Test2.started += instance.OnTest2;
+                @Test2.performed += instance.OnTest2;
+                @Test2.canceled += instance.OnTest2;
+                @Test3.started += instance.OnTest3;
+                @Test3.performed += instance.OnTest3;
+                @Test3.canceled += instance.OnTest3;
+            }
+        }
+    }
+    public TestActions @Test => new TestActions(this);
     private int m_KMSchemeIndex = -1;
     public InputControlScheme KMScheme
     {
@@ -308,5 +634,15 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnSwap(InputAction.CallbackContext context);
+        void OnDodgeUp(InputAction.CallbackContext context);
+        void OnDodgeDown(InputAction.CallbackContext context);
+        void OnDodgeLeft(InputAction.CallbackContext context);
+        void OnDodgeRight(InputAction.CallbackContext context);
+    }
+    public interface ITestActions
+    {
+        void OnTest1(InputAction.CallbackContext context);
+        void OnTest2(InputAction.CallbackContext context);
+        void OnTest3(InputAction.CallbackContext context);
     }
 }

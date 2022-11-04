@@ -2179,7 +2179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainManager: {fileID: 0}
-  projectile_FireBall: {fileID: 730210141538243382, guid: 1a5ba00cba0a07f439f9fc1e2cb88667, type: 3}
+  projectile_FireBall: {fileID: 730210141538243382, guid: 4541f4bc85e52514f9408b4861e3eb55, type: 3}
   target: {fileID: 0}
   moveSpeed: 3
   attackSpeed: 2.1

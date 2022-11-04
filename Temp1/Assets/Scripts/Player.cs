@@ -309,6 +309,7 @@ public class Player : MonoBehaviour, ICharacter
     {
         pHP -= d;
         //UI에 플레이어 pHP 값을 전달 -양해인 11.04
+        //씬에 캔버스(Health스크립트가 생성되지 않았으면) 에러가 나옵니다. by 손동욱 11.04
         Health.instance.SetCurrentHealth(pHP);
     }
 

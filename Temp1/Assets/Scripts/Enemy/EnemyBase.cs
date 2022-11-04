@@ -8,31 +8,35 @@ using UnityEditor;
 #endif
 public class EnemyBase : MonoBehaviour
 {
-    public EnemyData enemyData;
+    [Header("-------[ 컴포넌트 ]")]
+    public EnemyData enemyData;         //기본데이터
     public Transform target;            //플레이어 타겟
-
-    public GameObject meleeAttack;     //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
+    public GameObject meleeAttack;      //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
     public NavMeshAgent nav;            //네비 매쉬를 사용
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
     public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
-    public float sightRange = 100f;
+    public SkinnedMeshRenderer[] meshs; //피격시 몬스트의 색을 바꾸기 위한 콤포넌트
 
-    public bool isChase;                //타겟을 향해 이동중
-    public bool isAttack;
-    public bool isDead;
-    public bool isGetHit = false;
-    public bool isPlaeyerFind = false;
+    [Header("-------[ 몬스터 상태 체커 ]")]
+    public bool isChase;                //추적상태         
+    public bool isAttack;               //공격상태
+    public bool isDead;                 //죽은상태
+    public bool isGetHit = false;       //피격상태
+    public bool isPlaeyerFind = false;  //플레이어 발견 상태
 
+    public float sightRange = 5f;       //플레이어 발견 거리
    
     protected virtual void Awake()
     {
+        //컴포넌트 생성
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-
+        //meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         if (mainManager == null)
         {
             mainManager = FindObjectOfType<MainManager>();
@@ -49,76 +53,87 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        //몬스터 기본 행동 패턴
         SearchPlayer();
         if (!isAttack && !isDead && isPlaeyerFind)
         {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
+            MoveToTarget(); // 타겟을 향이 이동하는 메소드
             Targeting();
         }
     }
+    /// <summary>
+    /// 레이어 마스트를 통해 타겟을 찾고 타겟을 찾으면 isPlayerFind 를 반환
+    /// </summary>
     protected virtual void SearchPlayer()
     {
         isPlaeyerFind = false;        
 
-        // 레이어 마스크를 통해 오브젝트를 감지하는 물리 구체
+        // 레이어 마스크를 통해 오브젝트(플레이어)를 감지하는 물리 구체
         Collider[] collider =
             Physics.OverlapSphere(transform.position, sightRange,
             LayerMask.GetMask("Player"));
 
         if (collider.Length > 0)
         {
-            //Vector3 playerPos = collider[0].transform.position;
-            //Vector3 toPlayerDir = playerPos - transform.position;
-            //float angle = Vector3.Angle(transform.forward, toPlayerDir);
-            //if (sightHalfAngle > angle)
-            //{
-            //    Ray ray = new(transform.position + transform.up * 0.5f, toPlayerDir);
-            //    if (Physics.Raycast(ray, out RaycastHit hit, sightRange))
-            //    {
-            //        if (hit.collider.CompareTag("Player"))
-            //        {
-            //            chaseTarget = collider[0].transform;
-            //            result = true;
-            //        }
-            //    }
-            //}
-            //result = true;
             isPlaeyerFind = true;
         }
-        //return result;
     }
 
     protected virtual void MoveToTarget()
     {
-        isChase = true;                                                                     // 이동중임을 알리는 bool 값
+        isChase = true;
 
         if (!isGetHit && !isAttack)
         {
-            //targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
-
-            //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
-            //transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-
-            //anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
+            if (Vector3.Distance(transform.position, target.position) < 2f)
+            {
+                StopNavMesh(true);
+            }
+            else
+            {
+                StopNavMesh(false);
+            }
+        }
+    }
+    /// <summary>
+    /// 이동을 즉시 멈추기 위해 네비매시 이동을 멈춤
+    /// </summary>
+    /// <param name="isStop">네비매시 이동 ON/OFF</param>
+    protected virtual void StopNavMesh(bool isStop)
+    {
+        if (isStop)
+        {
+            anim.SetBool("isWalk", false);          //애니메이션을 멈춤
+            //포지션 값을 몬스터의 기준으로 변경
+            nav.SetDestination(transform.position); //목표를 자신으로 설정
+            nav.acceleration = float.MaxValue;      //목표까지의 가속을 최대치로 바꿈
+            transform.position = transform.position;//나의 위치를 현재 위치로 바꿈
+            nav.velocity = Vector3.zero;            //물리 힘을 제로로 만듬
+            //네비매쉬 이동 관련값을 false로 변경
+            nav.isStopped = true;                   //네비매쉬 멈춤
+            nav.updatePosition = false;             //위치 업데이트 멈춤
+            nav.updateRotation = false;             //방향 업데이트 멈춤
+        }
+        else
+        {
+            nav.isStopped = false;
+            nav.updatePosition = true;
+            nav.updateRotation = true;
+            nav.SetDestination(target.position);
+            anim.SetBool("isWalk", true);
         }
     }
     protected virtual void Targeting()
     {
-        //https://ssabi.tistory.com/29
-        //https://www.youtube.com/watch?v=voEFSbIPYjw
-        //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
-        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
-                transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
-
-        // 레이캐스트에 Player 오브젝트가 판별되면 어택
-        //if (rayHits.Length > 0)
-        //{
-        //    StartCoroutine(enemyAttack());
-        //}
     }
-
+    
+    /// <summary>
+    /// SearchPlayer() 의 범위를 에디터에서만 표시
+    /// </summary>
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Handles.DrawWireDisc(transform.position, transform.up, sightRange);
+#endif
     }
 }

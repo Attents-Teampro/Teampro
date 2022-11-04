@@ -18,6 +18,9 @@ public class Player : MonoBehaviour, ICharacter
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public int pHP = 100;
+    //플레이어 hp와 최대hp 설정 - 양해인 1104
+    public int pMaxHp = 100;
+
     public int damage =1;
     int pDamage = 0;
 
@@ -77,6 +80,9 @@ public class Player : MonoBehaviour, ICharacter
         equipWeaponIndex = 0;
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
+
+        //플레이어의 hp를 최대 hp로 초기화. 양해인 11.04
+        pHP = pMaxHp;
     }
 
     void FixedUpdate()
@@ -302,8 +308,10 @@ public class Player : MonoBehaviour, ICharacter
     public void Attacked(int d)
     {
         pHP -= d;
+        //UI에 플레이어 pHP 값을 전달 -양해인 11.04
+        Health.instance.SetCurrentHealth(pHP);
     }
-    
+
     public void Attack(GameObject target, int d)
     {
         ICharacter ic = target.GetComponent<ICharacter>();

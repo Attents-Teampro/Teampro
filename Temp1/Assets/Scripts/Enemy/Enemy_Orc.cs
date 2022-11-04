@@ -2,29 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class Enemy_Orc : EnemyBase, ICharacter
 {
 
-    public int currentHP;
-    Vector3 targetDirection;
-    ICharacter playerCharacter;
+    public int currentHP;           //현재 HP 값
+    [Header("-------[ Audio Clip ]")]
+    public AudioClip attackSfx;
+    public AudioClip getHitSfx;
+    public AudioClip dieSfx;
+    AudioSource audioSource;
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        meshs = GameObject.Find("Orc").GetComponentsInChildren<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
+    }
     protected override void Start()
     {
         base.Start();
-        playerCharacter = target.GetComponent<ICharacter>();
-        currentHP = enemyData.EHP;
+        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
     }
 
     protected override void Update()
     {
         base.Update();
-        //if (!isAttack && !isDead)
-        //{
-        //    MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-        //    Targeting();
-        //}
     }
     protected override void SearchPlayer()
     {
@@ -33,17 +38,15 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     protected override void MoveToTarget()
     {
-        isChase = true;                                                                     // 이동중임을 알리는 bool 값
-
-        if (!isGetHit && !isAttack)
-        {
-            //targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
-
-            //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
-            //transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-            nav.SetDestination(target.position);
-            anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
-        }
+        base.MoveToTarget();
+    }
+    /// <summary>
+    /// 공격을 하기 위해 이동을 멈춤
+    /// </summary>
+    /// <param name="isStop">bool 값</param>
+    protected override void StopNavMesh(bool isStop)
+    {
+        base.StopNavMesh(isStop);
     }
     protected override void Targeting()
     {
@@ -66,8 +69,8 @@ public class Enemy_Orc : EnemyBase, ICharacter
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-        rb.velocity = Vector3.zero;
         meleeAttack.SetActive(true);
+        audioSource.PlayOneShot(attackSfx);
         yield return new WaitForSeconds(1f);
 
         isAttack = false;
@@ -78,8 +81,11 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     IEnumerator OnDead()
     {
+        capsuleCollider.enabled = false;
+
         anim.SetTrigger("doDie");
         isDead = true;
+        audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -92,24 +98,67 @@ public class Enemy_Orc : EnemyBase, ICharacter
         //by 손동욱
 
         Destroy(gameObject);
+
     }
 
     IEnumerator OnGetHit()
     {
-        currentHP -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
+        audioSource.PlayOneShot(getHitSfx);
+        //PlaySound("Attack");
+        HitColor(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        HitColor(false);
+
         if (currentHP < 0)
         {
             Die();
         }
         yield return new WaitForSeconds(0.8f);
+
         isGetHit = false;
     }
+    /// <summary>
+    /// 피격시 매시 컬러 변경
+    /// </summary>
+    /// <param name="isHit"> On / Off </param>
+    void HitColor(bool isHit)
+    {
+        if (isHit)
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.red;
+        }
+        else
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.white;
+        }
+    }
+    //void PlaySound(string action)
+    //{
+    //    switch (action)
+    //    {
+    //        case "Atack":
+    //            audioSource.clip = attackSnd;
+    //            break;
+    //        case "GetHit":
+    //            audioSource.clip = getHitSnd;
+    //            break;
+    //        case "Die":
+    //            audioSource.clip = dieSnd;
+    //            break;
+    //    }
+    //    audioSource.Play();
 
+    //}
     public void Die()
     {
+
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)
@@ -120,8 +169,6 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     public void Attack(GameObject target, int damage)
     {
-        //StartCoroutine(enemyAttack());
-        // playerCharacter.Attacked(maxDamage);
     }
 }
 

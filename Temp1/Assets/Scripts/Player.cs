@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
 
-public class Player : MonoBehaviour, ICharacter
+public class Player : MonoBehaviour
 {
     //10.11 추가 by 손동욱
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
@@ -20,7 +21,6 @@ public class Player : MonoBehaviour, ICharacter
     public int pHP = 100;
     public int damage =1;
     int pDamage = 0;
-
 
     float hAxis;
     float vAxis;
@@ -54,7 +54,44 @@ public class Player : MonoBehaviour, ICharacter
     int equipWeaponIndex = -1;
     float fireDelay;
 
-    
+    //-------------------------------------------------
+
+    public int attackPower = 10;      // 공격력
+    public int defencePower = 3;      // 방어력
+    public int maxHP = 100;    // 최대 HP
+    int php = 100;              // 현재 HP
+    bool isAlive = true;            // 살아있는지 죽었는지 확인용
+
+    public int AttackPower => attackPower;
+
+    public int DefencePower => defencePower;
+
+    public int PHP
+    {
+        get => php;
+        set
+        {
+            if (isAlive && php != value) // 살아있고 HP가 변경되었을 때만 실행
+            {
+                php = value;
+
+                if (php < 0)
+                {
+                    Die();
+                }
+                php = Mathf.Clamp(php, 0, maxHP);
+
+                pHPChange?.Invoke(php / maxHP);
+            }
+        }
+    }
+    public int MaxHP => maxHP;
+    public bool IsAlive => isAlive;
+
+    public Action<int> pHPChange { get; set; }
+    public Action onDie { get; set; }
+
+    //--------------------------------------------------------------------
 
     private void Awake()
     {
@@ -77,22 +114,29 @@ public class Player : MonoBehaviour, ICharacter
         equipWeaponIndex = 0;
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
+
+        php = maxHP;
+        isAlive = true;
+    }
+
+    private void Update()
+    {
+        GetInput();
+        Swap();
+        Interation();
+
     }
 
     void FixedUpdate()
     {
-        GetInput();
+        
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
-        Swap();
-        Interation();
-        AttackPos();
+        //AttackPos();
 
-        if (isFireReady && !isSwap)
-        {
-            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
-        }
+
+        transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
     }
 
     private void OnEnable()
@@ -140,8 +184,8 @@ public class Player : MonoBehaviour, ICharacter
 
     void GetInput()
     {
-        hAxis = Input.GetAxisRaw("Horizontal");
-        vAxis = Input.GetAxisRaw("Vertical");
+        //hAxis = Input.GetAxisRaw("Horizontal");
+        //vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
         iDown = Input.GetButtonDown("Interation");
         sDown1 = Input.GetButtonDown("Swap1");
@@ -169,27 +213,26 @@ public class Player : MonoBehaviour, ICharacter
         isFireReady = equipWeapon.rate < fireDelay;
 
     }
-    void AttackPos()    // 마우스 방향으로 시야 움직임과 공격
-    {
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //void AttackPos()    // 마우스 방향으로 시야 움직임과 공격
+    //{
+    //    Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
+    //    Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
 
-        //float rayLength;
+    //    //float rayLength;
 
-        RaycastHit hit;
+    //    RaycastHit hit;
 
-        //if (GroupPlane.Raycast(cameraRay, out rayLength))
-        if (Physics.Raycast(cameraRay, out hit, 1000, LayerMask.GetMask("floor")))
-        {
-            Vector3 pointTolook = hit.point;
-            Vector3 dir = pointTolook - transform.position;
-            dir.y = 0;
+    //    //if (GroupPlane.Raycast(cameraRay, out rayLength))
+    //    if (Physics.Raycast(cameraRay, out hit, 1000, LayerMask.GetMask("floor")))
+    //    {
+    //        Vector3 pointTolook = hit.point;
+    //        Vector3 dir = pointTolook - transform.position;
+    //        dir.y = 0;
 
-            transform.rotation = Quaternion.LookRotation(dir);
-        }
-    }
-
+    //        transform.rotation = Quaternion.LookRotation(dir);
+    //    }
+    //}
 
     void OnDodge(InputAction.CallbackContext context)
     {
@@ -198,9 +241,10 @@ public class Player : MonoBehaviour, ICharacter
             dodgeVec = inputDir;
             speed *= 2;
             anim.SetTrigger("doDodge");
-            Debug.Log("dd");
+            Debug.Log("구르기");
         }
     }
+
 
     void Swap()
     {
@@ -229,7 +273,7 @@ public class Player : MonoBehaviour, ICharacter
 
             isSwap = true;
 
-            Invoke("SwapOut", 0.4f);
+            Invoke("SwapOut", 0.1f);
         }
     }
 
@@ -251,6 +295,21 @@ public class Player : MonoBehaviour, ICharacter
                 Destroy(nearObject);
             }
         }
+    }
+    public void Defence(int damage)
+    {
+        if (isAlive)                // 살아있을 때만 데미지 입음.
+        {
+            anim.SetTrigger("Hit"); // 피격 애니메이션 재생
+            PHP -= (damage - DefencePower);  // 기본공식 = 실제입는 데미지 = 적 공격 데미지 - 방어력
+        }
+    }
+    public void Die()
+    {
+        isAlive = false;
+        anim.SetLayerWeight(1, 0.0f);       // 애니메이션 레이어 가중치 제거
+        anim.SetBool("IsAlive", isAlive);   // 죽었다고 표시해서 사망 애니메이션 재생
+        onDie?.Invoke();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -295,10 +354,6 @@ public class Player : MonoBehaviour, ICharacter
     //10.11 추가. ICharacter 적용
     //프로토타입 제작을 위해서 임시로 플레이어 콜리더에 적 에너미가 들어오면 데미지를 받는 기능 추가
     //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
-    public void Die()
-    {
-
-    }
     public void Attacked(int d)
     {
         pHP -= d;

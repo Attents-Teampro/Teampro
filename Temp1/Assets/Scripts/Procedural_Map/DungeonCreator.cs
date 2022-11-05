@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,7 +21,7 @@ public class DungeonCreator : MonoBehaviour
     // 방 이어주는 복도의 크기
     public int corridorWidth;
 
-    //네비매시 서페이스 사용을 위한 캐싱
+    //네비매시 서페이스 사용을 위한 캐싱 : 박인엽
     NavMeshSurface surface;
 
     // 
@@ -44,7 +45,7 @@ public class DungeonCreator : MonoBehaviour
 
     private void Awake()
     {
-        //서페이스 객세 할당
+        //서페이스 객세 할당 : 박인엽
         surface = GetComponent<NavMeshSurface>();
     }
 
@@ -52,7 +53,7 @@ public class DungeonCreator : MonoBehaviour
     private void Start()
     {
         CreateDungeon(); // 던전 생성 매서드
-        surface.BuildNavMesh(); // 네비 매시 생성
+        surface.BuildNavMesh(); // 네비 매시 생성 from : 박인엽
     }
 
 
@@ -79,10 +80,10 @@ public class DungeonCreator : MonoBehaviour
         for (int i=0; i<listOfRooms.Count; i++)
         {
             CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
-            
         }
+                
         CreateWalls(wallParent); // 벽만들기
-        surface.BuildNavMesh(); // 네비매시 생성
+        surface.BuildNavMesh(); // 네비매시 생성 : 박인엽
 
     }
 
@@ -156,15 +157,15 @@ public class DungeonCreator : MonoBehaviour
 
         GameObject dungeonFloor = new GameObject("Mesh"+bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
 
-        
-
         dungeonFloor.transform.position = Vector3.zero;
         dungeonFloor.transform.localScale = Vector3.one;
         dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
         dungeonFloor.transform.parent = transform;
 
-        dungeonFloor.isStatic = true;
+        //dungeonFloor.AddComponent<BoxCollider>(); //던전 바닥 박스 콜리더 추가
+
+        //dungeonFloor.isStatic = true;
 
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
         {

@@ -2,22 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonCreator : MonoBehaviour
 {
-    // ÀüÃ¼ ´øÀü Å©±â
+    // ì „ì²´ ë˜ì „ í¬ê¸°
     public int dungeonWidth;
     public int dungeonLength;
 
-    // °¢ ¹æÀÇ Å©±â
+    // ê° ë°©ì˜ í¬ê¸°
     public int roomWidth;
     public int roomLength;
 
-    // »ı¼º ¹İº¹ È½¼ö
+    // ìƒì„± ë°˜ë³µ íšŸìˆ˜
     public int maxIterations;
 
-    // ¹æ ÀÌ¾îÁÖ´Â º¹µµÀÇ Å©±â
+    // ë°© ì´ì–´ì£¼ëŠ” ë³µë„ì˜ í¬ê¸°
     public int corridorWidth;
+
+    //ë„¤ë¹„ë§¤ì‹œ ì„œí˜ì´ìŠ¤ ì‚¬ìš©ì„ ìœ„í•œ ìºì‹±
+    NavMeshSurface surface;
 
     // 
     public Material material;
@@ -38,21 +42,26 @@ public class DungeonCreator : MonoBehaviour
     List<Vector3Int> possibleWallHorizontalPosition;
 
 
+    private void Awake()
+    {
+        //ì„œí˜ì´ìŠ¤ ê°ì„¸ í• ë‹¹
+        surface = GetComponent<NavMeshSurface>();
+    }
 
 
     private void Start()
     {
-        CreateDungeon(); // ´øÀü »ı¼º ¸Å¼­µå
-        
+        CreateDungeon(); // ë˜ì „ ìƒì„± ë§¤ì„œë“œ
+        surface.BuildNavMesh(); // ë„¤ë¹„ ë§¤ì‹œ ìƒì„±
     }
 
 
     public void CreateDungeon()
     {
-        DestroyAllChildren();// ¸ğµç°É Áö¿î´Ù.
-        DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength); // ´øÀüÀ» »ı¼ºÇÏ´Â Å¬·¡½º
+        DestroyAllChildren();// ëª¨ë“ ê±¸ ì§€ìš´ë‹¤.
+        DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength); // ë˜ì „ì„ ìƒì„±í•˜ëŠ” í´ë˜ìŠ¤
 
-        // ¹æÀ» »ı¼ºÇÏ´Â var. 
+        // ë°©ì„ ìƒì„±í•˜ëŠ” var. 
         var listOfRooms = generator.CalculateDungeon(
             maxIterations,
             roomWidth,roomLength, 
@@ -72,13 +81,14 @@ public class DungeonCreator : MonoBehaviour
             CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
             
         }
-        CreateWalls(wallParent); // º®¸¸µé±â
-        
+        CreateWalls(wallParent); // ë²½ë§Œë“¤ê¸°
+        surface.BuildNavMesh(); // ë„¤ë¹„ë§¤ì‹œ ìƒì„±
+
     }
 
     private void CreateWalls(GameObject wallParent)
     {
-        // º® »ı¼º
+        // ë²½ ìƒì„±
 
         foreach (var wallPosition in possibleWallHorizontalPosition)
         {
@@ -90,23 +100,23 @@ public class DungeonCreator : MonoBehaviour
             CreateWall(wallParent, wallPosition, wallVertical);
         }
 
-        // NavMesh¸¦ À§ÇÑ Á¤ÀûÀ¸·Î ¸¸µé±â
+        // NavMeshë¥¼ ìœ„í•œ ì •ì ìœ¼ë¡œ ë§Œë“¤ê¸°
         wallParent.isStatic = true;
 
     }
 
     private void CreateWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)
     {
-        // º® »ı¼º... ÇÁ¸®ÆÕ ÀÌ¿ë
+        // ë²½ ìƒì„±... í”„ë¦¬íŒ¹ ì´ìš©
         Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
 
-        // NavMesh¸¦ À§ÇÑ Á¤ÀûÀ¸·Î ¸¸µé±â 
+        // NavMeshë¥¼ ìœ„í•œ ì •ì ìœ¼ë¡œ ë§Œë“¤ê¸° 
         wallPrefab.isStatic = true;
     }
 
     private void CreateMesh (Vector2 bottomLeftCorner, Vector2 topRightCorner)
     {
-        // ¸é ¸¸µé¾îÁÖ´Â ¸Å½áµå
+        // ë©´ ë§Œë“¤ì–´ì£¼ëŠ” ë§¤ì¨ë“œ
         // V = Vertices
 
         Vector3 bottomLeftV = new Vector3(bottomLeftCorner.x, 0, bottomLeftCorner.y);
@@ -130,7 +140,7 @@ public class DungeonCreator : MonoBehaviour
 
         int[] triangles = new int[]
         {
-            // ½Ã°è¹æÇâ...?
+            // ì‹œê³„ë°©í–¥...?
 
             0,
             1,
@@ -195,7 +205,7 @@ public class DungeonCreator : MonoBehaviour
 
     private void DestroyAllChildren()
     {
-        // ¸ğµç ¸Ê°ú ¿ÀºêÁ§Æ®¸¦ Áö¿î´Ù
+        // ëª¨ë“  ë§µê³¼ ì˜¤ë¸Œì íŠ¸ë¥¼ ì§€ìš´ë‹¤
         while(transform.childCount != 0)
         {
             foreach(Transform item in transform)

@@ -163,8 +163,7 @@ public class DungeonCreator : MonoBehaviour
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
         dungeonFloor.transform.parent = transform;
 
-        //dungeonFloor.AddComponent<BoxCollider>(); //던전 바닥 박스 콜리더 추가
-
+        dungeonFloor.AddComponent<BoxCollider>(); //던전 바닥 박스 콜리더 추가
         //dungeonFloor.isStatic = true;
 
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)

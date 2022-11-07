@@ -3,31 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class EnemyBase : MonoBehaviour
 {
-    public EnemyData enemyData;
+    [Header("-------[ 컴포넌트 ]")]
+    public EnemyData enemyData;         //기본데이터
     public Transform target;            //플레이어 타겟
-
-    public GameObject meleeAttack;     //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
+    public GameObject meleeAttack;      //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
     public NavMeshAgent nav;            //네비 매쉬를 사용
     public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
     public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
+    public SkinnedMeshRenderer[] meshs; //피격시 몬스트의 색을 바꾸기 위한 콤포넌트
 
-    public bool isChase;                //타겟을 향해 이동중
-    public bool isAttack;
-    public bool isDead;
-    public bool isGetHit = false;
+    [Header("-------[ 몬스터 상태 체커 ]")]
+    public bool isChase;                //추적상태         
+    public bool isAttack;               //공격상태
+    public bool isDead;                 //죽은상태
+    public bool isGetHit = false;       //피격상태
+    public bool isPlaeyerFind = false;  //플레이어 발견 상태
 
+    public float sightRange = 5f;       //플레이어 발견 거리
    
     protected virtual void Awake()
     {
+        //컴포넌트 생성
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-
+        //meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         if (mainManager == null)
         {
             mainManager = FindObjectOfType<MainManager>();
@@ -42,4 +51,89 @@ public class EnemyBase : MonoBehaviour
         //by 손동욱
     }
 
+    protected virtual void Update()
+    {
+        //몬스터 기본 행동 패턴
+        SearchPlayer();
+        if (!isAttack && !isDead && isPlaeyerFind)
+        {
+            MoveToTarget(); // 타겟을 향이 이동하는 메소드
+            Targeting();
+        }
+    }
+    /// <summary>
+    /// 레이어 마스트를 통해 타겟을 찾고 타겟을 찾으면 isPlayerFind 를 반환
+    /// </summary>
+    protected virtual void SearchPlayer()
+    {
+        isPlaeyerFind = false;        
+
+        // 레이어 마스크를 통해 오브젝트(플레이어)를 감지하는 물리 구체
+        Collider[] collider =
+            Physics.OverlapSphere(transform.position, sightRange,
+            LayerMask.GetMask("Player"));
+
+        if (collider.Length > 0)
+        {
+            isPlaeyerFind = true;
+        }
+    }
+
+    protected virtual void MoveToTarget()
+    {
+        isChase = true;
+
+        if (!isGetHit && !isAttack)
+        {
+            if (Vector3.Distance(transform.position, target.position) < 2f)
+            {
+                StopNavMesh(true);
+            }
+            else
+            {
+                StopNavMesh(false);
+            }
+        }
+    }
+    /// <summary>
+    /// 이동을 즉시 멈추기 위해 네비매시 이동을 멈춤
+    /// </summary>
+    /// <param name="isStop">네비매시 이동 ON/OFF</param>
+    protected virtual void StopNavMesh(bool isStop)
+    {
+        if (isStop)
+        {
+            anim.SetBool("isWalk", false);          //애니메이션을 멈춤
+            //포지션 값을 몬스터의 기준으로 변경
+            nav.SetDestination(transform.position); //목표를 자신으로 설정
+            nav.acceleration = float.MaxValue;      //목표까지의 가속을 최대치로 바꿈
+            transform.position = transform.position;//나의 위치를 현재 위치로 바꿈
+            nav.velocity = Vector3.zero;            //물리 힘을 제로로 만듬
+            //네비매쉬 이동 관련값을 false로 변경
+            nav.isStopped = true;                   //네비매쉬 멈춤
+            nav.updatePosition = false;             //위치 업데이트 멈춤
+            nav.updateRotation = false;             //방향 업데이트 멈춤
+        }
+        else
+        {
+            nav.isStopped = false;
+            nav.updatePosition = true;
+            nav.updateRotation = true;
+            nav.SetDestination(target.position);
+            anim.SetBool("isWalk", true);
+        }
+    }
+    protected virtual void Targeting()
+    {
+    }
+    
+    /// <summary>
+    /// SearchPlayer() 의 범위를 에디터에서만 표시
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        Handles.DrawWireDisc(transform.position, transform.up, sightRange);
+#endif
+    }
 }

@@ -6,41 +6,40 @@ using UnityEngine.AI;
 public class Enemy_Skelleton : EnemyBase, ICharacter
 {
     
-    int currentHP;
-    Vector3 targetDirection;
-    ICharacter playerCharacter;
+    public int currentHP;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        meshs = GameObject.Find("Skeleton").GetComponentsInChildren<SkinnedMeshRenderer>();
+    }
     protected override void Start()
     {
         base.Start();
-        playerCharacter = target.GetComponent<ICharacter>();
-        currentHP = enemyData.EHP;
+        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!isAttack)
-        {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-            Targeting();
-        }
+        base .Update();
     }
-    private void MoveToTarget()
+    protected override void SearchPlayer()
     {
-        isChase = true;                                                                     // 이동중임을 알리는 bool 값
-
-        if (!isGetHit && !isAttack)
-        {
-            targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
-
-            rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
-            transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-
-            anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
-        }
+        base.SearchPlayer();
     }
-
-    void Targeting()
+    protected override void MoveToTarget()
+    {
+        base.MoveToTarget();
+    }
+    /// <summary>
+    /// 공격을 하기 위해 이동을 멈춤
+    /// </summary>
+    /// <param name="isStop">bool 값</param>
+    protected override void StopNavMesh(bool isStop)
+    {
+        base.StopNavMesh(isStop);
+    }
+    protected override void Targeting()
     {
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
@@ -72,6 +71,8 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     IEnumerator OnDead()
     {
+        capsuleCollider.enabled = false;
+
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);
@@ -90,21 +91,44 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     IEnumerator OnGetHit()
     {
-        currentHP -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
+
+        HitColor(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        HitColor(false);
+
         if (currentHP < 0)
         {
             Die();
         }
         yield return new WaitForSeconds(0.8f);
+
         isGetHit = false;
     }
-
-
+    /// <summary>
+    /// 피격시 매시 컬러 변경
+    /// </summary>
+    /// <param name="isHit"> On / Off </param>
+    void HitColor(bool isHit)
+    {
+        if (isHit)
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.red;
+        }
+        else
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.white;
+        }
+    }
     public void Die()
     {
+        
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

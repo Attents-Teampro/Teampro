@@ -11,51 +11,44 @@ using static UnityEngine.UI.Image;
 public class Enemy_Mage : EnemyBase, ICharacter
 {
     public GameObject projectile;
-    int currentHP;
-    Vector3 targetDirection;
-
-    ICharacter playerCharacter;
-
+    public int currentHP;
+    
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        meshs = GameObject.Find("Mage").GetComponentsInChildren<SkinnedMeshRenderer>();
+    }
     protected override void Start()
     {
         base.Start();
-        playerCharacter = target.GetComponent<ICharacter>();
         currentHP = enemyData.EHP;
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!isAttack && !isDead)
-        {
-            MoveToTarget();                     // 타겟을 향이 이동하는 메소드
-            Targeting();
-        }
+        base.Update();
+    }
+
+    protected override void SearchPlayer()
+    {
+        base.SearchPlayer();
     }
 
     /// <summary>
     /// 타겟을 향해 이동 : 추 후 타겟 거리를 보고 이동 targetDistance 변수로 처리 예정
     /// </summary>
-    private void MoveToTarget()
+    protected override void MoveToTarget()
     {
-        isChase = true;                                                                     // 이동중임을 알리는 bool 값
-
-        if (!isGetHit && !isAttack)
-        {
-            targetDirection = (target.position - transform.position).normalized;                //타겟 위치의 방향
-
-            rb.MovePosition(transform.position + targetDirection * Time.deltaTime * enemyData.MoveSpeed); //리지드바디를 사용하여 타겟으로 이동
-            transform.LookAt(target);                                                           //Lookat을 사용하여 타겟 바라보기
-
-            anim.SetBool("isWalk", true);                                                       // walk 애니메이션 활성화}
-        }
+        base.MoveToTarget();
     }
 
-    void Targeting()
+    protected override void Targeting()
     {
         
         //https://ssabi.tistory.com/29
@@ -97,7 +90,10 @@ public class Enemy_Mage : EnemyBase, ICharacter
     /// <returns></returns>
     IEnumerator OnDead()
     {
+        capsuleCollider.enabled = false;
+
         anim.SetTrigger("doDie");
+        isDead = true;
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -119,11 +115,16 @@ public class Enemy_Mage : EnemyBase, ICharacter
     /// <returns></returns>
     IEnumerator OnGetHit()
     {
-        //currentHP = enemyData.EHP;
-        currentHP -= 50; // 테스트용 데미지 값
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
+
+        HitColor(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        HitColor(false);
+        
         if (currentHP < 0)
         {
             Die();
@@ -131,7 +132,19 @@ public class Enemy_Mage : EnemyBase, ICharacter
         yield return new WaitForSeconds(0.8f);
         isGetHit = false;
     }
-
+    void HitColor(bool isHit)
+    {
+        if (isHit)
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.red;
+        }
+        else
+        {
+            foreach (SkinnedMeshRenderer mesh in meshs)
+                mesh.material.color = Color.white;
+        }
+    }
 
     public void Die()
     {
@@ -145,7 +158,5 @@ public class Enemy_Mage : EnemyBase, ICharacter
 
     public void Attack(GameObject target, int damage)
     {
-        //StartCoroutine(enemyAttack());
-        // playerCharacter.Attacked(maxDamage);
     }
 }

@@ -894,8 +894,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4160692353078115664}
   - component: {fileID: 4100327859133898836}
-  - component: {fileID: 876758314443041566}
+  - component: {fileID: 39277459099110938}
   - component: {fileID: 446608348}
+  - component: {fileID: 5538937806457796695}
   - component: {fileID: 3491459890291698308}
   m_Layer: 0
   m_Name: Shell
@@ -903,7 +904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4160692353078115664
 Transform:
   m_ObjectHideFlags: 0
@@ -942,8 +943,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &876758314443041566
-SphereCollider:
+--- !u!136 &39277459099110938
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -952,9 +953,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0.4, z: 0}
+  m_Radius: 0.7
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &446608348
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -971,6 +973,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!195 &5538937806457796695
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158859801316043186}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2.5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 300
+  m_StoppingDistance: 2.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &3491459890291698308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,10 +1015,14 @@ MonoBehaviour:
   capsuleCollider: {fileID: 0}
   anim: {fileID: 0}
   mainManager: {fileID: 0}
+  meshs: []
   isChase: 0
   isAttack: 0
   isDead: 0
   isGetHit: 0
+  isPlaeyerFind: 0
+  sightRange: 6
+  currentHP: 0
 --- !u!1 &4158907722797144342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,6 +1224,7 @@ GameObject:
   - component: {fileID: 5461404118967246669}
   - component: {fileID: 4886646089270077993}
   - component: {fileID: 2105568924231848645}
+  - component: {fileID: 1211242973}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -1232,6 +1261,19 @@ SphereCollider:
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2105568924231848645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7439093976231094879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7c1879b7309914584771a088704749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: ee9d08b45292f2a469fba38a12f6b083, type: 2}
+--- !u!114 &1211242973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

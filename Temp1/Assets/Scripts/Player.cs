@@ -6,7 +6,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
 
-public class Player : MonoBehaviour
+//11.04 인터페이스 ICharacter가 빠져있어서 추가했습니다. 
+//왜 빼신지 모르겠는데 일단 ICharacter로 enemy랑 enemy_Boss에서 ICharacter로 데미지를 적용하고 있어서
+//그게 없으면 에러가 나올 수 밖에 없습니다.(플레이어가 데미지를 입을 때 에러 생성)
+//by 손동욱
+public class Player : MonoBehaviour, ICharacter
 {
     //10.11 추가 by 손동욱
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
@@ -18,8 +22,13 @@ public class Player : MonoBehaviour
     public float speed;
     public GameObject[] weapons;
     public bool[] hasWeapons;
-    public int pHP = 100;
-    public int damage =1;
+
+    //플레이어 hp와 최대hp 설정 - 양해인 1104
+    public int pHP;
+    public int pMaxHp = 200;
+
+
+    public int damage = 1;
     int pDamage = 0;
 
     float hAxis;
@@ -115,8 +124,12 @@ public class Player : MonoBehaviour
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
 
-        php = maxHP;
+        //플레이어의 hp를 최대 hp로 초기화. 양해인 11.04
+        pHP = pMaxHp;
+
         isAlive = true;
+
+
     }
 
     private void Update()
@@ -129,7 +142,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
         //AttackPos();
@@ -320,9 +333,9 @@ public class Player : MonoBehaviour
         //    isJump = false;
         //}
         //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
-            if(equipWeapon == null)
+            if (equipWeapon == null)
             {
                 pDamage = damage;
             }
@@ -330,7 +343,7 @@ public class Player : MonoBehaviour
             {
                 pDamage = damage * equipWeapon.iDamage;
             }
-            
+
             Attack(collision.gameObject, pDamage);
             Debug.Log("공격");
         }
@@ -356,9 +369,14 @@ public class Player : MonoBehaviour
     //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
     public void Attacked(int d)
     {
+        Debug.Log("데미지 입음");
         pHP -= d;
+        Debug.Log("데미지 적용");
+        //UI에 플레이어 pHP 값을 전달 -양해인 11.04
+        Health.instance.SetCurrentHealth(pHP);
+        Debug.Log("UI 데미지 적용");
     }
-    
+
     public void Attack(GameObject target, int d)
     {
         ICharacter ic = target.GetComponent<ICharacter>();

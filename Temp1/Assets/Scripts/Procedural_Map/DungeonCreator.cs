@@ -53,7 +53,7 @@ public class DungeonCreator : MonoBehaviour
     private void Start()
     {
         CreateDungeon(); // 던전 생성 매서드
-        surface.BuildNavMesh(); // 네비 매시 생성 from : 박인엽
+        //surface.BuildNavMesh(); // 네비 매시 생성 from : 박인엽
     }
 
 

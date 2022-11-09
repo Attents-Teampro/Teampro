@@ -838,6 +838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498155236221ef447960de8c5220e7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  turnSpeed: 10
   speed: 5
   weapons:
   - {fileID: 3432888516440096245}
@@ -846,7 +848,11 @@ MonoBehaviour:
   - {fileID: 8946174317851389052}
   hasWeapons: 01010101
   pHP: 100
+  pMaxHp: 200
   damage: 1
+  attackPower: 10
+  defencePower: 3
+  maxHP: 100
 --- !u!1 &5225322082342842490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,7 +2066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7960502685420422106, guid: 38aa009d5511475eb95ebd11fb7803ab, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38aa009d5511475eb95ebd11fb7803ab, type: 3}
@@ -2123,7 +2129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6064316799571392590, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6873363103045821172, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
       propertyPath: m_RootOrder

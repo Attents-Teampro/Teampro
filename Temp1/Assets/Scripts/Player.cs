@@ -29,7 +29,7 @@ public class Player : MonoBehaviour, ICharacter
 
 
     public int damage = 1;
-    int pDamage = 0;
+    public int pDamage = 0;
 
     float hAxis;
     float vAxis;
@@ -325,30 +325,30 @@ public class Player : MonoBehaviour, ICharacter
         onDie?.Invoke();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //if (collision.gameObject.tag == "Floor")
-        //{
-        //    anim.SetBool("isJump", false);
-        //    isJump = false;
-        //}
-        //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (equipWeapon == null)
-            {
-                pDamage = damage;
-            }
-            else
-            {
-                pDamage = damage * equipWeapon.iDamage;
-            }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    //if (collision.gameObject.tag == "Floor")
+    //    //{
+    //    //    anim.SetBool("isJump", false);
+    //    //    isJump = false;
+    //    //}
+    //    //10.11 임시 추가. 추후 공격 모션에 적용하셔야 몬스터 공격이 실행될 것 같습니다.
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        if (equipWeapon == null)
+    //        {
+    //            pDamage = damage;
+    //        }
+    //        else
+    //        {
+    //            pDamage = damage * equipWeapon.iDamage;
+    //        }
 
-            Attack(collision.gameObject, pDamage);
-            Debug.Log("공격");
-        }
-        //by 손동욱
-    }
+    //        Attack(collision.gameObject, pDamage);
+    //        Debug.Log("공격");
+    //    }
+    //    //by 손동욱
+    //}
 
     void OnTriggerStay(Collider other)
     {

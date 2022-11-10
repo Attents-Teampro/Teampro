@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3790954888115489019
+--- !u!1 &6520896511300289931
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 480198640502922596}
-  - component: {fileID: 6480546422584917300}
+  - component: {fileID: 7514484332154163220}
+  - component: {fileID: 3966909394043465796}
   m_Layer: 0
-  m_Name: Spawner 1
+  m_Name: Spawner 4(Boss)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &480198640502922596
+--- !u!4 &7514484332154163220
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3790954888115489019}
+  m_GameObject: {fileID: 6520896511300289931}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.086753845, y: 1.564497, z: 2.1133485}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,22 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6480546422584917300
+--- !u!114 &3966909394043465796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3790954888115489019}
+  m_GameObject: {fileID: 6520896511300289931}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 006f9a30892724849bbcacf37ee16296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObject: {fileID: 6259778561874722237, guid: 11a1ef014a356934fa52efc3af65eebe, type: 3}
-  Wall: {fileID: 7393079093931221304, guid: 309523499a6091e46a6e7b3b66641561, type: 3}
-  mainManager: {fileID: 2010157419725594000, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
-  floor: {fileID: 1003601716, guid: b1b85b09ece97aa48941090e49cfe8d9, type: 3}
-  numOfEnemy: 2
-  isBoss: 0
+  enemyObject: {fileID: 4632512588683869222, guid: a5a1cdc0f4bf6ee4c95fcfe3aed108cc, type: 3}
+  numOfEnemy: 3
+  isBoss: 1
   bossPosition: {x: 0, y: 0, z: 0}

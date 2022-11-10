@@ -9,80 +9,87 @@ public class Door : MonoBehaviour
     //반대편 문 스크립트
     public Door door;
 
-    
-    //문이 열렸는지 체크
-    bool isOpen = false;
-    bool IsOpen
-    {
-        get => isOpen;
-        set 
-        {
-            if (isOpen != value)
-            {
-                isOpen = value;
-                DoorControl(isOpen);
-            }
-        }
-    }
-
+    public bool isSpawn = false;
     //해당 문과 연결된 방 저장 변수
     GameObject thisRoom = null;
+
+    Room room;
 
     //컴포넌트 변수
     BoxCollider col;
     MeshRenderer mr;
     public float checkRange = 5f;
 
+    //문이 열렸는지 체크
+    bool isOpen = false;
+    public bool IsOpen
+    {
+        get => isOpen;
+        set 
+        {
+            
+            isOpen = value;
+            DoorControl(isOpen);
+        }
+    }
+    
+
+    
+
     private void Awake()
     {
         col = GetComponent<BoxCollider>();
         mr = GetComponent<MeshRenderer>();
+        //sphereCol = GetComponent<SphereCollider>();
         checkRange = transform.localScale.y * 0.5f + 0.2f;
     }
 
     private void Start()
     {
-        if (CheckRoom())
+        if(room == null)
         {
-            //Debug.Log($"방 찾기 성공\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 {thisRoom}입니다.");
-        }
-        else
-        {
-            //Debug.Log($"방 찾기 실패\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 찾지못했습니다.");
             Destroy(gameObject);
         }
+        //if (CheckRoom())
+        //{
+        //    //Debug.Log($"방 찾기 성공\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 {thisRoom}입니다.");
+        //}
+        //else
+        //{
+        //    //Debug.Log($"방 찾기 실패\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 찾지못했습니다.");
+        //    Destroy(gameObject);
+        //}
     }
 
-    public void Clear()
+    /// <summary>
+    /// 클리어, 클로즈를 담당
+    /// </summary>
+    /// <param name="x">true면 Open, false면 Close</param>
+    public void ClearAndClose(bool x)
     {
         //방을 클리어했으니 문을 열기
         //문 체크 변수 변경
-        isOpen = true;
-
+        IsOpen = x;
+        door.IsOpen = x;
+        Debug.Log("문 열기 실행 1");
     }
     private void DoorControl(bool t)
     {
+        Debug.Log("문 열기 실행 2");
+        //Open
         if (t)
         {
-            DoorOpen();
+            mr.enabled = false;
+            col.isTrigger = true;
         }
+        //Close
         else
         {
-            DoorClose();
+            mr.enabled = true;
+            col.isTrigger = false;
         }
     }
-
-    private void DoorClose()
-    {
-        mr.enabled = true;
-        col.isTrigger = false;
-    }
-
-    private void DoorOpen()
-    {
-        mr.enabled = false;
-        col.isTrigger = true;
-    }
+   
     public bool CheckRoom()
     {
         bool result = false;
@@ -95,8 +102,10 @@ public class Door : MonoBehaviour
             //변수에 방 대입
             thisRoom = colliders[0].gameObject;
             //방에 문 대입
-            thisRoom.GetComponent<Room>().door.Add(this);
-            
+            room = thisRoom.GetComponent<Room>();
+            room.door.Add(this);
+            //Debug.Log(room.door);
+
             //thisRoom.GetComponent<Room>().StartSpawn();
             result = true;
         }
@@ -105,16 +114,33 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isOpen)
+        if (other.gameObject.CompareTag("Player") && !isSpawn && !room.isClear)
         {
-            //door.CheckRoom();
-            door.thisRoom.GetComponent<Room>().StartSpawn();
+            SetInfo();
+            IsOpen = false;
+            col.center = new Vector3(0, col.center.y, col.center.z);
+            room.StartSpawn();
         }
     }
-    private void OnTriggerExit(Collider other)
+
+    public void SetInfo()
     {
-        isOpen = false;
+        isSpawn = true;
     }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player") && !room.isClear)
+    //    {
+    //        room.StartSpawn();
+    //    }
+    //}
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, checkRange);
+    }
+
     ////방이 이미 콜리더 안에 있기 때문에 stay사용
     //private void OnCollisionStay(Collision collision)
     //{
@@ -123,12 +149,5 @@ public class Door : MonoBehaviour
 
     //    }
     //}
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, new Vector3(checkRange, checkRange, checkRange));
-    }
-
-
 
 }

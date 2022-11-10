@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     //public BoxCollider floor;
 
     //생성할 몬스터 수
-    public int numOfEnemy = 5; 
+    public int numOfEnemy = 5;
 
     //floor오브젝트의 위치값을 저장 및 랜덤함수를 돌릴 변수
     Vector3 sizeOfGround;
@@ -31,34 +31,32 @@ public class Spawner : MonoBehaviour
 
     //매쉬랜더러 변수
     MeshRenderer mr;
-    private void Awake()
-    {
-        //mr = GetComponent<MeshRenderer>();
-    }
-    private void Start()
-    {
-        //11.10 수정. 스폰이 start로 시작하자마자 실행이 아니라, 특정 함수 호출 시 실행
-        //StartCoroutine(SpawnerStart());
-    }
+    //Room 스크립트 변수
+    Room room;
 
-    public void StartSpawn()
+    //테스트용 변수
+    GameObject[] mon;
+    public void StartSpawn(GameObject obj)
     {
-        StartCoroutine(SpawnerStart());
+        mr = obj.GetComponent<MeshRenderer>();
+        room = obj.GetComponent<Room>();
+        SpawnerStart();
     }
-    IEnumerator SpawnerStart()
+    void SpawnerStart()
     {
-        yield return new WaitForSeconds(Time.deltaTime * 5);
+
         //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
-        
+
         //mainManager = FindObjectOfType<MainManager>();
         MainManager.instance.numOfStageEnemy += numOfEnemy;
+        //Debug.Log($"값 {numOfEnemy}를 메인에 넘겨줌");
 
         //보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
         if (isBoss)
         {
             Instantiate(enemyObject, bossPosition, Quaternion.identity);
             //return;
-            yield break;
+            return;
         }
         //11.10 주석 by 손동욱
         //벽이 바뀌어서 주석 처리 
@@ -67,11 +65,12 @@ public class Spawner : MonoBehaviour
         //WallPosition = new Vector3[Wall.transform.childCount];
         ////Wall 오브젝트의 차일드 오브젝트 좌우위아래 대입
 
-        Debug.Log("메쉬랜더러 찾음");
-        mr = GetComponent<MeshRenderer>();
+        //Debug.Log("메쉬랜더러 찾음");
+        //mr = GetComponent<MeshRenderer>();
         Vector3 floor = mr.bounds.size * 0.5f;
 
-        
+        //테스트 변수 관련 코드
+        mon = new GameObject[numOfEnemy];
         //몬스터 생성. 
         for (int i = 0; i < numOfEnemy; i++)
         {
@@ -98,11 +97,23 @@ public class Spawner : MonoBehaviour
                 else
                 {
                     //몬스터 오브젝트 생성.
-                    Instantiate(enemyObject, sizeOfGround + GetComponent<Room>().roomPosition, Quaternion.identity);
+                    mon[i] = Instantiate(enemyObject, sizeOfGround + room.roomPosition, Quaternion.identity);
                     //while문 종료. for문은 계속 실행되기 때문에 초기에 설정한 numOfEnemy 수에 맞게 몬스터 생성이 됨
                     resetPosition = false;
                 }
             }
+        }
+    }
+
+    public void KillAllMonsters()
+    {
+        foreach(var i in mon)
+        {
+            ICharacter ic = i.GetComponent<ICharacter>();
+            ic.Die();
+            Debug.Log(i.name);
+            Debug.Log("죽음");
+
         }
     }
 }

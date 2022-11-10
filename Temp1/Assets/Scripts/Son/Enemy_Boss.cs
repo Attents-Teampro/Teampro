@@ -64,7 +64,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         {
             target = FindObjectOfType<Player>().transform;
         }
-        target.position = new Vector3(target.position.x, 0, target.position.y);
+        //target.position = new Vector3(target.position.x, 0, target.position.y);
     }
     IEnumerator DelayStart()
     {

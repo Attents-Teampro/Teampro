@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CorridorNode : Node
@@ -11,14 +10,12 @@ public class CorridorNode : Node
     private int corridorWidth;
     private int modifierDistanceFromWall = 1; // 복도를 구석에서 어느정도 떨어져서 만들어지게끔 함
 
-
     // base 를 null 로 함으로서 parent Node 에 이어지지 않고 corridor 끼리 이어지게끔 만듬
-    public CorridorNode(Node node1, Node node2, int corridorWidth) : base(null) 
+    public CorridorNode(Node node1, Node node2, int corridorWidth) : base(null)
     {
         this.structure1 = node1;
         this.structure2 = node2;
         this.corridorWidth = corridorWidth;
-
         GenerateCorridor();
     }
 
@@ -26,12 +23,8 @@ public class CorridorNode : Node
     {
         // 복도가 어디에 배치되어있는지 알아내야함
         // 각도를 활용해서 복도의 방향을 알아낸다
-        
-
-
 
         var relativePositionOfStructure2 = CheckPositionStructure2AgainstStructure1();
-
         switch (relativePositionOfStructure2)
         {
             case RelativePosition.Up:
@@ -49,17 +42,14 @@ public class CorridorNode : Node
             default:
                 break;
         }
-        
     }
 
     private void ProcessRoomInRelationRightOrLeft(Node structure1, Node structure2)
     {
-        Node leftStructure = null; 
-
         // structure1 이 자식이 없으면 자기 자신을 return 하고 자식이 있으면 자식을 return 한다
+        Node leftStructure = null;
         List<Node> leftStructureChildren = StructureHelper.TraverseGraphToExtractLowestLeaves(structure1);
-       
-        Node rightStructure = null; 
+        Node rightStructure = null;
         List<Node> rightStructureChildren = StructureHelper.TraverseGraphToExtractLowestLeaves(structure2);
 
         var sortedLeftStructure = leftStructureChildren.OrderByDescending(child => child.TopRightAreaCorner.x).ToList();
@@ -76,7 +66,7 @@ public class CorridorNode : Node
         }
 
         var possibleNeighboursInRightStructureList = rightStructureChildren.Where(
-            child => GetValidYForNeighbourLeftRight(
+            child => GetValidYForNeighourLeftRight(
                 leftStructure.TopRightAreaCorner,
                 leftStructure.BottomRightAreaCorner,
                 child.TopLeftAreaCorner,
@@ -92,15 +82,15 @@ public class CorridorNode : Node
         {
             rightStructure = possibleNeighboursInRightStructureList[0];
         }
-        int y = GetValidYForNeighbourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+        int y = GetValidYForNeighourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
             rightStructure.TopLeftAreaCorner,
             rightStructure.BottomLeftAreaCorner);
-        while( y == 1 && sortedLeftStructure.Count > 0)
+        while (y == -1 && sortedLeftStructure.Count > 1)
         {
-            sortedLeftStructure = sortedLeftStructure.Where(child => child.TopLeftAreaCorner.y != leftStructure.TopLeftAreaCorner.y).ToList();
+            sortedLeftStructure = sortedLeftStructure.Where(
+                child => child.TopLeftAreaCorner.y != leftStructure.TopLeftAreaCorner.y).ToList();
             leftStructure = sortedLeftStructure[0];
-
-            y = GetValidYForNeighbourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+            y = GetValidYForNeighourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
             rightStructure.TopLeftAreaCorner,
             rightStructure.BottomLeftAreaCorner);
         }
@@ -108,35 +98,36 @@ public class CorridorNode : Node
         TopRightAreaCorner = new Vector2Int(rightStructure.TopLeftAreaCorner.x, y + this.corridorWidth);
     }
 
-    private int GetValidYForNeighbourLeftRight(Vector2Int leftNodeUp, Vector2Int leftNodeDown, Vector2Int rightNodeUp, Vector2Int rightNodeDown)
+    private int GetValidYForNeighourLeftRight(Vector2Int leftNodeUp, Vector2Int leftNodeDown, Vector2Int rightNodeUp, Vector2Int rightNodeDown)
     {
         // 각각의 방 구석들을 modifierDistanceFromWall 로 거리를 재서 구석에 복도가 안 생기게끔 한다
+
         if (rightNodeUp.y >= leftNodeUp.y && leftNodeDown.y >= rightNodeDown.y)
         {
             return StructureHelper.CalculateMiddlePoint(
                 leftNodeDown + new Vector2Int(0, modifierDistanceFromWall),
-                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth))
-                .y;
+                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
+                ).y;
         }
         if (rightNodeUp.y <= leftNodeUp.y && leftNodeDown.y <= rightNodeDown.y)
         {
             return StructureHelper.CalculateMiddlePoint(
-                rightNodeDown + new Vector2Int(0,modifierDistanceFromWall),
-                rightNodeUp - new Vector2Int(0,modifierDistanceFromWall + this.corridorWidth)
+                rightNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                rightNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
                 ).y;
         }
         if (leftNodeUp.y >= rightNodeDown.y && leftNodeUp.y <= rightNodeUp.y)
         {
             return StructureHelper.CalculateMiddlePoint(
-                rightNodeDown + new Vector2Int(0,modifierDistanceFromWall),
-                leftNodeUp - new Vector2Int(0,modifierDistanceFromWall)
+                rightNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall)
                 ).y;
         }
         if (leftNodeDown.y >= rightNodeDown.y && leftNodeDown.y <= rightNodeUp.y)
         {
             return StructureHelper.CalculateMiddlePoint(
                 leftNodeDown + new Vector2Int(0, modifierDistanceFromWall),
-                rightNodeUp - new Vector2Int(0,modifierDistanceFromWall + this.corridorWidth)
+                rightNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
                 ).y;
         }
         return -1;
@@ -147,15 +138,15 @@ public class CorridorNode : Node
         // ToList() = 조건에 맞는 elements 들을 추가하는 작업
 
         Node bottomStructure = null;
-        List<Node> structureBottomChildren = StructureHelper.TraverseGraphToExtractLowestLeaves(structure1);
+        List<Node> structureBottmChildren = StructureHelper.TraverseGraphToExtractLowestLeaves(structure1);
         Node topStructure = null;
         List<Node> structureAboveChildren = StructureHelper.TraverseGraphToExtractLowestLeaves(structure2);
 
-        var sortedBottomStructure = structureBottomChildren.OrderByDescending(child => child.TopRightAreaCorner.y).ToList();
+        var sortedBottomStructure = structureBottmChildren.OrderByDescending(child => child.TopRightAreaCorner.y).ToList();
 
         if (sortedBottomStructure.Count == 1)
         {
-            bottomStructure = structureBottomChildren[0];
+            bottomStructure = structureBottmChildren[0];
         }
         else
         {
@@ -185,23 +176,22 @@ public class CorridorNode : Node
                 bottomStructure.TopRightAreaCorner,
                 topStructure.BottomLeftAreaCorner,
                 topStructure.BottomRightAreaCorner);
-        while(x==-1 && sortedBottomStructure.Count > 1)
+        while (x == -1 && sortedBottomStructure.Count > 1)
         {
             sortedBottomStructure = sortedBottomStructure.Where(child => child.TopLeftAreaCorner.x != topStructure.TopLeftAreaCorner.x).ToList();
             bottomStructure = sortedBottomStructure[0];
-
             x = GetValidXForNeighbourUpDown(
                 bottomStructure.TopLeftAreaCorner,
                 bottomStructure.TopRightAreaCorner,
                 topStructure.BottomLeftAreaCorner,
                 topStructure.BottomRightAreaCorner);
         }
-
         BottomLeftAreaCorner = new Vector2Int(x, bottomStructure.TopLeftAreaCorner.y);
         TopRightAreaCorner = new Vector2Int(x + this.corridorWidth, topStructure.BottomLeftAreaCorner.y);
     }
 
-    private int GetValidXForNeighbourUpDown(Vector2Int bottomNodeLeft, Vector2Int bottomNodeRight, Vector2Int topNodeLeft, Vector2Int topNodeRight)
+    private int GetValidXForNeighbourUpDown(Vector2Int bottomNodeLeft,
+        Vector2Int bottomNodeRight, Vector2Int topNodeLeft, Vector2Int topNodeRight)
     {
         if (topNodeLeft.x < bottomNodeLeft.x && bottomNodeRight.x < topNodeRight.x)
         {
@@ -214,21 +204,23 @@ public class CorridorNode : Node
         {
             return StructureHelper.CalculateMiddlePoint(
                 topNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
-                topNodeRight =- new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+                topNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
                 ).x;
         }
         if (bottomNodeLeft.x >= (topNodeLeft.x) && bottomNodeLeft.x <= topNodeRight.x)
         {
             return StructureHelper.CalculateMiddlePoint(
-                bottomNodeLeft + new Vector2Int(modifierDistanceFromWall,0),
-                topNodeRight - new Vector2Int (this.corridorWidth + modifierDistanceFromWall, 0)
+                bottomNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                topNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+
                 ).x;
         }
         if (bottomNodeRight.x <= topNodeRight.x && bottomNodeRight.x >= topNodeLeft.x)
         {
             return StructureHelper.CalculateMiddlePoint(
-                topNodeLeft + new Vector2Int (modifierDistanceFromWall, 0),
-                bottomNodeRight - new Vector2Int (this.corridorWidth + modifierDistanceFromWall, 0)
+                topNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                bottomNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+
                 ).x;
         }
         return -1;
@@ -241,10 +233,7 @@ public class CorridorNode : Node
 
         Vector2 middlePointStructure1Temp = ((Vector2)structure1.TopRightAreaCorner + structure1.BottomLeftAreaCorner) / 2;
         Vector2 middlePointStructure2Temp = ((Vector2)structure2.TopRightAreaCorner + structure2.BottomLeftAreaCorner) / 2;
-
         float angle = CalculateAngle(middlePointStructure1Temp, middlePointStructure2Temp);
-
-
         if ((angle < 45 && angle >= 0) || (angle > -45 && angle < 0))
         {
             return RelativePosition.Right;
@@ -253,7 +242,7 @@ public class CorridorNode : Node
         {
             return RelativePosition.Up;
         }
-        else if (angle < -135 && angle < -45)
+        else if (angle > -135 && angle < -45)
         {
             return RelativePosition.Down;
         }
@@ -261,15 +250,11 @@ public class CorridorNode : Node
         {
             return RelativePosition.Left;
         }
-
-
     }
 
     private float CalculateAngle(Vector2 middlePointStructure1Temp, Vector2 middlePointStructure2Temp)
     {
-        return Mathf.Atan2(
-            middlePointStructure2Temp.y - middlePointStructure1Temp.y, 
-            middlePointStructure2Temp.x - middlePointStructure1Temp.x)
-            * Mathf.Rad2Deg;
+        return Mathf.Atan2(middlePointStructure2Temp.y - middlePointStructure1Temp.y,
+            middlePointStructure2Temp.x - middlePointStructure1Temp.x) * Mathf.Rad2Deg;
     }
 }

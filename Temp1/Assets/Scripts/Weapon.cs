@@ -20,7 +20,17 @@ public class Weapon : MonoBehaviour, ICharacter
     private void Awake()
     {
         meleeArea = GetComponent<BoxCollider>();
-        meleeArea.enabled = false;
+        //11.10 추가 by 손동욱
+        //mellArea가 null이면 에러가 계속 나와서 수정
+        if(meleeArea == null)
+        {
+            Debug.Log("에러, Weapon스크립트의 meleeArea변수가 null입니다.");
+        }
+        else
+        {
+            meleeArea.enabled = false;
+        }
+        
     }
 
     public void Use()

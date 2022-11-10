@@ -8,11 +8,13 @@ public class MeleeAttack : MonoBehaviour, ICharacter
     public EnemyData enemyData;
     Enemy_Orc orc;
     Enemy_Skelleton skelleton;
+    Enemy_Shell shell;
     Player player;
     
 
     private void Awake()
     {
+        shell= GetComponentInParent<Enemy_Shell>();
         orc = GetComponentInParent<Enemy_Orc>();
         skelleton = GetComponentInParent<Enemy_Skelleton>();
         player = FindObjectOfType<Player>();
@@ -31,6 +33,11 @@ public class MeleeAttack : MonoBehaviour, ICharacter
             {
                 Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
                 Attack(other.gameObject, skelleton.enemyData.EDamage);
+            }
+            else if (shell != null)
+            {
+                Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
+                Attack(other.gameObject, shell.enemyData.EDamage);
             }
         }
     }

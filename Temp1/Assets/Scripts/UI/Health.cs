@@ -2,14 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Health class is used as a bridge between health preferences and your game logic
-/// </summary>
+//Player와 healthpreferences(UI 변경 스크립트)간의 값을 get set하는 스크립트
+//프로퍼티 개선 작업 필요
 public class Health : MonoBehaviour
 {
     public static Health instance;
 
     private HealthPreferences prefs;
+
+    
     
 
     void Start()
@@ -21,11 +22,13 @@ public class Health : MonoBehaviour
 
     public float GetCurrentHealth()
     {
+        
         return prefs.GetCurrentHealth();
     }
 
-    public void SetCurrentHealth(int currentHealth)
+    public void SetCurrentHealth(float currentHealth)
     {
+        
         prefs.SetCurrentHealth(currentHealth);
     }
 
@@ -36,46 +39,43 @@ public class Health : MonoBehaviour
 
     public void SetTotalHealth(float amount)
     {
+        
         prefs.SetTotalHealth(amount);
     }
 
-    public void AddDamage(float damage)
-    {
-        prefs.AddDamage(damage);
-    }
+    
+    //misc
+    //public void AddDamage(float damage)
+    //{    
+    //    prefs.AddDamage(damage);
+    //}
 
-    public void AddHeal(float heal)
-    {
-        prefs.AddHeal(heal);
-    }
+    //public void AddHeal(float heal)
+    //{
+    //    prefs.AddHeal(heal);
+    //}
 
- 
-    public void EnableInvincibility(bool enabled)
-    {
-        prefs.EnableInvincibility(enabled);
-    }
+    //public void SetImagesAmount(int amount)
+    //{
+    //    prefs.Init(amount);
+    //}
 
-    public void SetImagesAmount(int amount)
-    {
-        prefs.Init(amount);
-    }
+    //public void AddImage()
+    //{
+    //    prefs.AddImage();
+    //}
 
-    public void AddImage()
-    {
-        prefs.AddImage();
-    }
+    //public void RemoveImage()
+    //{
+    //    prefs.RemoveImage();
+    //}
 
-    public void RemoveImage()
-    {
-        prefs.RemoveImage();
-    }
+    //public void SetFillType(Image.FillMethod type) {
+    //    prefs.SetFillType(type);
+    //}
 
-    public void SetFillType(Image.FillMethod type) {
-        prefs.SetFillType(type);
-    }
-
-    public void Reset()
-    {
-        prefs.Reset();
-    }
+    //public void Reset()
+    //{
+    //    prefs.Reset();
+    //}
 }

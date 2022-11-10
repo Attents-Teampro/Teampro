@@ -21,7 +21,7 @@ public class GameStart : MonoBehaviour
     {
         creater.SetActive(true);
         player.SetActive(true);
-        creater.GetComponent<DungeonCreator>().CreateDungeon();
+        //creater.GetComponent<DungeonCreator>().CreateDungeon();
         //player.transform.position = creater.GetComponent<DungeonCreator>().roomCollider[0].center;
     }
     public void DungeonSet()

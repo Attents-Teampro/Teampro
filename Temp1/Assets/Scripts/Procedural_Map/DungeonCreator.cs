@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -31,18 +32,36 @@ public class DungeonCreator : MonoBehaviour
     [Range(0.0f, 2.0f)]
     public int roomOffset;
 
+    public BoxCollider[] roomCollider;
+
     public GameObject wallVertical, walllHorizontal;
     List<Vector3Int> possibleDoorVerticalPosition;
     List<Vector3Int> possibleDoorHorizontalPosition;
     List<Vector3Int> possibleWallVerticalPosition;
     List<Vector3Int> possibleWallHorizontalPosition;
 
+    NavMeshSurface surface;
+    NavMeshSurface[] surfaces;
+    int count;
+    public Player player;
 
-
-
+    private void Awake()
+    {
+        surface = GetComponent<NavMeshSurface>();
+    }
     private void Start()
     {
-        //CreateDungeon(); // 던전 생성 매서드
+        CreateDungeon(); // 던전 생성 매서드
+
+        
+        surfaces = GetComponents<NavMeshSurface>();
+        for (int i = 0; i < surfaces.Length; i++)
+        {
+            surfaces[i].BuildNavMesh();
+        }
+        Debug.Log("ㅁ");
+        player.gameObject.SetActive(true);
+        player.transform.position = roomCollider[0].center;
         
     }
 
@@ -67,13 +86,21 @@ public class DungeonCreator : MonoBehaviour
         possibleWallVerticalPosition = new List<Vector3Int>();
         possibleWallHorizontalPosition = new List<Vector3Int>();
 
+        //콜리더 지정에 필요한 변수 초기화
+        count = 0;
+        roomCollider = new BoxCollider[listOfRooms.Count];
+        
+
         for (int i=0; i<listOfRooms.Count; i++)
         {
             CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
             
         }
-        CreateWalls(wallParent); // 벽만들기
-        
+        //CreateWalls(wallParent); // 벽만들기
+
+
+        //surface.BuildNavMesh();
+
     }
 
     private void CreateWalls(GameObject wallParent)
@@ -89,10 +116,11 @@ public class DungeonCreator : MonoBehaviour
         {
             CreateWall(wallParent, wallPosition, wallVertical);
         }
-
+        
+        wallParent.AddComponent<BoxCollider>();
         // NavMesh를 위한 정적으로 만들기
-        wallParent.isStatic = true;
-
+        surface.BuildNavMesh();
+        
     }
 
     private void CreateWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)
@@ -102,12 +130,17 @@ public class DungeonCreator : MonoBehaviour
 
         // NavMesh를 위한 정적으로 만들기 
         wallPrefab.isStatic = true;
+        // wallPrefab.AddComponent<BoxCollider>();
+        
     }
 
     private void CreateMesh (Vector2 bottomLeftCorner, Vector2 topRightCorner)
     {
+        
+
         // 면 만들어주는 매써드
         // V = Vertices
+
 
         Vector3 bottomLeftV = new Vector3(bottomLeftCorner.x, 0, bottomLeftCorner.y);
         Vector3 bottomRightV = new Vector3(topRightCorner.x, 0, bottomLeftCorner.y);
@@ -144,9 +177,13 @@ public class DungeonCreator : MonoBehaviour
         mesh.uv = uvs;
         mesh.triangles = triangles;
 
-        GameObject dungeonFloor = new GameObject("Mesh"+bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
-
         
+        GameObject dungeonFloor = new GameObject("Mesh" +bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
+        
+        if (dungeonFloor.name == "Mesh")
+        {
+
+        }
 
         dungeonFloor.transform.position = Vector3.zero;
         dungeonFloor.transform.localScale = Vector3.one;
@@ -154,8 +191,10 @@ public class DungeonCreator : MonoBehaviour
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
         dungeonFloor.transform.parent = transform;
 
-        dungeonFloor.isStatic = true;
-
+        // dungeonFloor.isStatic = true;
+        roomCollider[count] = dungeonFloor.AddComponent<BoxCollider>(); ;
+        //몇 번째로 생성되었는지 카운트
+        count++;
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
         {
             var wallPosition = new Vector3(row, 0, bottomLeftV.z);

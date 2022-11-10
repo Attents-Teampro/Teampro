@@ -3,9 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// This class contains all settings and health update logic
-/// </summary>
+
 public class HealthPreferences : MonoBehaviour
 {
     public GameObject fullHeartsContainer;  //채워진 하트만 있는 콘테이너
@@ -16,13 +14,13 @@ public class HealthPreferences : MonoBehaviour
 
     public int imagesAmount;                //만들어져있는 하트 갯수
 
-    public float baseHealth = 100;          //현재 채력
-    public float currentHealth;             //최대 체력
+    public float maxHealth;               //최대 체력
+    public float currentHealth;          //현재 체력
 
     private float valuePerImage;            //하트 이미지 하나가 자긴 hp 밸류 (최대 hp값 / 하트 갯수.ex)최대hp 100,하트 갯수 4일땐 25, 5면 20)
-    private bool isInvincible = false;      //무적모드
 
-    public Image.FillMethod fillMethod;     //이미지 채워지는 형태.필링 메소드
+    Player player;
+    public Image.FillMethod fillMethod;     //이미지 채워지는 방식
 
     //인스펙터창에서 가리기
     [HideInInspector]
@@ -36,22 +34,35 @@ public class HealthPreferences : MonoBehaviour
     [HideInInspector]
     public Image.Origin360 radial360Direction;
 
+    
 
-    /// <summary>
-    /// Update health object with inspector changes while not playing 
-    /// </summary>
+
+    private void Start()
+    {
+
+        player = Player.instance;
+        maxHealth = player.pMaxHp;
+        //currentHealth = player.pHP;
+
+        currentHealth = maxHealth;
+
+    }
+
+   
+
     private void OnValidate()
     {
-        currentHealth = Mathf.Clamp(currentHealth, 0, baseHealth);  //현재체력은 0에서 base 값 사이를 벗어나지 않는다
+        
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);  //현재체력은 0에서 base 값 사이를 벗어나지 않는다
 
         if (gameObject.scene.IsValid()) //씬이 없다면?
         {
-            if (!Application.isPlaying) //프로그램이 플레이중이라면
+            if (!Application.isPlaying) //프로그램이 플레이중이면
             {
                 RemoveAll();  //모두 제거
 #if UNITY_EDITOR
                 for (int i = 0; i < imagesAmount; i++)
-                    EditorApplication.delayCall += () => CreateImage(i);
+                    EditorApplication.delayCall += () => CreateImage(i); //하트 이미지를 생성한다
 #endif
             }
 #if UNITY_EDITOR
@@ -60,21 +71,31 @@ public class HealthPreferences : MonoBehaviour
         }
     }
 
+    
+
+
+    //플레이로 전환했을때 
     private void RemoveAll() 
     {
         if (Application.isPlaying)
         {
             foreach(Transform child in fullHeartsContainer.transform)
-                DestroyImmediate(child.gameObject);
+                Destroy(child.gameObject);
 
             foreach (Transform child in emptyHeartsContainer.transform)
-                DestroyImmediate(child.gameObject);
+                Destroy(child.gameObject);
         }
         else
         {
 #if UNITY_EDITOR
             foreach (Transform child in fullHeartsContainer.transform)
+                //아래 코드가 게임 종료 후 에러가 생성됩니다. by 손동욱 11.04
                 EditorApplication.delayCall += () => DestroyImmediate(child.gameObject);
+            ///에러 메세지 
+            ///InvalidOperationException: Destroying a GameObject inside a Prefab instance is not allowed.
+            ///UnityEngine.Object.DestroyImmediate(UnityEngine.Object obj)(at < 823fb226a3f9439cb41fdcb61f9c86a1 >:0)
+            ///HealthPreferences +<> c__DisplayClass17_0.< RemoveAll > b__0()(at Assets / Scripts / UI / HealthPreferences.cs:90)
+            ///UnityEditor.EditorApplication.Internal_CallDelayFunctions()(at < 1135c66e5f4c41a7831fa5798849d8b6 >:0)
 
             foreach (Transform child in emptyHeartsContainer.transform)
                 EditorApplication.delayCall += () => DestroyImmediate(child.gameObject);
@@ -82,15 +103,25 @@ public class HealthPreferences : MonoBehaviour
         }
     }
 
-    public void Init(int amount) //정도만큼 이미지를 만든다
+    /// <summary>
+    /// 이미지 생성
+    /// </summary>
+    public void Init(int amount) 
     {
-        imagesAmount = amount; 
-
+        imagesAmount = amount;
+        //Debug.Log("init");
         RemoveAll();
 
         for (int i = 0; i < imagesAmount; i++)
+        {
             CreateImage(i);
+
+        }
     }
+
+    /// <summary>
+    /// 스프라이트 생성
+    /// </summary>
     private void CreateImage(int index)
     {
         GameObject heartFull = new GameObject(); 
@@ -99,7 +130,8 @@ public class HealthPreferences : MonoBehaviour
         imgFull.sprite = fullHeartSprite;
         heartFull.GetComponent<RectTransform>().SetParent(fullHeartsContainer.transform);
         heartFull.transform.localScale = Vector3.one;
-
+        heartFull.name = $"heartFull";
+        imgFull.raycastTarget = false;
         imgFull.type = Image.Type.Filled;
         imgFull.fillMethod = fillMethod;
         switch (fillMethod)
@@ -111,7 +143,7 @@ public class HealthPreferences : MonoBehaviour
             case Image.FillMethod.Radial360: imgFull.fillOrigin = (int)radial360Direction; break;
         }
 
-        valuePerImage = baseHealth / imagesAmount;
+        valuePerImage = maxHealth / imagesAmount;
 
         if ((index + 1) * valuePerImage > currentHealth) //
         {
@@ -131,13 +163,20 @@ public class HealthPreferences : MonoBehaviour
         heartEmpty.tag = "Heart Empty";
         Image imgEmpty = heartEmpty.AddComponent<Image>();
         imgEmpty.sprite = emptyHeartSprite;
+        imgEmpty.raycastTarget = false;
         heartEmpty.GetComponent<RectTransform>().SetParent(emptyHeartsContainer.transform);
         heartEmpty.transform.localScale = Vector3.one;
+        heartEmpty.name = $"heartEmpty";
     }
+
+    /// <summary>
+    /// 현재 체력만큼 스프라이트 이미지를 갱신하여 만든다
+    /// </summary>
     private void UpdateHealth()
     {
-        valuePerImage = baseHealth / imagesAmount;
-
+        
+        valuePerImage = maxHealth / imagesAmount;
+        //이미지 당 값 =  기본 체력 /하트 갯수   =33.33 100/3
         for (int i = 0; i < imagesAmount; i++)
         {
             if ((i + 1) * valuePerImage > currentHealth)
@@ -155,92 +194,87 @@ public class HealthPreferences : MonoBehaviour
         }
     }
 
+    
     public void SetCurrentHealth(float amount)
     {
-        currentHealth = Mathf.Clamp(amount, 0, baseHealth);
+        currentHealth = Mathf.Clamp(amount, 0, maxHealth);
         UpdateHealth();
     }
+
+    
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
+   
     public float GetTotalHealth()
     {
-        return baseHealth;
+        return maxHealth;
     }
 
-    /// <summary>
-    /// Set base health amount
-    /// </summary>
+    
     public void SetTotalHealth(float amount) 
     {
-        baseHealth = amount;
+        maxHealth = amount;
         UpdateHealth();
     }
 
-    /// <summary>
-    /// Decrease current health by amount
-    /// </summary>
-    /// <param name="amount"></param>
-    public void AddDamage(float amount)
-    {
-        if (!isInvincible)
-        {
-            Debug.Log("HPref-add damage");
-            currentHealth -= amount;
+  
+    //misc
+    //public void AddDamage(float amount)
+    //{
+        
+    //        Debug.Log("HPref-add damage");
+    //        currentHealth -= amount;
 
-            if (currentHealth < 0)
-                currentHealth = 0;
+    //        if (currentHealth < 0)
+    //            currentHealth = 0;
 
-            UpdateHealth();
-        }
-    }
+    //        UpdateHealth();
+        
+    //}
 
-    public void AddHeal(float amount)
-    {
-        currentHealth += amount;
+    ///// <summary>
+    ///// Increase current health by amount
+    ///// </summary>
+    //public void AddHeal(float amount)
+    //{
+    //    currentHealth += amount;
 
-        if (currentHealth > baseHealth)
-            currentHealth = baseHealth;
+    //    if (currentHealth > maxHealth)
+    //        currentHealth = maxHealth;
 
-        UpdateHealth();
-    }
+    //    UpdateHealth();
+    //}
 
-    public void AddImage()
-    {
-        imagesAmount += 1;
-        Init(imagesAmount);
-    }
+    ///// <summary>
+    ///// Add one image
+    ///// </summary>
+    //public void AddImage()
+    //{
+    //    imagesAmount += 1;
+    //    Init(imagesAmount);
+    //}
 
-    public void RemoveImage()
-    {
-        if (imagesAmount > 0)
-        {
-            imagesAmount -= 1;
-            Init(imagesAmount);
-        }
-    }
+    ///// <summary>
+    ///// Remove one image
+    ///// </summary>
+    //public void RemoveImage()
+    //{
+    //    if (imagesAmount > 0)
+    //    {
+    //        imagesAmount -= 1;
+    //        Init(imagesAmount);
+    //    }
+    //}
 
-    public void SetFillType(Image.FillMethod type)
-    {
-        fillMethod = type;
-        Init(imagesAmount);
-    }
+   
+    //public void SetFillType(Image.FillMethod type)
+    //{
+    //    fillMethod = type;
+    //    Init(imagesAmount);
+    //}
 
-    public void EnableInvincibility(bool enable)
-    {
-        if (enable)
-            isInvincible = true;
-        else
-            isInvincible = false;
-    }
-    public void Reset()
-    {
-        imagesAmount = 3;
-        baseHealth = 100;
-        currentHealth = 100;
-        fillMethod = Image.FillMethod.Horizontal;
-        Init(imagesAmount);
-    }
+   
 }

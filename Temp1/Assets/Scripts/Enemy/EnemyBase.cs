@@ -13,7 +13,6 @@ public class EnemyBase : MonoBehaviour
     public Transform target;            //플레이어 타겟
     public GameObject meleeAttack;      //밀리 어택용 컬리젼 박스 : 밀리어택은 하위 클래스에서 처리
     public NavMeshAgent nav;            //네비 매쉬를 사용
-    public Rigidbody rb;
     public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
     public Animator anim;
     public MainManager mainManager;     //몬스터가 죽으면 현재 몬스터의 숫자를 계산하는 클래스
@@ -31,7 +30,6 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         //컴포넌트 생성
-        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();

@@ -2505,7 +2505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5585860869262248751, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5585860869262248751, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2582,25 +2582,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &871639911 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2010157419725594001, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
-  m_PrefabInstance: {fileID: 884117475}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &871639914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 871639911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e421d8405cde544b48732d35db2791, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  creater: {fileID: 688269009437829890}
-  player: {fileID: 201512153}
 --- !u!1001 &884117475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2608,17 +2589,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2010157419725594000, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
-      propertyPath: currentRoom
+    - target: {fileID: 871639914, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: player
       value: 
+      objectReference: {fileID: 201512153}
+    - target: {fileID: 871639914, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: creater
+      value: 
+      objectReference: {fileID: 688269009437829890}
+    - target: {fileID: 762380313743942940, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: spawners.Array.size
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 762380313743942940, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: spawners.Array.data[0]
+      value: 
+      objectReference: {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
+    - target: {fileID: 762380313743942940, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: spawners.Array.data[1]
+      value: 
+      objectReference: {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
+    - target: {fileID: 762380313743942940, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
+      propertyPath: spawners.Array.data[2]
+      value: 
+      objectReference: {fileID: 6480546422584917300, guid: 127d556f6521f1d459531b0d6052c4bd, type: 3}
     - target: {fileID: 2010157419725594001, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
       propertyPath: m_Name
       value: MainManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 2010157419725594001, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2010157419725594003, guid: daeec2aa3a506f340999886bffe3cf46, type: 3}
       propertyPath: m_RootOrder

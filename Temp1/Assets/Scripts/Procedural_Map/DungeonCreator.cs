@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public class DungeonCreator : MonoBehaviour
         {
             surfaces[i].BuildNavMesh();
         }
-        Debug.Log("ㅁ");
+        //Debug.Log("ㅁ");
 
         //11.10 추가 by 손동욱
         //플레이어와 카메라를 활성화하고, 시작 위치로 이동시키는 코드
@@ -220,9 +221,40 @@ public class DungeonCreator : MonoBehaviour
         dungeonFloor.transform.parent = transform;
 
         // dungeonFloor.isStatic = true;
-        roomCollider[count] = dungeonFloor.AddComponent<BoxCollider>(); ;
+
+        //11.10 추가 by 손동욱
+        //룸 콜리더를 연결
+        roomCollider[count] = dungeonFloor.AddComponent<BoxCollider>();
+        //룸 스크립트와 해당 방을 연결
+        Room r = dungeonFloor.AddComponent<Room>();
+        //룸 콜리더의 위치를 이용해서 해당 방의 position 좌표 구하고, Room스크립트 변수에 대입
+        dungeonFloor.GetComponent<Room>().roomPosition = roomCollider[count].center;
         //몇 번째로 생성되었는지 카운트
         count++;
+        //태그랑 레이어 지정
+        dungeonFloor.tag = "Floor";
+        dungeonFloor.layer = 7;
+        //Room 스크립트 추가
+        
+
+        //룸에 할당할 스포너 종류의 개수 정하기
+        int rand = Random.Range(1, MainManager.instance.spawnManager.spawners.Length);
+
+        //정한 개수 대입
+        r.spawners = new Spawner[rand];
+        
+        //정한 개수 만큼의 스포너를 대입. 대입할 스포너는 매니저의 스포너 배열에서 랜덤으로 정함.
+        for (int i =0; i<r.spawners.Length; i++)
+        {
+            //스포너 매니저의 마지막 인덱스 스포너는 보스가 될 예정이므로 -1을 해서 랜덤
+            rand = Random.Range(0, MainManager.instance.spawnManager.spawners.Length);
+            r.spawners[i] = MainManager.instance.spawnManager.spawners[rand];
+        }
+        
+        
+
+
+
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
         {
             var wallPosition = new Vector3(row, 0, bottomLeftV.z);

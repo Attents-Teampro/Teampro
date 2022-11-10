@@ -8,11 +8,11 @@ public class Test_Start : Test_Base
     protected override void Test1(InputAction.CallbackContext _)
     {
         MainManager.instance.StartGame();
-        Debug.Log("시작스");
+        //Debug.Log("시작스");
     }
     protected override void Test2(InputAction.CallbackContext _)
     {
-        MainManager.instance.SetGame();
+        //MainManager.instance.SetGame();
     }
     protected override void Test3(InputAction.CallbackContext _)
     {

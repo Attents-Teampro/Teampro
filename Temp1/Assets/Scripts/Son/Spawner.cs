@@ -5,14 +5,14 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     //생성할 몬스터 프리팹, 몬스터가 생성되는 위치 계산을 위한 벽 오브젝트
-    public GameObject enemyObject, Wall;
+    public GameObject enemyObject;//, Wall;
 
     //생성된 몬스터 수를 저장할 매니저 스크립트
     //시작할 때 메인 매니저에게 값을 넘긴다. 메인 매니저는 넘겨진 값들을 합해서 총 몬스터 수를 구한다.
-    public MainManager mainManager;
+    //public MainManager mainManager;
 
     //변수 floor에는 Ground 오브젝트 넣으면 됩니다.
-    public BoxCollider floor;
+    //public BoxCollider floor;
 
     //생성할 몬스터 수
     public int numOfEnemy = 5; 
@@ -28,18 +28,30 @@ public class Spawner : MonoBehaviour
 
     //보스면 위치할 벡터
     public Vector3 bossPosition;
+
+    //매쉬랜더러 변수
+    MeshRenderer mr;
+    private void Awake()
+    {
+        //mr = GetComponent<MeshRenderer>();
+    }
     private void Start()
+    {
+        //11.10 수정. 스폰이 start로 시작하자마자 실행이 아니라, 특정 함수 호출 시 실행
+        //StartCoroutine(SpawnerStart());
+    }
+
+    public void StartSpawn()
     {
         StartCoroutine(SpawnerStart());
     }
-
     IEnumerator SpawnerStart()
     {
         yield return new WaitForSeconds(Time.deltaTime * 5);
         //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
         
-        mainManager = FindObjectOfType<MainManager>();
-        mainManager.numOfStageEnemy += numOfEnemy;
+        //mainManager = FindObjectOfType<MainManager>();
+        MainManager.instance.numOfStageEnemy += numOfEnemy;
 
         //보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
         if (isBoss)
@@ -48,16 +60,18 @@ public class Spawner : MonoBehaviour
             //return;
             yield break;
         }
-        //차일드 0번aa부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
-        Vector3[] WallPosition;
-        WallPosition = new Vector3[Wall.transform.childCount];
+        //11.10 주석 by 손동욱
+        //벽이 바뀌어서 주석 처리 
+        ////차일드 0번aa부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
+        //Vector3[] WallPosition;
+        //WallPosition = new Vector3[Wall.transform.childCount];
+        ////Wall 오브젝트의 차일드 오브젝트 좌우위아래 대입
 
-        //Wall 오브젝트의 차일드 오브젝트 좌우위아래 대입
-        for (int i = 0; i < Wall.transform.childCount; i++)
-        {
-            WallPosition[i] = Wall.transform.GetChild(i).position;
-        }
+        Debug.Log("메쉬랜더러 찾음");
+        mr = GetComponent<MeshRenderer>();
+        Vector3 floor = mr.bounds.size * 0.5f;
 
+        
         //몬스터 생성. 
         for (int i = 0; i < numOfEnemy; i++)
         {
@@ -72,11 +86,11 @@ public class Spawner : MonoBehaviour
                 //이 식으로 바닥 콜리더 크기에 맞게 위치값을 계산.. 그런데 콜리더 크기가 더 커서 그런지 자꾸 벽을 넘어감
                 //그래서 바로 아래에 if문으로 벽 안에 있는지 판독하게 만들었음.
                 //아마 콜리더 크기가 더 큰게 콜리더 /2를 하면 해결 될지도 모르겠음 일단 if문으로 해결하고 나중에 확인할 예정
-                sizeOfGround = new Vector3(Random.Range(-floor.size.x, floor.size.x), floor.size.y, Random.Range(-floor.size.z, floor.size.z));
-                if (WallPosition[0].x < sizeOfGround.x ||   //오른쪽 벽
-                    WallPosition[1].x > sizeOfGround.x ||   //왼쪽 벽
-                    WallPosition[2].z < sizeOfGround.z ||   //윗 벽
-                    WallPosition[3].z > sizeOfGround.z)     //아래 벽
+                sizeOfGround = new Vector3(Random.Range(-floor.x, floor.x), floor.y, Random.Range(-floor.z, floor.z));
+                if (mr.bounds.max.x < sizeOfGround.x ||   //오른쪽 벽
+                    -mr.bounds.max.x > sizeOfGround.x ||   //왼쪽 벽
+                    mr.bounds.max.z < sizeOfGround.z ||   //윗 벽
+                    -mr.bounds.max.x > sizeOfGround.z)     //아래 벽
                 {
                     //얼마나 while문이 반복되었는지 알 수 있음. 추후 오차값을 줄이는 데 식별용으로 쓰일 예정
                     Debug.Log("Enemy 오브젝트 위치 이탈. 재조정");
@@ -84,7 +98,7 @@ public class Spawner : MonoBehaviour
                 else
                 {
                     //몬스터 오브젝트 생성.
-                    Instantiate(enemyObject, sizeOfGround, Quaternion.identity);
+                    Instantiate(enemyObject, sizeOfGround + GetComponent<Room>().roomPosition, Quaternion.identity);
                     //while문 종료. for문은 계속 실행되기 때문에 초기에 설정한 numOfEnemy 수에 맞게 몬스터 생성이 됨
                     resetPosition = false;
                 }

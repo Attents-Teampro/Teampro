@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2010157419725594003}
   - component: {fileID: 2010157419725594000}
+  - component: {fileID: 871639914}
+  - component: {fileID: 762380313743942940}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -44,6 +46,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1852647662047d24284c8fa0c4e7284b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalObject: {fileID: 0}
   numOfStageEnemy: 0
   numOfDieEnemy: 0
+--- !u!114 &871639914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010157419725594001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e421d8405cde544b48732d35db2791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creater: {fileID: 0}
+  player: {fileID: 0}
+--- !u!114 &762380313743942940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010157419725594001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff64802c171667741a3dfecfbc2a81f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawners: []

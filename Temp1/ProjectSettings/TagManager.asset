@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Heart Empty
   - Heart Full
+  - Room
   layers:
   - Default
   - TransparentFX

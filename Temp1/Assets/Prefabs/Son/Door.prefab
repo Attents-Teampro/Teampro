@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -131,8 +131,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.83, z: 0.75}
-  m_Center: {x: 3.54, y: 0, z: 0}
+  m_Size: {x: 12.33, y: 0.83, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1502231155494406974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 138745258873431883}
+  checkRange: 2.55
 --- !u!1 &5303444129877740841
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,8 +243,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.83, z: 0.75}
-  m_Center: {x: 3.54, y: 0, z: 0}
+  m_Size: {x: 12.33, y: 0.83, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &138745258873431883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1502231155494406974}
+  checkRange: 2.55
 --- !u!1 &5404738752783836919
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,8 +355,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.83, z: 0.75}
-  m_Center: {x: 3.54, y: 0, z: 0}
+  m_Size: {x: 12.33, y: 0.83, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5499603612829817045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1833284542969796500}
+  checkRange: 2.55
 --- !u!1 &6010064399646588239
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,8 +467,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.83, z: 0.75}
-  m_Center: {x: 3.54, y: 0, z: 0}
+  m_Size: {x: 12.33, y: 0.83, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1833284542969796500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,3 +482,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 5499603612829817045}
+  checkRange: 2.55

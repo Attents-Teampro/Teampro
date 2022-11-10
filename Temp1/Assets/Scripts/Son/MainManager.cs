@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,22 +9,26 @@ public class MainManager : MonoBehaviour
 {
     
     public static MainManager instance;
-    
+
     //포탈 오브젝트. 포탈을 담은 빈 오브젝트를 비활성화 상태로 두고, 필요할 때만 활성화
-    public GameObject portalObject;
+    //public GameObject portalObject;
+
+    public Action onClearthisRoom;
 
     //각각 스테이지에 있는 몬스터, 죽은 몬스터 수를 세는 변수다.
     //스테이지 몬스터는 스포너에게, 죽은 몬스터 수는 몬스터 스크립트에서 얻는다.
     public int numOfStageEnemy = 0, numOfDieEnemy = 0;
 
     GameStart gameStart;
+    public SpawnManager spawnManager;
+
     private void Awake()
     {
         //활성화 될 때 이미 메인 매너지 클래스가 있을 시 이 오브젝트를 삭제하는 코드
         if (instance != null)
         {
             //삭제 전 포탈 오브젝트와 전체 스테이지 에너미 수를 가져온다.
-            instance.portalObject = this.portalObject;
+            //instance.portalObject = this.portalObject;
             Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
             instance.numOfStageEnemy = this.numOfStageEnemy;
             Debug.Log($"{numOfStageEnemy}, {instance.numOfStageEnemy}현재 스테이지 몬스터 수");
@@ -35,6 +40,7 @@ public class MainManager : MonoBehaviour
         instance = this;
 
         gameStart = GetComponent<GameStart>();
+        spawnManager = GetComponent<SpawnManager>();
         //씬 이동시 삭제되지 않게 해주는 함수
         DontDestroyOnLoad(gameObject);
     }
@@ -42,7 +48,9 @@ public class MainManager : MonoBehaviour
     //몬스터가 모두 죽으면 실행되는 함수. 포탈을 활성화하고, 변수를 초기화한다.
     public void StageClear()
     {
-        portalObject.SetActive(true);
+        onClearthisRoom?.Invoke();
+
+        //portalObject.SetActive(true);
         numOfDieEnemy = 0;
         numOfStageEnemy = 0;
     }
@@ -52,10 +60,6 @@ public class MainManager : MonoBehaviour
     public void StartGame()
     {
         gameStart.DungeonCreate();   
-    }
-    public void SetGame()
-    {
-        gameStart.DungeonSet();
     }
 
     /*

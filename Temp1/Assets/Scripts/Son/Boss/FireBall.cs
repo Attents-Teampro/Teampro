@@ -29,12 +29,11 @@ public class FireBall : MonoBehaviour
         Destroy(gameObject, lifeTime);
         position = target.transform.position;
         position.y = transform.position.y;
-        
+        transform.LookAt(position);
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.LookAt(position);
         transform.Translate(Time.deltaTime * speed * transform.forward, Space.World);
     }
     private void OnTriggerEnter(Collider other)

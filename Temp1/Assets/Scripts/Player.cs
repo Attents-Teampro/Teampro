@@ -371,12 +371,9 @@ public class Player : MonoBehaviour, ICharacter
     //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
     public void Attacked(int d)
     {
-        Debug.Log("데미지 입음");
         pHP -= d;
-        Debug.Log("데미지 적용");
         //UI에 플레이어 pHP 값을 전달 -양해인 11.04
         Health.instance.SetCurrentHealth(pHP);
-        Debug.Log("UI 데미지 적용");
     }
 
     public void Attack(GameObject target, int d)

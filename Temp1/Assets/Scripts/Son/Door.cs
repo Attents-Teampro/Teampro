@@ -81,12 +81,14 @@ public class Door : MonoBehaviour
         {
             mr.enabled = false;
             col.isTrigger = true;
+            SetColliderSize(true);
         }
         //Close
         else
         {
             mr.enabled = true;
             col.isTrigger = false;
+            SetColliderSize(false);
         }
     }
    
@@ -118,7 +120,6 @@ public class Door : MonoBehaviour
         {
             SetInfo();
             IsOpen = false;
-            col.center = new Vector3(0, col.center.y, col.center.z);
             room.StartSpawn();
         }
     }
@@ -126,6 +127,17 @@ public class Door : MonoBehaviour
     public void SetInfo()
     {
         isSpawn = true;
+    }
+    public void SetColliderSize(bool isFront)
+    {
+        float colX = 0;
+        if (isFront)
+        {
+            colX = -18;
+        }
+        col.center = new Vector3(colX, col.center.y, col.center.z);
+
+
     }
     //private void OnTriggerExit(Collider other)
     //{

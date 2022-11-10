@@ -110,6 +110,7 @@ public class Weapon : MonoBehaviour, ICharacter
     {
         ICharacter ic = target.GetComponent<ICharacter>();
         ic.Attacked(d);
+        Debug.Log($"데미지 입힘\n{target.name}에 {d}만큼 입힘");
         //Debug.Log($"{gameObject.name}가 {target.name}을 공격. {d}만큼의 피해를 입혔습니다.\n현재{target.name}의 HP는 {target.GetComponent<Enemy>().curHealth}");
     }
 }

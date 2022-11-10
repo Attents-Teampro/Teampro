@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -1955,6 +1956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -4046,6 +4048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -4588,6 +4591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 3966909394043465796, guid: 3fb7c5f6f69993942bafe606adeeb6fa, type: 3}
   door: []
@@ -4703,6 +4707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -5519,6 +5524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -6011,6 +6017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
@@ -7935,6 +7942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5d0021a75ad3e4ca252d2243675b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   spawners:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}

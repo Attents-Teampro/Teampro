@@ -42,7 +42,7 @@ public class DungeonCreator : MonoBehaviour
 
     private void Start()
     {
-        CreateDungeon(); // 던전 생성 매서드
+        //CreateDungeon(); // 던전 생성 매서드
         
     }
 

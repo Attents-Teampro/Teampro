@@ -23,7 +23,7 @@ public class MainManager : MonoBehaviour
 
     GameStart gameStart;
     public SpawnManager spawnManager;
-
+    public int gold = 0;
     private void Awake()
     {
         //활성화 될 때 이미 메인 매너지 클래스가 있을 시 이 오브젝트를 삭제하는 코드

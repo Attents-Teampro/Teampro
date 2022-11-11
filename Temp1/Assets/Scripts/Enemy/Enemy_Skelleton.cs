@@ -11,7 +11,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     protected override void Awake()
     {
         base.Awake();
-        meshs = GameObject.Find("Skeleton").GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     protected override void Start()
     {

@@ -11,7 +11,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
     protected override void Awake()
     {
         base.Awake();
-        meshs = GameObject.Find("TurtleShell").GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
     protected override void Start()

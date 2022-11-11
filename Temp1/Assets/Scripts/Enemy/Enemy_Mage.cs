@@ -20,7 +20,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     protected override void Awake()
     {
         base.Awake();
-        meshs = GameObject.Find("Mage").GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     protected override void Start()
     {

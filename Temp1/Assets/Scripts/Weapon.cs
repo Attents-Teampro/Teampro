@@ -15,7 +15,13 @@ public class Weapon : MonoBehaviour, ICharacter
     public Transform arrowPos;
     public GameObject arrow;
 
-    
+    // 11.11
+    public EnemyData enemyData;
+    Enemy_Orc orc;
+    Enemy_Skelleton skelleton;
+    Enemy_Shell shell;
+    Player player;
+
 
     private void Awake()
     {
@@ -30,7 +36,13 @@ public class Weapon : MonoBehaviour, ICharacter
         {
             meleeArea.enabled = false;
         }
-        
+
+        // 11.11
+        shell = GetComponentInParent<Enemy_Shell>();
+        orc = GetComponentInParent<Enemy_Orc>();
+        skelleton = GetComponentInParent<Enemy_Skelleton>();
+        player = FindObjectOfType<Player>();
+
     }
 
     public void Use()
@@ -51,7 +63,7 @@ public class Weapon : MonoBehaviour, ICharacter
             yield return new WaitForSeconds(0.1f);  // 0.1√  ¥Î±‚
             meleeArea.enabled = true;
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
             meleeArea.enabled = false;
         }
 

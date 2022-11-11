@@ -394,7 +394,7 @@ public class DungeonCreator : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             bool result = objDoor.transform.GetChild(i).GetComponent<Door>().CheckRoom();
-            Debug.Log($"{i} {dungeonFloor.name}의 방 찾기 결과 = {result}");
+            //Debug.Log($"{i} {dungeonFloor.name}의 방 찾기 결과 = {result}");
         }
         //몇 번째로 생성되었는지 카운트
         count++;

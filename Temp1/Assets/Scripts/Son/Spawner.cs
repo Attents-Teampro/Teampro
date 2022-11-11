@@ -67,7 +67,7 @@ public class Spawner : MonoBehaviour
 
         //Debug.Log("메쉬랜더러 찾음");
         //mr = GetComponent<MeshRenderer>();
-        Vector3 floor = mr.bounds.size * 0.5f;
+        Vector3 floor = mr.bounds.size * 0.5f * 0.9f;
 
         //테스트 변수 관련 코드
         mon = new GameObject[numOfEnemy];

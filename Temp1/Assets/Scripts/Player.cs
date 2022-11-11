@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
@@ -118,6 +119,10 @@ public class Player : MonoBehaviour, ICharacter
         instance = this;
         DontDestroyOnLoad(gameObject);
         //by 손동욱 
+
+        //11.11 start에서 이동 by 손동욱
+        //플레이어의 hp를 최대 hp로 초기화. 양해인 11.04
+        pHP = pMaxHp;
     }
     void Start()
     {
@@ -125,14 +130,15 @@ public class Player : MonoBehaviour, ICharacter
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
 
-        //플레이어의 hp를 최대 hp로 초기화. 양해인 11.04
-        pHP = pMaxHp;
+
 
         isAlive = true;
 
-       
+        //HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
+        //healthP.SetPlayer(this);
 
     }
+    
 
     private void Update()
     {
@@ -156,11 +162,15 @@ public class Player : MonoBehaviour, ICharacter
 
     private void OnEnable()
     {
+        HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
+        healthP.SetPlayer(this);
+
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Dodge.performed += OnDodge;
         inputActions.Player.Attack.performed += OnAttacking;
+
     }
 
 

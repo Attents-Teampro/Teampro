@@ -19,7 +19,7 @@ public class HealthPreferences : MonoBehaviour
 
     private float valuePerImage;            //하트 이미지 하나가 자긴 hp 밸류 (최대 hp값 / 하트 갯수.ex)최대hp 100,하트 갯수 4일땐 25, 5면 20)
 
-    Player player;
+    public Player player;
     public Image.FillMethod fillMethod;     //이미지 채워지는 방식
 
     //인스펙터창에서 가리기
@@ -34,21 +34,26 @@ public class HealthPreferences : MonoBehaviour
     [HideInInspector]
     public Image.Origin360 radial360Direction;
 
-    
 
 
     private void Start()
     {
-
-        player = Player.instance;
-        maxHealth = player.pMaxHp;
-        //currentHealth = player.pHP;
-
-        currentHealth = maxHealth;
-
+        //player = Player.instance;
+        //maxHealth = player.pMaxHp;
+        ////currentHealth = player.pHP;
+        //currentHealth = maxHealth;
     }
 
-   
+    public void SetPlayer(Player p)
+    {
+        Debug.Log($"플레이어 찾아오기 성공. {p.name}, {p.pHP}");
+        player = p;
+        maxHealth = player.pMaxHp;
+        //currentHealth = player.pHP;
+        currentHealth = maxHealth;
+        UpdateHealth();
+    }
+
 
     private void OnValidate()
     {

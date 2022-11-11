@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfStageEnemy: 0
   numOfDieEnemy: 0
+  spawnManager: {fileID: 0}
 --- !u!114 &871639914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,4 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff64802c171667741a3dfecfbc2a81f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawners: []
+  spawners:
+  - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
+  - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
+  - {fileID: 6480546422584917300, guid: 127d556f6521f1d459531b0d6052c4bd, type: 3}
+  - {fileID: 3966909394043465796, guid: 3fb7c5f6f69993942bafe606adeeb6fa, type: 3}

@@ -18,7 +18,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     protected override void Awake()
     {
         base.Awake();
-        meshs = GameObject.Find("Orc").GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         audioSource = GetComponent<AudioSource>();
     }
     protected override void Start()

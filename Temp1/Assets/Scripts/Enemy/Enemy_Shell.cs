@@ -86,7 +86,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
             mainManager.StageClear();
         }
         //by 손동욱
-
+        Instantiate(dropItems[0], transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

@@ -97,6 +97,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         }
         //by 손동욱
 
+        Instantiate(dropItems[0], transform.position, Quaternion.identity);
         Destroy(gameObject);
 
     }

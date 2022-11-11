@@ -26,6 +26,9 @@ public class EnemyBase : MonoBehaviour
     public bool isPlaeyerFind = false;  //플레이어 발견 상태
 
     public float sightRange = 5f;       //플레이어 발견 거리
+
+    [Header("-------[ 드롭 아이템 ]")]
+    public GameObject[] dropItems;
    
     protected virtual void Awake()
     {
@@ -47,6 +50,7 @@ public class EnemyBase : MonoBehaviour
         //target = GameObject.Find("Player").GetComponent<Transform>();
         target = FindObjectOfType<Player>().transform;
         //by 손동욱
+        
     }
 
     protected virtual void Update()

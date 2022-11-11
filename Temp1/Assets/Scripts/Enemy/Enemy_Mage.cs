@@ -104,7 +104,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
             mainManager.StageClear();
         }
         //by 손동욱
-
+        Instantiate(dropItems[0], transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

@@ -2324,7 +2324,9 @@ MonoBehaviour:
   isDead: 0
   isGetHit: 0
   isPlaeyerFind: 0
-  sightRange: 5
+  sightRange: 7
+  dropItems:
+  - {fileID: 9158437562956330169, guid: def9d7ea6746bd74d91d6962b3a13f5c, type: 3}
   currentHP: 0
   attackSfx: {fileID: 8300000, guid: 5266ec6ef617fe54fb5c6b8380e7f19c, type: 3}
   getHitSfx: {fileID: 8300000, guid: 8ed8a729f2686ed4ba3b9af89aa18c8d, type: 3}

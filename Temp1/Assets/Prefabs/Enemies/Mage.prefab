@@ -1977,7 +1977,9 @@ MonoBehaviour:
   isDead: 0
   isGetHit: 0
   isPlaeyerFind: 0
-  sightRange: 7
+  sightRange: 10
+  dropItems:
+  - {fileID: 9158437562956330169, guid: def9d7ea6746bd74d91d6962b3a13f5c, type: 3}
   projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
   currentHP: 0
 --- !u!1 &6259785249478902155

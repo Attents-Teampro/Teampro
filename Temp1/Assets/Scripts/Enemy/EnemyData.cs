@@ -32,5 +32,4 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     float targetRange;
     public float TargetRange { get { return targetRange; }}
-
 }

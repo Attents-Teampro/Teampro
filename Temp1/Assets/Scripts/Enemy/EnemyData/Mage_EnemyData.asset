@@ -19,3 +19,4 @@ MonoBehaviour:
   rotationSpeed: 1
   targetRadius: 0.5
   targetRange: 5
+  goldValue: 50

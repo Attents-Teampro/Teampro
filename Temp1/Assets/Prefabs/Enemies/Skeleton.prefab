@@ -157,7 +157,9 @@ MonoBehaviour:
   isDead: 0
   isGetHit: 0
   isPlaeyerFind: 0
-  sightRange: 5
+  sightRange: 9
+  dropItems:
+  - {fileID: 9158437562956330169, guid: def9d7ea6746bd74d91d6962b3a13f5c, type: 3}
   currentHP: 0
 --- !u!195 &5830050378594124366
 NavMeshAgent:

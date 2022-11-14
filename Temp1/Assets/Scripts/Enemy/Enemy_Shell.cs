@@ -12,12 +12,12 @@ public class Enemy_Shell : EnemyBase, ICharacter
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        currentHP = enemyData.EHP;
     }
 
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;
     }
 
     protected override void Update()

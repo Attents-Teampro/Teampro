@@ -20,11 +20,11 @@ public class Enemy_Orc : EnemyBase, ICharacter
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         audioSource = GetComponent<AudioSource>();
+        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
     }
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
     }
 
     protected override void Update()

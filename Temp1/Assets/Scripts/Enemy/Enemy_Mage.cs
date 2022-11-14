@@ -21,11 +21,11 @@ public class Enemy_Mage : EnemyBase, ICharacter
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        currentHP = enemyData.EHP;
     }
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
     }

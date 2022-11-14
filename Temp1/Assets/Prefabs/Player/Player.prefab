@@ -363,11 +363,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage: 0
+  iDamage: 100
   rate: 0.1
   meleeArea: {fileID: 0}
   arrowPos: {fileID: 446256205}
   arrow: {fileID: 241737473893427511, guid: 96c287e11db02a64f8842e9d7506d599, type: 3}
+  enemyData: {fileID: 0}
 --- !u!114 &2036354011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,7 +2156,7 @@ Animator:
   m_GameObject: {fileID: 8001354749718593143}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d9b155d656a64f02adc39213c8d11c86, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4fc4f389ed204684b8def2f8970095a5, type: 2}
+  m_Controller: {fileID: 9100000, guid: df655f85a779503418fd4f1a67b11884, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2177,6 +2178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498155236221ef447960de8c5220e7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  turnSpeed: 10
   speed: 5
   weapons:
   - {fileID: 6825763076235687243}
@@ -2184,6 +2187,12 @@ MonoBehaviour:
   - {fileID: 1357746317549918755}
   - {fileID: 6188668910436123550}
   hasWeapons: 01010101
+  pHP: 0
+  pMaxHp: 200
+  damage: 1
+  pDamage: 0
+  attackPower: 10
+  defencePower: 3
 --- !u!54 &1268493896
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2759,11 +2768,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 25
+  iDamage: 100
   rate: 0.5
   meleeArea: {fileID: 227262867}
   arrowPos: {fileID: 0}
   arrow: {fileID: 0}
+  enemyData: {fileID: 0}
 --- !u!114 &227262873
 MonoBehaviour:
   m_ObjectHideFlags: 0

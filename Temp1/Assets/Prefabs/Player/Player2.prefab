@@ -853,7 +853,6 @@ MonoBehaviour:
   pDamage: 0
   attackPower: 10
   defencePower: 3
-  maxHP: 100
 --- !u!1 &5225322082342842490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827121279121044061, guid: 76198c5798c130440ad6108d99a98e57, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4492193475624265959, guid: 76198c5798c130440ad6108d99a98e57, type: 3}
       propertyPath: m_RootOrder

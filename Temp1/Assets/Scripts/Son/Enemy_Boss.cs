@@ -30,9 +30,10 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //GameObject player;
     //public GameObject projectile;       //원거리용 발사체
     //public BoxCollider meleeAttack;     //밀리 어택용 컬리젼 박스
-    //public NavMeshAgent nav;            //네비 매쉬를 사용
     //public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
-    Rigidbody rb;
+    NavMeshAgent agent;            //네비 매쉬를 사용
+    //-agent의 stopdistance는 근접 공격 사거리
+
     Animator anim;
     RaycastHit[] rayHits;
     Vector3 targetDirection;
@@ -52,9 +53,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     private void Awake()
     {
         mainManager = FindObjectOfType<MainManager>();
-        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        
+        agent = GetComponent<NavMeshAgent>();
         //일정 시간이(deley변수) 지난 후에 보스가 액티브 되도록
         StartCoroutine(DelayStart());
     }
@@ -77,19 +77,30 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         //idle 상태
         if (!isAttack && isActive && !isAttacked) 
         {
-            transform.LookAt(target);
-            rayHits = Physics.SphereCastAll(transform.position, targetRadius,
-                transform.forward, targetRange, LayerMask.GetMask("Player"));
+            //transform.LookAt(target);
+            agent.SetDestination(target.position);
+            //rayHits = Physics.SphereCastAll(transform.position, targetRadius,
+            //    transform.forward, targetRange, LayerMask.GetMask("Player"));
 
-            //적 감지, 근접 공격
-            if (rayHits.Length != 0) 
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)  // 경로 계산이 완료됬고 아직 도착지점으로 인정되는 거리까지 이동하지 않았다.
             {
                 //주석 이유 : 공격 타입 랜덤 지정에서 eDamage를 타입에 맞는 값으로 지정하기 때문에 중복을 방지하기 위해서 주석 처리
                 //eDamage = damage;//특별하게 데미지 추가가 없으면 public으로 설정한 damage를 eDmage에 대입
                 isAttack = true;
                 attackTimer = 0;
+                agent.isStopped = true;
                 StartCoroutine(MeleeAniAttack());
             }
+
+            ////적 감지, 근접 공격
+            //if (rayHits.Length != 0) 
+            //{
+            //    //주석 이유 : 공격 타입 랜덤 지정에서 eDamage를 타입에 맞는 값으로 지정하기 때문에 중복을 방지하기 위해서 주석 처리
+            //    //eDamage = damage;//특별하게 데미지 추가가 없으면 public으로 설정한 damage를 eDmage에 대입
+            //    isAttack = true;
+            //    attackTimer = 0;
+            //    StartCoroutine(MeleeAniAttack());
+            //}
             //적이 근접하지 않았을 때(원거리 or 걷기)
             else
             {
@@ -103,8 +114,11 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                     Debug.Log("인식");
                     //원거리 공격 타이머 재기
                     longAttackTimer += Time.deltaTime * 100;
-                    if(longAttackTimer > longAttackTurm)
+
+                    //타이머(쿨다운)이 변수 longAttackTurm 보다 커지면 원거리 공격 실행
+                    if (longAttackTimer > longAttackTurm)
                     {
+                        agent.isStopped = true;
                         longAttackTimer = 0;
                         isAttack = true;
                         attackTimer = 0;
@@ -143,10 +157,14 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         if (target!=null)
         {
+            agent.isStopped = false;
             targetDirection = (target.position - transform.position).normalized;
             //물리힘을 줘서 이동하는 velocity, MovePosition, AddForce는 플레이어 리지드바디와 충돌해서 계속 이상하게 움직여짐
             //그래서 위치(position) 이동 방식 사용 by 손동욱 10.19
-            transform.position += targetDirection * Time.deltaTime * moveSpeed;
+            //transform.position += targetDirection * Time.deltaTime * moveSpeed;
+            //11.14 네브매쉬 이용 이동방법으로 수정
+            agent.SetDestination(target.position);
+
             //rb.MovePosition(transform.position + targetDirection * Time.deltaTime * moveSpeed); //리지드바디를 사용하여 타겟으로 이동
             //rb.velocity += targetDirection * Time.deltaTime * moveSpeed;
             anim.SetBool("isWalk", true);

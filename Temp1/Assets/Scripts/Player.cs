@@ -69,8 +69,6 @@ public class Player : MonoBehaviour, ICharacter
 
     public int attackPower = 10;      // 공격력
     public int defencePower = 3;      // 방어력
-    public int maxHP = 100;    // 최대 HP
-    int php = 100;              // 현재 HP
     bool isAlive = true;            // 살아있는지 죽었는지 확인용
 
     public int AttackPower => attackPower;
@@ -79,24 +77,28 @@ public class Player : MonoBehaviour, ICharacter
 
     public int PHP
     {
-        get => php;
+        get => pHP;
         set
         {
-            if (isAlive && php != value) // 살아있고 HP가 변경되었을 때만 실행
+            Debug.Log("공격받음, 이프문 미실행");
+            Debug.Log($"isAlive = {isAlive}\n php = {pHP}\n value = {value}");
+            if (isAlive && pHP != value) // 살아있고 HP가 변경되었을 때만 실행
             {
-                php = value;
+                Debug.Log("공격받음, 이프문 실행");
+                pHP = value;
 
-                if (php < 0)
+                if (pHP <= 0)
                 {
+                    Debug.Log("죽음");
                     Die();
                 }
-                php = Mathf.Clamp(php, 0, maxHP);
+                pHP = Mathf.Clamp(pHP, 0, pMaxHp);
 
-                pHPChange?.Invoke(php / maxHP);
+                pHPChange?.Invoke(pHP / pMaxHp);
             }
         }
     }
-    public int MaxHP => maxHP;
+    public int MaxHP => pMaxHp;
     public bool IsAlive => isAlive;
 
     public Action<int> pHPChange { get; set; }
@@ -133,12 +135,13 @@ public class Player : MonoBehaviour, ICharacter
 
 
         isAlive = true;
+        anim.SetBool("IsAlive", isAlive);
 
         //HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
         //healthP.SetPlayer(this);
 
     }
-    
+
 
     private void Update()
     {
@@ -367,6 +370,7 @@ public class Player : MonoBehaviour, ICharacter
         if (other.tag == "Weapon")
             nearObject = other.gameObject;
 
+
         //Debug.Log(nearObject.name);
     }
 
@@ -381,7 +385,9 @@ public class Player : MonoBehaviour, ICharacter
     //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
     public void Attacked(int d)
     {
-        pHP -= d;
+        Debug.Log("어택드 실행");
+        Debug.Log($"현재 플레이어 pHP = {pHP}");
+        PHP -= d;
         //UI에 플레이어 pHP 값을 전달 -양해인 11.04
         Health.instance.SetCurrentHealth(pHP);
     }

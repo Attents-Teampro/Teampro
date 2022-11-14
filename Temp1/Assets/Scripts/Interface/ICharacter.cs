@@ -5,6 +5,8 @@ using UnityEngine;
 
 interface ICharacter
 {
+    //캐릭터만 사용하는 인터페이스
+    //무
 
     /* //추후 캐릭터 HP값들을 참조할 필요성이 생기면 이런 식으로 만들면 좋을 것 같아요~ by 손
     int hp { get; set; }

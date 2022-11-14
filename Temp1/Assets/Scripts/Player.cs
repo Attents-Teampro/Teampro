@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, ICharacter
             {
                 Debug.Log("공격받음, 이프문 실행");
                 pHP = value;
-
+                anim.SetTrigger("Hit");
                 if (pHP <= 0)
                 {
                     Debug.Log("죽음");
@@ -329,7 +329,7 @@ public class Player : MonoBehaviour, ICharacter
         if (isAlive)                // 살아있을 때만 데미지 입음.
         {
             anim.SetTrigger("Hit"); // 피격 애니메이션 재생
-            PHP -= (damage - DefencePower);  // 기본공식 = 실제입는 데미지 = 적 공격 데미지 - 방어력
+            PHP -= (damage);  // 기본공식 = 실제입는 데미지 = 적 공격 데미지 - 방어력
         }
     }
     public void Die()

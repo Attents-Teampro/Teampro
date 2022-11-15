@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Orc
   eHP: 200
+  eMaxHP: 200
   eDamage: 20
   moveSpeed: 10
   rotationSpeed: 1
   targetRadius: 1.5
   targetRange: 1
-  goldValue: 50

@@ -7,16 +7,22 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 {
     
     public int currentHP;
+    public int maxHP;
 
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
+
     }
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
+        EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
+        EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
+        //currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
+
     }
 
     protected override void Update()

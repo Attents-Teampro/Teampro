@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Mage_EnemyData
   m_EditorClassIdentifier: 
   enemyType: Mage
-  eHP: 100
+  eHP: 111
+  eMaxHP: 123
   eDamage: 0
   moveSpeed: 8
   rotationSpeed: 1
   targetRadius: 0.5
   targetRange: 5
-  goldValue: 50

@@ -14,6 +14,10 @@ public class EnemyData : ScriptableObject
     public int EHP { get { return eHP; }}
 
     [SerializeField]
+    int eMaxHP;
+    public int EMaxHP { get { return eMaxHP; } }
+
+    [SerializeField]
     int eDamage;
     public int EDamage { get { return eDamage; }}
 

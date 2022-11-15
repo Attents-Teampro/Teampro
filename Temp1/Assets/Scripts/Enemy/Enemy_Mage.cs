@@ -12,7 +12,8 @@ public class Enemy_Mage : EnemyBase, ICharacter
 {
     public GameObject projectile;
     public int currentHP;
-    
+    public int maxHP;
+
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
 
@@ -21,14 +22,28 @@ public class Enemy_Mage : EnemyBase, ICharacter
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
+        
+        
     }
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;
+        
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
+
+        EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
+        EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
+
+        maxHP = enemyData.EMaxHP;
+        Debug.Log($"{maxHP}");
+        currentHP = enemyData.EHP;
+        Debug.Log($"{currentHP} / {enemyData.EHP}");
+
     }
+
+    
 
     protected override void Update()
     {
@@ -154,6 +169,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
+        EnemyHealth.instance.SetCurrentHealth(currentHP);
     }
 
     public void Attack(GameObject target, int damage)

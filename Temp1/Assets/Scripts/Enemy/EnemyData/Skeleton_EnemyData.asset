@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Skelleton
   eHP: 150
+  eMaxHP: 150
   eDamage: 10
   moveSpeed: 15
   rotationSpeed: 2
   targetRadius: 1.5
   targetRange: 1
-  goldValue: 50

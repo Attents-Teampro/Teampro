@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +22,7 @@ public class EnemyHealthPreferences : MonoBehaviour
 
     EnemyData enemyData;
 
-    Transform camera;
-
+    
     public Image.FillMethod fillMethod;     //이미지 채워지는 방식
 
     //인스펙터창에서 가리기
@@ -42,15 +42,10 @@ public class EnemyHealthPreferences : MonoBehaviour
 
     private void Start()
     {
-
-        //maxHealth = enemyData.EMaxHP;  //fail
-        
-        
-        //currentHealth = player.pHP;
-
-        currentHealth = maxHealth;
-
+        //currentHealth = enemyData.EHP;
+        //maxHealth = enemyData.EMaxHP;
     }
+   
 
    
 
@@ -203,7 +198,8 @@ public class EnemyHealthPreferences : MonoBehaviour
     
     public void SetCurrentHealth(float amount)
     {
-        currentHealth = Mathf.Clamp(amount, 0, maxHealth);
+        currentHealth = Mathf.Clamp(amount, 0, maxHealth);//current 와 max가 0
+        Debug.Log($"Prefs.cs-{amount},{currentHealth}");
         UpdateHealth();
     }
 
@@ -226,10 +222,7 @@ public class EnemyHealthPreferences : MonoBehaviour
         UpdateHealth();
     }
 
-    private void LateUpdate()
-    {
-        transform.LookAt(transform.position + camera.forward);
-    }
+  
 
     //misc
     //public void AddDamage(float amount)

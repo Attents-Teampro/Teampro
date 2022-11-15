@@ -1,5 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class EnemyHealthPreferences : MonoBehaviour
 
     private float valuePerImage;            //하트 이미지 하나가 자긴 hp 밸류 (최대 hp값 / 하트 갯수.ex)최대hp 100,하트 갯수 4일땐 25, 5면 20)
 
-    EnemyData enemyData;
+    //EnemyData enemyData;
 
     
     public Image.FillMethod fillMethod;     //이미지 채워지는 방식
@@ -37,17 +38,70 @@ public class EnemyHealthPreferences : MonoBehaviour
     [HideInInspector]
     public Image.Origin360 radial360Direction;
 
-    
-
+    Enemy_Orc orc;
+    Enemy_Mage mage;
+    Enemy_Shell shell;
+    Enemy_Skelleton skeleton;
+    GameObject parent;
 
     private void Start()
     {
-        //currentHealth = enemyData.EHP;
-        //maxHealth = enemyData.EMaxHP;
-    }
-   
+        parent = transform.parent.transform.parent.gameObject;
+        if (parent.name == "Orc")
+        {
+            orc = parent.GetComponent<Enemy_Orc>();
+            maxHealth = orc.maxHP;
+            currentHealth = orc.currentHP;
 
-   
+        }
+        else if (parent.name == "Mage")
+        {
+            mage = parent.GetComponent<Enemy_Mage>();
+            maxHealth = mage.maxHP;
+            currentHealth = mage.currentHP;
+            //Debug.Log($"{parent.name}의 현재 HP : {currentHP}");
+        }
+        else if (parent.name == "Shell")
+        {
+            shell = parent.GetComponent<Enemy_Shell>();
+            maxHealth = shell.maxHP;
+            currentHealth = shell.currentHP;
+        }
+        else if (parent.name == "Skeleton")
+        {
+            skeleton = parent.GetComponent<Enemy_Skelleton>();
+            maxHealth = skeleton.maxHP;
+            currentHealth = skeleton.currentHP;
+        }
+        //SetCurrentHealth(currentHealth);
+    }
+
+    private void Update()
+    {
+        if (parent.name == "Orc")
+        {
+            currentHealth = orc.currentHP;
+
+        }
+        else if (parent.name == "Mage")
+        {
+            currentHealth = mage.currentHP;
+        }
+        else if (parent.name == "Shell")
+        {
+            currentHealth = shell.currentHP;
+        }
+        else if (parent.name == "Skeleton")
+        {
+            currentHealth = skeleton.currentHP;
+        }
+        Debug.Log($"pref -{parent.name}의 CurHP : {currentHealth}, MaxHP : {maxHealth}");
+        //currentHealth = EnemyHealth.instance.currentHP;
+        UpdateHealth();
+        //SetCurrentHealth(currentHealth);
+    }
+
+
 
     private void OnValidate()
     {

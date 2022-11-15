@@ -22,24 +22,20 @@ public class Enemy_Mage : EnemyBase, ICharacter
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
-        
-        
-        
+        maxHP = enemyData.EHP;
+        currentHP = maxHP;
     }
     protected override void Start()
     {
         base.Start();
-        currentHP = enemyData.EHP;
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
 
-        EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
-        EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
-
-        maxHP = enemyData.EMaxHP;
-        Debug.Log($"{maxHP}");
-        currentHP = enemyData.EHP;
-        Debug.Log($"{currentHP} / {enemyData.EHP}");
+        //EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
+        //EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
+        //Debug.Log($"{maxHP}");
+        //currentHP = enemyData.EHP;
+        //Debug.Log($"{currentHP} / {enemyData.EHP}");
 
     }
 

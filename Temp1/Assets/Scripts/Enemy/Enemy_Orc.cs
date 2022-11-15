@@ -15,24 +15,23 @@ public class Enemy_Orc : EnemyBase, ICharacter
     public AudioClip dieSfx;
     AudioSource audioSource;
 
-
+    EnemyHealth health;
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        health = GetComponentInChildren<EnemyHealth>();
         audioSource = GetComponent<AudioSource>();
-        EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
-        EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
+        currentHP = enemyData.EHP;
+        maxHP = enemyData.EHP;
 
     }
     protected override void Start()
     {
         base.Start();
         
-
-        //currentHP = enemyData.EHP;
-
-
+        //EnemyHealth.instance.SetCurrentHealth(currentHP);
+        //EnemyHealth.instance.SetTotalHealth(maxHP);
     }
 
     protected override void Update()
@@ -167,14 +166,13 @@ public class Enemy_Orc : EnemyBase, ICharacter
     //}
     public void Die()
     {
-
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
-        //EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
+        //EnemyHealth.instance.SetCurrentHealth(currentHP);
     }
 
     public void Attack(GameObject target, int damage)

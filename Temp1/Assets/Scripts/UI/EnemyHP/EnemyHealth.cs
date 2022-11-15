@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,19 +10,77 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyHealthPreferences prefs;
 
-    
-    
+    public int maxHP;
+    public int currentHP;
 
+    Enemy_Orc orc;
+    Enemy_Mage mage;
+    Enemy_Shell shell;
+    Enemy_Skelleton skeleton;
+    GameObject parent;
+
+    int parentHP;
     void Start()
     {
-        instance = this;
+        parent = transform.parent.transform.parent.gameObject;
+        if(parent.name == "Orc")
+        {
+        orc = parent.GetComponent<Enemy_Orc>();
+        maxHP = orc.maxHP;
+            currentHP = orc.currentHP;
+
+        }
+        else if(parent.name == "Mage")
+        {
+            mage = parent.GetComponent<Enemy_Mage>();
+            maxHP = mage.maxHP;
+            currentHP = mage.currentHP;
+            //Debug.Log($"{parent.name}의 현재 HP : {currentHP}");
+        }
+        else if(parent.name == "Shell")
+        {
+            shell = parent.GetComponent<Enemy_Shell>();
+            maxHP = shell.maxHP;
+            currentHP = shell.currentHP;
+        }
+        else if(parent.name == "Skeleton")
+        {
+            skeleton = parent.GetComponent<Enemy_Skelleton>();
+            maxHP = skeleton.maxHP;
+            currentHP = skeleton.currentHP;
+        }
+    
         prefs = GetComponent<EnemyHealthPreferences>();
+        //EnemyHealth.instance.SetCurrentHealth(currentHP);
+        //EnemyHealth.instance.SetTotalHealth(maxHP);
+        instance = this;
         
+    }
+
+    private void LateUpdate()
+    {
+        if (parent.name == "Orc")
+        {
+            currentHP = orc.currentHP;
+
+        }
+        else if (parent.name == "Mage")
+        {
+            currentHP = mage.currentHP;
+        }
+        else if (parent.name == "Shell")
+        {
+            currentHP = shell.currentHP;
+        }
+        else if (parent.name == "Skeleton")
+        {
+            currentHP = skeleton.currentHP;
+        }
+        Debug.Log($"{parent.name}의 현재 HP{currentHP}");
     }
 
     public float GetCurrentHealth()
     {
-        
         return prefs.GetCurrentHealth();
     }
 

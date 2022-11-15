@@ -7,12 +7,14 @@ public class Enemy_Shell : EnemyBase, ICharacter
 {
 
     public int currentHP;
+    public int maxHP;
 
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
-        currentHP = enemyData.EHP;
+        maxHP = enemyData.EHP;
+        currentHP = maxHP;
     }
 
     protected override void Start()

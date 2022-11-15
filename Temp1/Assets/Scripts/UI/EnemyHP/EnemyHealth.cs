@@ -28,7 +28,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void SetCurrentHealth(float currentHealth)
     {
-        
+        Debug.Log($"SetCurrentHealth {currentHealth}");
         prefs.SetCurrentHealth(currentHealth);
     }
 
@@ -39,7 +39,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void SetTotalHealth(float amount)
     {
-        
+        Debug.Log($"SetTotalHealth {amount}");
         prefs.SetTotalHealth(amount);
     }
 

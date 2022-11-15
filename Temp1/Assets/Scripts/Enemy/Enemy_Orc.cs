@@ -8,6 +8,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
 {
 
     public int currentHP;           //현재 HP 값
+    public int maxHP;
     [Header("-------[ Audio Clip ]")]
     public AudioClip attackSfx;
     public AudioClip getHitSfx;
@@ -20,11 +21,18 @@ public class Enemy_Orc : EnemyBase, ICharacter
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         audioSource = GetComponent<AudioSource>();
-        currentHP = enemyData.EHP;  //시작시 최대HP값을 enemyData 에서 가져옴
+        EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
+        EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
+
     }
     protected override void Start()
     {
         base.Start();
+        
+
+        //currentHP = enemyData.EHP;
+
+
     }
 
     protected override void Update()
@@ -166,6 +174,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
+        //EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
     }
 
     public void Attack(GameObject target, int damage)

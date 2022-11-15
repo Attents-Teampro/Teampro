@@ -8,6 +8,17 @@ using UnityEditor;
 #endif
 public class EnemyBase : MonoBehaviour
 {
+    public enum EnemyType
+    {
+        Orc = 0,
+        Skeleton,
+        Mage,
+        Shell,
+        Boss,
+    }
+
+    public EnemyType enemyType;
+
     [Header("-------[ 컴포넌트 ]")]
     public EnemyData enemyData;         //기본데이터
     public Transform target;            //플레이어 타겟

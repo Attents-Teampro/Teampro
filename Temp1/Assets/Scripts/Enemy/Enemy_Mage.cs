@@ -30,13 +30,6 @@ public class Enemy_Mage : EnemyBase, ICharacter
         base.Start();
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
-
-        //EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
-        //EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
-        //Debug.Log($"{maxHP}");
-        //currentHP = enemyData.EHP;
-        //Debug.Log($"{currentHP} / {enemyData.EHP}");
-
     }
 
     

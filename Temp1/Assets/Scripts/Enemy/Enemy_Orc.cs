@@ -29,9 +29,6 @@ public class Enemy_Orc : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        
-        //EnemyHealth.instance.SetCurrentHealth(currentHP);
-        //EnemyHealth.instance.SetTotalHealth(maxHP);
     }
 
     protected override void Update()

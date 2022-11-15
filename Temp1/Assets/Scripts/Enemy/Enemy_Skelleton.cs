@@ -19,8 +19,6 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        //EnemyHealth.instance.SetCurrentHealth(enemyData.EHP);
-        //EnemyHealth.instance.SetTotalHealth(enemyData.EMaxHP);
     }
 
     protected override void Update()

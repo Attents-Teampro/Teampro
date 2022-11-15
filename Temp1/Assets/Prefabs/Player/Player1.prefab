@@ -1857,9 +1857,9 @@ GameObject:
   - component: {fileID: 5497046304658154193}
   - component: {fileID: -8966918093408900504}
   - component: {fileID: 7553516371161987786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1977,9 +1977,9 @@ MonoBehaviour:
   pHP: 100
   pMaxHp: 200
   damage: 1
+  pDamage: 0
   attackPower: 10
   defencePower: 3
-  maxHP: 100
 --- !u!1 &3344969970483799443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6046,20 +6046,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7960502685420422106, guid: 38aa009d5511475eb95ebd11fb7803ab, type: 3}
   m_PrefabInstance: {fileID: 1898597532244450864}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7180031445702321414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8367775387678809578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01993a042335a714992cadb195a50fe9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 4
-  value: 2
 --- !u!114 &2797163906314613684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6078,6 +6064,21 @@ MonoBehaviour:
   meleeArea: {fileID: 0}
   arrowPos: {fileID: 0}
   arrow: {fileID: 241737473893427511, guid: 96c287e11db02a64f8842e9d7506d599, type: 3}
+  enemyData: {fileID: 0}
+--- !u!114 &7180031445702321414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367775387678809578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01993a042335a714992cadb195a50fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  value: 2
 --- !u!4 &9181607972108388176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7292088283297175904, guid: 38aa009d5511475eb95ebd11fb7803ab, type: 3}
@@ -10176,6 +10177,7 @@ MonoBehaviour:
   meleeArea: {fileID: 8796972001486954981}
   arrowPos: {fileID: 0}
   arrow: {fileID: 0}
+  enemyData: {fileID: 0}
 --- !u!4 &4472795100044766547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7989824334958907706, guid: 2371f43a13174ee3986eba2fd841cd76, type: 3}

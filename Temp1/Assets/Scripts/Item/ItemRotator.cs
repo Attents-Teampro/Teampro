@@ -27,7 +27,7 @@ public class ItemRotator : MonoBehaviour
         //coinValue = (int)GameObject.Find("Orc").GetComponent<EnemyBase>().enemyData.GoldValue;
         //coinValue = (int)transform.GetComponentInParent<EnemyBase>().enemyData.GoldValue;
         
-        Debug.Log(coinValue);
+        //Debug.Log(coinValue);
     }
 
     // Update is called once per frame

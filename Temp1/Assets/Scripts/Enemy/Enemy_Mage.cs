@@ -29,7 +29,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        
+        currentHP = enemyData.EHP;
         mageStaff = transform.GetChild(2);
         mageBulletPosition = mageStaff.GetChild(0);
 

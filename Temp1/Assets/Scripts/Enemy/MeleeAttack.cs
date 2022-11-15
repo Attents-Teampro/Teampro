@@ -46,12 +46,14 @@ public class MeleeAttack : MonoBehaviour, ICharacter
     {
         Debug.Log($"{transform.root.name}가 {target.name}을 공격. {damage}만큼의 피해를 입혔습니다.\n" +
             $"현재{target.name}의 HP는 {target.GetComponent<Player>().pHP}");
-        Attacked(damage);
+        ICharacter targetIC = target.GetComponent<ICharacter>();
+        targetIC.Attacked(damage);
+        //target.Attacked(damage);
     }
 
     public void Attacked(int damage)
     {
-        player.pHP -= damage;
+        //player.pHP -= damage;
     }
 
     public void Die()

@@ -10,35 +10,40 @@ public class MeleeAttack : MonoBehaviour, ICharacter
     Enemy_Skelleton skelleton;
     Enemy_Shell shell;
     Player player;
-    
+
 
     private void Awake()
     {
-        shell= GetComponentInParent<Enemy_Shell>();
+        shell = GetComponentInParent<Enemy_Shell>();
         orc = GetComponentInParent<Enemy_Orc>();
         skelleton = GetComponentInParent<Enemy_Skelleton>();
         player = FindObjectOfType<Player>();
     }
     private void OnTriggerEnter(Collider other)
     {
+        int damage =0;
         if (other.gameObject.CompareTag("Player"))
         {
             if (orc != null)
             {
                 Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
-                Attack(other.gameObject, orc.enemyData.EDamage);
+                //Attack(other.gameObject, orc.enemyData.EDamage);
+                damage = orc.enemyData.EDamage;
 
             }
             else if (skelleton != null)
             {
                 Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
-                Attack(other.gameObject, skelleton.enemyData.EDamage);
+                //Attack(other.gameObject, skelleton.enemyData.EDamage);
+                damage = skelleton.enemyData.EDamage;
             }
             else if (shell != null)
             {
                 Debug.Log($"{transform.root.name}Attack : {enemyData.EDamage}");
-                Attack(other.gameObject, shell.enemyData.EDamage);
+                //Attack(other.gameObject, shell.enemyData.EDamage);
+                damage = shell.enemyData.EDamage;
             }
+            Attack(other.gameObject, damage);
         }
     }
 

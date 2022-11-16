@@ -23,7 +23,7 @@ public class EnemyHealthPreferences : MonoBehaviour
 
     //EnemyData enemyData;
 
-    
+
     public Image.FillMethod fillMethod;     //이미지 채워지는 방식
 
     //인스펙터창에서 가리기
@@ -42,70 +42,71 @@ public class EnemyHealthPreferences : MonoBehaviour
     Enemy_Mage mage;
     Enemy_Shell shell;
     Enemy_Skelleton skeleton;
-    GameObject parent;
 
+    EnemyBase parent;
+
+
+    /// <summary>
+    /// 스타트에서 트랜스폼 루트의 Enemy Base 클래스를 가져옴
+    /// Enemy Base 의 EnemyType에 따라 각 이너미의 클래스를 가져옴(currentHP)를 가져오기 위해
+    /// 최대 HP와 현재HP를 가져옴
+    /// </summary>
     private void Start()
     {
-        parent = transform.parent.transform.parent.gameObject;
-        if (parent.name == "Orc")
-        {
-            orc = parent.GetComponent<Enemy_Orc>();
-            maxHealth = orc.maxHP;
-            currentHealth = orc.currentHP;
+        parent = transform.root.GetComponent<EnemyBase>();
 
-        }
-        else if (parent.name == "Mage")
+        switch (parent.enemyType)
         {
-            mage = parent.GetComponent<Enemy_Mage>();
-            maxHealth = mage.maxHP;
-            currentHealth = mage.currentHP;
-            //Debug.Log($"{parent.name}의 현재 HP : {currentHP}");
+            case EnemyBase.EnemyType.Orc:
+                orc = GetComponentInParent<Enemy_Orc>();
+                maxHealth = orc.maxHP;
+                currentHealth = orc.currentHP;
+                break;
+            case EnemyBase.EnemyType.Mage:
+                mage = parent.GetComponent<Enemy_Mage>();
+                maxHealth = mage.maxHP;
+                currentHealth = mage.currentHP;
+                break;
+            case EnemyBase.EnemyType.Shell:
+                shell = GetComponentInParent<Enemy_Shell>();
+                maxHealth = shell.maxHP;
+                currentHealth = shell.currentHP;
+                break;
+            case EnemyBase.EnemyType.Skeleton:
+                skeleton = GetComponentInParent<Enemy_Skelleton>();
+                maxHealth = skeleton.maxHP;
+                currentHealth = skeleton.currentHP;
+                break;
         }
-        else if (parent.name == "Shell")
-        {
-            shell = parent.GetComponent<Enemy_Shell>();
-            maxHealth = shell.maxHP;
-            currentHealth = shell.currentHP;
-        }
-        else if (parent.name == "Skeleton")
-        {
-            skeleton = parent.GetComponent<Enemy_Skelleton>();
-            maxHealth = skeleton.maxHP;
-            currentHealth = skeleton.currentHP;
-        }
-        //SetCurrentHealth(currentHealth);
     }
 
     private void Update()
     {
-        if (parent.name == "Orc")
-        {
-            currentHealth = orc.currentHP;
+        parent = transform.root.GetComponent<EnemyBase>();
 
-        }
-        else if (parent.name == "Mage")
+        switch (parent.enemyType)
         {
-            currentHealth = mage.currentHP;
+            case EnemyBase.EnemyType.Orc:
+                currentHealth = orc.currentHP;
+                break;
+            case EnemyBase.EnemyType.Mage:
+                currentHealth = mage.currentHP;
+                break;
+            case EnemyBase.EnemyType.Shell:
+                currentHealth = shell.currentHP;
+                break;
+            case EnemyBase.EnemyType.Skeleton:
+                currentHealth = skeleton.currentHP;
+                break;
         }
-        else if (parent.name == "Shell")
-        {
-            currentHealth = shell.currentHP;
-        }
-        else if (parent.name == "Skeleton")
-        {
-            currentHealth = skeleton.currentHP;
-        }
-        Debug.Log($"pref -{parent.name}의 CurHP : {currentHealth}, MaxHP : {maxHealth}");
-        //currentHealth = EnemyHealth.instance.currentHP;
         UpdateHealth();
-        //SetCurrentHealth(currentHealth);
     }
 
 
 
     private void OnValidate()
     {
-        
+
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);  //현재체력은 0에서 base 값 사이를 벗어나지 않는다
 
         if (gameObject.scene.IsValid()) //씬이 없다면?
@@ -124,14 +125,14 @@ public class EnemyHealthPreferences : MonoBehaviour
         }
     }
 
- 
+
 
     //플레이로 전환했을때 
-    private void RemoveAll() 
+    private void RemoveAll()
     {
         if (Application.isPlaying)
         {
-            foreach(Transform child in fullHeartsContainer.transform)
+            foreach (Transform child in fullHeartsContainer.transform)
                 Destroy(child.gameObject);
 
             foreach (Transform child in emptyHeartsContainer.transform)
@@ -158,7 +159,7 @@ public class EnemyHealthPreferences : MonoBehaviour
     /// <summary>
     /// 이미지 생성
     /// </summary>
-    public void Init(int amount) 
+    public void Init(int amount)
     {
         imagesAmount = amount;
         //Debug.Log("init");
@@ -167,9 +168,9 @@ public class EnemyHealthPreferences : MonoBehaviour
         for (int i = 0; i < imagesAmount; i++)
         {
             CreateImage(i);
-            
+
         }
-        
+
     }
 
     /// <summary>
@@ -177,7 +178,7 @@ public class EnemyHealthPreferences : MonoBehaviour
     /// </summary>
     private void CreateImage(int index)
     {
-        GameObject heartFull = new GameObject(); 
+        GameObject heartFull = new GameObject();
         heartFull.tag = "Heart Full";
         Image imgFull = heartFull.AddComponent<Image>();
         imgFull.sprite = fullHeartSprite;
@@ -221,7 +222,7 @@ public class EnemyHealthPreferences : MonoBehaviour
         heartEmpty.transform.localScale = Vector3.one;
         heartEmpty.name = $"heartEmpty";
 
-        
+
     }
 
     /// <summary>
@@ -229,7 +230,7 @@ public class EnemyHealthPreferences : MonoBehaviour
     /// </summary>
     private void UpdateHealth()
     {
-        
+
         valuePerImage = maxHealth / imagesAmount;
         //이미지 당 값 =  기본 체력 /하트 갯수   =33.33 100/3
         for (int i = 0; i < imagesAmount; i++)
@@ -249,7 +250,7 @@ public class EnemyHealthPreferences : MonoBehaviour
         }
     }
 
-    
+
     public void SetCurrentHealth(float amount)
     {
         currentHealth = Mathf.Clamp(amount, 0, maxHealth);//current 와 max가 0
@@ -257,26 +258,26 @@ public class EnemyHealthPreferences : MonoBehaviour
         UpdateHealth();
     }
 
-    
+
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-   
+
     public float GetTotalHealth()
     {
         return maxHealth;
     }
 
-    
-    public void SetTotalHealth(float amount) 
+
+    public void SetTotalHealth(float amount)
     {
         maxHealth = amount;
         UpdateHealth();
     }
 
-  
+
 
     //misc
     //public void AddDamage(float amount)

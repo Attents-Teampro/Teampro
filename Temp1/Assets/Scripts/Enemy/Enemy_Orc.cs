@@ -24,6 +24,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         audioSource = GetComponent<AudioSource>();
         currentHP = enemyData.EHP;
         maxHP = enemyData.EHP;
+        enemyType = EnemyType.Orc;
 
     }
     protected override void Start()

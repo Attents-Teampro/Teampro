@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton_EnemyData
   m_EditorClassIdentifier: 
   enemyType: Skelleton
-  eHP: 150
-  eMaxHP: 150
-  eDamage: 10
+  eHP: 80
+  eDamage: 40
   moveSpeed: 15
   rotationSpeed: 2
   targetRadius: 1.5

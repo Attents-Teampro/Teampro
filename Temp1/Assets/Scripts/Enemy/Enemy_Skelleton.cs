@@ -15,6 +15,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;  //시작시 최대HP값을 enemyData 에서 가져옴
+        enemyType = EnemyType.Skeleton;
     }
     protected override void Start()
     {

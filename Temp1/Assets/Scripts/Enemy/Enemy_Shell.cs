@@ -15,6 +15,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;
+        enemyType= EnemyType.Shell;
     }
 
     protected override void Start()

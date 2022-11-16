@@ -10,27 +10,28 @@ public class MeleeAttack : MonoBehaviour, ICharacter
     Enemy_Skelleton skeleton;
     Enemy_Shell shell;
     Player player;
-    GameObject parent;
 
-    public float damage;
+    EnemyBase parent;
 
-    private void Awake()
+    public int damage = 0;
+
+    private void Start()
     {
-        parent = transform.root.gameObject;
-        //Debug.Log(parent.name);
-        switch (parent.name)
+        parent = transform.root.GetComponent<EnemyBase>();
+        
+        switch(parent.enemyType)
         {
-            case "Orc":
+            case EnemyBase.EnemyType.Orc:
                 orc = GetComponentInParent<Enemy_Orc>();
-                //Debug.Log($"{parent.name} 콤포넌트 가져오기 성공");
+                damage = orc.enemyData.EDamage;
                 break;
-            case "Shell":
+            case EnemyBase.EnemyType.Shell:
                 shell = GetComponentInParent<Enemy_Shell>();
-                //Debug.Log($"{parent.name} 콤포넌트 가져오기 성공");
+                damage = shell.enemyData.EDamage;
                 break;
-            case "Skeleton":
+            case EnemyBase.EnemyType.Skeleton:
                 skeleton = GetComponentInParent<Enemy_Skelleton>();
-                //Debug.Log($"{parent.name} 콤포넌트 가져오기 성공");
+                damage = skeleton.enemyData.EDamage;
                 break;
         }
         player = FindObjectOfType<Player>();
@@ -38,22 +39,10 @@ public class MeleeAttack : MonoBehaviour, ICharacter
 
     private void OnTriggerEnter(Collider other)
     {
-        int damage = 0;
+
         if (other.gameObject.CompareTag("Player"))
         {
-            switch (parent.name)
-            {
-                case "Orc":
-                    damage = orc.enemyData.EDamage;
-                    break;
-                case "Shell":
-                    damage = shell.enemyData.EDamage;
-                    break;
-                case "Skeleton":
-                    damage = skeleton.enemyData.EDamage;
-                    break;
-            }
-            Debug.Log($"{parent.name} 의 데미지 :{damage}");
+            Debug.Log(damage);
             Attack(other.gameObject, damage);
         }
     }

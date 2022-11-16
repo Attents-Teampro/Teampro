@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Mage_EnemyData
   m_EditorClassIdentifier: 
   enemyType: Mage
-  eHP: 150
-  eMaxHP: 150
-  eDamage: 0
+  eHP: 60
+  eDamage: 20
   moveSpeed: 8
   rotationSpeed: 1
   targetRadius: 0.5

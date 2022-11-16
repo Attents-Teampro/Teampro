@@ -41,11 +41,11 @@ public class Projectile : MonoBehaviour, ICharacter
         {
             Debug.Log("Player Attacked");
             Attack(other.gameObject, attackDamage);
+            Destroy(this.gameObject);
         }
         else if (!other.CompareTag("Enemy"))
         {
         }
-            Destroy(this.gameObject);
     }
 
     public void Die()

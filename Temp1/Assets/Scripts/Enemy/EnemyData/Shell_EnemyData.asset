@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Shell
   eHP: 80
-  eDamage: 30
+  eDamage: 40
   moveSpeed: 8
   rotationSpeed: 1
   targetRadius: 0.5
   targetRange: 3
-  goldValue: 50

@@ -990,6 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07afd6b7ccdccfd4b90d5877e659af93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 3
   enemyData: {fileID: 11400000, guid: ee9d08b45292f2a469fba38a12f6b083, type: 2}
   target: {fileID: 0}
   meleeAttack: {fileID: 7439093976231094879}
@@ -1007,6 +1008,7 @@ MonoBehaviour:
   dropItems:
   - {fileID: 9158437562956330169, guid: def9d7ea6746bd74d91d6962b3a13f5c, type: 3}
   currentHP: 0
+  maxHP: 0
 --- !u!1 &4158907722797144342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,3 +1258,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: ee9d08b45292f2a469fba38a12f6b083, type: 2}
+  damage: 0

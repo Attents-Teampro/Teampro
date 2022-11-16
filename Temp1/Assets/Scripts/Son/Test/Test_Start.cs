@@ -10,7 +10,7 @@ public class Test_Start : Test_Base
     //던전 절차적 생성
     protected override void Test1(InputAction.CallbackContext _)
     {
-        MainManager.instance.StartGame();
+        MainManager.instance.GameStartFunc();
         //Debug.Log("시작스");
     }
 

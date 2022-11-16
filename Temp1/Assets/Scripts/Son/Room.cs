@@ -66,5 +66,5 @@ public class Room : MonoBehaviour
             i.ClearAndClose(false);
         }
     }
-
+    
 }

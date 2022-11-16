@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class MainManager : MonoBehaviour
+public class MainManager : Singleton<MainManager>
 {
     
     public static MainManager instance;
@@ -21,6 +21,7 @@ public class MainManager : MonoBehaviour
     
     public int numOfDieEnemy = 0;
 
+    public GameObject clearUIWindos;
     GameStart gameStart;
     public SpawnManager spawnManager;
     public int gold = 0;
@@ -47,8 +48,16 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    //몬스터가 모두 죽으면 실행되는 함수. 포탈을 활성화하고, 변수를 초기화한다.
-    public void StageClear()
+    protected override void Start()
+    {
+        base.Start();
+        GameStartFunc();
+    }
+    /// <summary>
+    /// 몬스터가 모두 죽으면 실행되는 함수. 포탈을 활성화하고, 변수를 초기화한다.
+    /// </summary>
+    /// <param name="isBoss">ture면 보스가 죽었을 때 실행되는 클리어 함수</param>
+    public void StageClear(bool isBoss = false)
     {
         Debug.Log("스테이지 클리어");
         onClearthisRoom?.Invoke();
@@ -56,12 +65,19 @@ public class MainManager : MonoBehaviour
         //portalObject.SetActive(true);
         numOfDieEnemy = 0;
         numOfStageEnemy = 0;
+
+        //보스가 처치되면
+        if (isBoss)
+        {
+            //클리어UI 창 활성화
+            clearUIWindos.SetActive(true);
+        }
     }
 
     /// <summary>
     /// 게임 시작 시 실행되는 함수
     /// </summary>
-    public void StartGame()
+    public void GameStartFunc()
     {
         gameStart.DungeonCreate();   
     }

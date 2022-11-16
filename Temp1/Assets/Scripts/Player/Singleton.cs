@@ -17,6 +17,8 @@ public class Singleton<T> : MonoBehaviour where T : Component
 {
     private static bool isShutDown = false;
     private static T _instance = null;
+    private bool isInitialize = false;
+
     public static T Inst
     {
         get
@@ -71,7 +73,13 @@ public class Singleton<T> : MonoBehaviour where T : Component
         }
     }
 
-
+    protected virtual void Start()
+    {
+        if (!isInitialize)
+        {
+            Initialize();
+        }
+    }
     private void OnApplicationQuit()
     {
         isShutDown = true;
@@ -87,7 +95,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     protected virtual void Initialize()
     {
-
+        isInitialize = true;
     }
 }
 

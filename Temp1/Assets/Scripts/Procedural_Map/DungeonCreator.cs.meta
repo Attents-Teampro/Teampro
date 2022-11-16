@@ -3,7 +3,12 @@ guid: 0d4d912d7a4689247b31f820e517a435
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - material: {instanceID: 0}
+  - wallVertical: {fileID: 3373313719371669675, guid: 1d0406f3be4e64d4d8f84d56f4ab968d, type: 3}
+  - walllHorizontal: {fileID: 2405691891025107464, guid: 8e27214a00fecab42b901dfabe2d7ca9, type: 3}
+  - player: {fileID: 8001354749718593143, guid: 3e974cb15881ffb4bade49f1187ebabf, type: 3}
+  - door: {fileID: 107595438012055677, guid: bf01da604071acd4994a6faad045c429, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

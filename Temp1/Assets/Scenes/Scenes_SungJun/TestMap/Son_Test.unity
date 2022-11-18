@@ -8119,8 +8119,8 @@ MonoBehaviour:
   - {fileID: 392748127}
   - {fileID: 830672812}
   - {fileID: 644674519}
-  wallVertical: {fileID: 0}
-  walllHorizontal: {fileID: 0}
+  wallVertical: {fileID: 8753675751577585064, guid: 76257fc4964cd484989e3a56a342b94e, type: 3}
+  walllHorizontal: {fileID: 2983560248429768675, guid: 0b84e1940b269ca4fbec190d930348ae, type: 3}
   player: {fileID: 852722946}
   door: {fileID: 107595438012055677, guid: bf01da604071acd4994a6faad045c429, type: 3}
 --- !u!1 &688269009437829890

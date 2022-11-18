@@ -92,13 +92,14 @@ public class DungeonCreator : MonoBehaviour
             roomTopCornerModifier, 
             roomOffset,
             corridorWidth);
+
         GameObject wallParent = new GameObject("WallParent");
         wallParent.transform.parent = transform;
         possibleDoorVerticalPosition = new List<Vector3Int>();
         possibleDoorHorizontalPosition = new List<Vector3Int>();
         possibleWallVerticalPosition = new List<Vector3Int>();
         possibleWallHorizontalPosition = new List<Vector3Int>();
-
+        
         //11.10 추가 및 수정 by 손동욱
         //{
         //콜리더 지정에 필요한 변수 초기화
@@ -122,9 +123,8 @@ public class DungeonCreator : MonoBehaviour
                 CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
             }
         }
-        //벽 만드는거 잠시 멈췄습니다.
-        //CreateWalls(wallParent); // 벽만들기
-        //}
+        // 벽만들기
+        CreateWalls(wallParent);
 
         //surface.BuildNavMesh();
 

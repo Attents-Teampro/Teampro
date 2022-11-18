@@ -158,9 +158,11 @@ public class Player : MonoBehaviour, ICharacter
         Attacking();
         //AttackPos();
 
-
-        transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
+        if (IsAlive)
+        {
+            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
+        }
     }
 
     private void OnEnable()
@@ -189,25 +191,28 @@ public class Player : MonoBehaviour, ICharacter
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        if (isDodge)
-            inputDir = dodgeVec;
-
-        if (isSwap)
-            moveVec = Vector3.zero;
-
-        Vector2 input = context.ReadValue<Vector2>();
-        inputDir.x = input.x;
-        inputDir.y = 0.0f;
-        inputDir.z = input.y;
-
-        if (!context.canceled)
+        if (IsAlive)
         {
-            Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-            inputDir = cameraYRotation * inputDir;
+            if (isDodge)
+                inputDir = dodgeVec;
 
-            targetRotation = Quaternion.LookRotation(inputDir);
+            if (isSwap)
+                moveVec = Vector3.zero;
+
+            Vector2 input = context.ReadValue<Vector2>();
+            inputDir.x = input.x;
+            inputDir.y = 0.0f;
+            inputDir.z = input.y;
+
+            if (!context.canceled)
+            {
+                Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+                inputDir = cameraYRotation * inputDir;
+
+                targetRotation = Quaternion.LookRotation(inputDir);
+            }
+            anim.SetBool("isRun", !context.canceled);
         }
-        anim.SetBool("isRun", !context.canceled);
     }
 
     void GetInput()

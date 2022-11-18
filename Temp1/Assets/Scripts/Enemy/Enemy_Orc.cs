@@ -6,9 +6,10 @@ using UnityEngine.UIElements;
 
 public class Enemy_Orc : EnemyBase, ICharacter
 {
-
+    [Header("-------[ Enemy Unique Status]")]
     public int currentHP;           //현재 HP 값
     public int maxHP;
+
     [Header("-------[ Audio Clip ]")]
     public AudioClip attackSfx;
     public AudioClip getHitSfx;
@@ -30,6 +31,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
+        MeleeAttackTrigger(false);
     }
 
     protected override void Update()
@@ -62,7 +64,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
-        if (rayHits.Length > 0)
+        if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {
             StartCoroutine(enemyAttack());
         }
@@ -70,18 +72,15 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     IEnumerator enemyAttack()
     {
+        MeleeAttackTrigger(true);
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-        meleeAttack.SetActive(true);
+        meleeAttack.SetActive(true);            //meleeAttack Coliision 킴
         audioSource.PlayOneShot(attackSfx);
-        yield return new WaitForSeconds(1f);
-
-        isAttack = false;
-        meleeAttack.SetActive(false);
-        isChase = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds (1f);   //AudioPlay 를 위한 지연 시간
+        StartCoroutine(WaitForAttack());
     }
 
     IEnumerator OnDead()
@@ -104,7 +103,6 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
         Instantiate(dropItems[0], transform.position, Quaternion.identity);
         Destroy(gameObject);
-
     }
 
     IEnumerator OnGetHit()
@@ -112,8 +110,8 @@ public class Enemy_Orc : EnemyBase, ICharacter
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
-        audioSource.PlayOneShot(getHitSfx);
-        //PlaySound("Attack");
+        MeleeAttackTrigger(false);   //meleeAttack Collision 끔
+        audioSource.PlayOneShot(getHitSfx); 
         HitColor(true);
 
         yield return new WaitForSeconds(0.1f);

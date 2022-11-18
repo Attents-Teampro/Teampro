@@ -61,8 +61,9 @@ public class Enemy_Mage : EnemyBase, ICharacter
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
+        Debug.Log(rayHits[0]);
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
-        if (rayHits.Length > 0)
+        if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {
             StartCoroutine(enemyAttack());
         }
@@ -81,12 +82,12 @@ public class Enemy_Mage : EnemyBase, ICharacter
         anim.SetTrigger("doAttack");
         yield return new WaitForSeconds(0.4f);
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
-        yield return new WaitForSeconds(1.1f);
-        isAttack = false;
         
+        yield return new WaitForSeconds(2f);
+        Debug.Log("메이지 대기");
+        isAttack = false;
         isChase = true;
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackInterval);
     }
     /// <summary>
     /// Enemy 죽는 함수

@@ -37,10 +37,11 @@ public class EnemyBase : MonoBehaviour
     public bool isPlaeyerFind = false;  //플레이어 발견 상태
 
     public float sightRange = 5f;       //플레이어 발견 거리
+    public float attackInterval = 2f;
 
     [Header("-------[ 드롭 아이템 ]")]
     public GameObject[] dropItems;
-   
+
     protected virtual void Awake()
     {
         //컴포넌트 생성
@@ -48,7 +49,7 @@ public class EnemyBase : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         //meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
-        
+
         if (mainManager == null)
         {
             mainManager = FindObjectOfType<MainManager>();
@@ -61,7 +62,7 @@ public class EnemyBase : MonoBehaviour
         //target = GameObject.Find("Player").GetComponent<Transform>();
         target = FindObjectOfType<Player>().transform;
         //by 손동욱
-        
+
     }
 
     protected virtual void Update()
@@ -79,7 +80,7 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void SearchPlayer()
     {
-        isPlaeyerFind = false;        
+        isPlaeyerFind = false;
 
         // 레이어 마스크를 통해 오브젝트(플레이어)를 감지하는 물리 구체
         Collider[] collider =
@@ -139,7 +140,36 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Targeting()
     {
     }
-    
+    /// <summary>
+    /// 근접 몬스터 MeleeAttack Collision 켜고/끄기
+    /// </summary>
+    /// <param name="isAttack"></param>
+    protected virtual void MeleeAttackTrigger(bool isAttack)
+    {
+        if (isAttack)
+        {
+            meleeAttack.SetActive(true);
+        }
+        else
+        {
+            meleeAttack.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 몬스터 공격 대기 시간
+    /// 몬스터 공격 대기 시간
+    /// </summary>
+    /// <returns></returns>
+    protected virtual IEnumerator WaitForAttack()
+    {
+        Debug.Log("공격대기");
+        MeleeAttackTrigger(false);              //meleeAttack Collision 끔
+        isAttack = true;
+        isChase = true;
+        yield return new WaitForSeconds(attackInterval);
+        isAttack = false;
+    }
     /// <summary>
     /// SearchPlayer() 의 범위를 에디터에서만 표시
     /// </summary>

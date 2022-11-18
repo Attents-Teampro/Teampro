@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Projectile : MonoBehaviour, ICharacter
 {
-    public int attackDamage = 50;
+    public EnemyData enemyData;
     private float projectileSpeed = 10f;
     Vector3 targetPoint;
 
@@ -40,7 +40,7 @@ public class Projectile : MonoBehaviour, ICharacter
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player Attacked");
-            Attack(other.gameObject, attackDamage);
+            Attack(other.gameObject, enemyData.EDamage);
             Destroy(this.gameObject);
         }
         else if (!other.CompareTag("Enemy"))

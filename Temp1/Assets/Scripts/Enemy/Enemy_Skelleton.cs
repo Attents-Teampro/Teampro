@@ -20,6 +20,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
+        MeleeAttackTrigger(false);
     }
 
     protected override void Update()
@@ -51,7 +52,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
-        if (rayHits.Length > 0)
+        if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {
             StartCoroutine(enemyAttack());
         }
@@ -65,11 +66,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         anim.SetTrigger("doAttack");
         meleeAttack.SetActive(true);
         yield return new WaitForSeconds(1f);
-
-        isAttack = false;
-        meleeAttack.SetActive(false);
-        isChase = true;
-        yield return new WaitForSeconds(1f);
+        StartCoroutine(WaitForAttack());
     }
 
     IEnumerator OnDead()
@@ -97,6 +94,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
+        MeleeAttackTrigger(false);
 
         HitColor(true);
 

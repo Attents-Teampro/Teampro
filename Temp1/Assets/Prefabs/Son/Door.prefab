@@ -131,8 +131,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.11, y: 0.83, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 10, y: 0.83000004, z: 0.8}
+  m_Center: {x: -4.56, y: 0, z: 0}
 --- !u!114 &1502231155494406974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 138745258873431883}
   isSpawn: 0
-  checkRange: 2.55
+  checkRange: 1
 --- !u!1 &5303444129877740841
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +244,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.11, y: 0.83, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 10, y: 0.83000004, z: 0.8}
+  m_Center: {x: -4.56, y: 0, z: 0}
 --- !u!114 &138745258873431883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1502231155494406974}
   isSpawn: 0
-  checkRange: 2.7
+  checkRange: 1
 --- !u!1 &5404738752783836919
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,8 +357,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.11, y: 0.83, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 10, y: 0.83000004, z: 0.8000001}
+  m_Center: {x: -4.56, y: 0, z: 0}
 --- !u!114 &5499603612829817045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1833284542969796500}
   isSpawn: 0
-  checkRange: 2.55
+  checkRange: 1
 --- !u!1 &6010064399646588239
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,8 +470,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.11, y: 0.83, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 10, y: 0.83000004, z: 0.8000001}
+  m_Center: {x: -4.56, y: 0, z: 0}
 --- !u!114 &1833284542969796500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,4 +486,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 5499603612829817045}
   isSpawn: 0
-  checkRange: 2.55
+  checkRange: 1

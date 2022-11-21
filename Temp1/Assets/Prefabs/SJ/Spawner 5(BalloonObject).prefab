@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 480198640502922596}
   - component: {fileID: 6480546422584917300}
   m_Layer: 0
-  m_Name: Spawner 3-1Obs
+  m_Name: Spawner 5(BalloonObject)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006f9a30892724849bbcacf37ee16296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObject: {fileID: 2971918006981601034, guid: 7e2cb08e1c1476b4297a0dcd444d0732, type: 3}
-  numOfEnemy: 3
+  enemyObject: {fileID: 2911597060502401789, guid: 04f7a9876908a5f41adfac2b9668eaab, type: 3}
+  numOfEnemy: 4
   isBoss: 0
   bossPosition: {x: 0, y: 0, z: 0}

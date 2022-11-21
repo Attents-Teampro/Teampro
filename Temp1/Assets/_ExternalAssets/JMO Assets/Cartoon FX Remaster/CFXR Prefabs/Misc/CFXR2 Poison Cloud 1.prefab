@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4425129568604026700}
   - component: {fileID: 9049779857616056944}
   m_Layer: 0
-  m_Name: CFXR2 Poison Cloud
+  m_Name: CFXR2 Poison Cloud 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

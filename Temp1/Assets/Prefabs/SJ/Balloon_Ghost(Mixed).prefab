@@ -76,12 +76,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2911597060502401789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff94fd12bfda3ef4883fe9a3f75645b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f7542a2d6b565e45b761ecf4ebe646d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Is_Breaked: 0
-  ghost_normal: {fileID: 4187144168491269354, guid: db22502f7e763c441afb7962d6b19d22, type: 3}
-  ghost_Parts: {fileID: 1018494401351371775, guid: 485ef9375707a814e9fdd1c1b45fca82, type: 3}
+  ghost_normal: {fileID: 2911597060888555931}
+  ghost_Parts: {fileID: 2911597060234219985}
   ghost: {fileID: 2911597059970714854}
 --- !u!54 &3777315659942775772
 Rigidbody:

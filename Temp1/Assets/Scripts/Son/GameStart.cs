@@ -8,11 +8,23 @@ public class GameStart : MonoBehaviour
     //public GameObject[] room;
     //BoxCollider col;
     //Vector3 roomPosition;
+    [SerializeField]
+    bool isFirstRoomSpawn = false;
     private void Start()
     {
-        creater.GetComponent<DungeonCreator>().CreateDungeon();
-        creater.SetActive(false);
-        player.SetActive(false);
+        creater.SetActive(true);
+        player.SetActive(true);
+        if (isFirstRoomSpawn)
+        {
+
+            Room r = creater.transform.GetChild(1).GetComponent<Room>();
+            Debug.Log($"첫 번째 차일드는 {creater.transform.GetChild(1).name}");
+            //Room[] r = creater.transform.GetComponentsInChildren<Room>();
+            //foreach (Room room in r)
+            //{
+            //    room.StartSpawn();
+            //}
+        }
     }
     /// <summary>
     /// 던전 크리에이트와 샛을 한 프레임 안에서 실행하면 에러(콜리더가 안생김)가 있음.

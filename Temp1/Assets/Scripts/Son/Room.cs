@@ -14,10 +14,10 @@ public class Room : MonoBehaviour
     
     private void Start()
     {
-        Debug.Log("ㅇㅇ1");
+        //Debug.Log("ㅇㅇ1");
         if (index == 0)
         {
-            Debug.Log("ㅇㅇ2");
+            //Debug.Log("ㅇㅇ2");
             OpenAllDoor();
             foreach(Door d in door)
             {
@@ -39,16 +39,19 @@ public class Room : MonoBehaviour
         //    i.StartSpawn(gameObject);
         //}
 
-        MainManager.instance.onClearthisRoom += OpenAllDoor;
+        
         //Debug.Log($"연결. {name}은 함수 연결 완료");
     }
-
+    public void PlayerInThisRoom()
+    {
+        MainManager.instance.onClearthisRoom += OpenAllDoor;
+    }
     void OpenAllDoor()
     {
         //Debug.Log($"실행. {name}은 함수 실행 완료");
         foreach (var i in door)
         {
-            Debug.Log($"{transform.name}의 문 열기 실행 0");
+            //Debug.Log($"{transform.name}의 문 열기 실행 0");
             i.ClearAndClose(true);
         }
         isClear = true;

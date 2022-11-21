@@ -41,7 +41,7 @@ public class Door : MonoBehaviour
         col = GetComponent<BoxCollider>();
         mr = GetComponent<MeshRenderer>();
         //sphereCol = GetComponent<SphereCollider>();
-        checkRange = transform.localScale.y * 0.5f + 0.2f;
+        checkRange = transform.localScale.y * 0.5f +5f;
     }
 
     private void Start()
@@ -71,11 +71,11 @@ public class Door : MonoBehaviour
         //문 체크 변수 변경
         IsOpen = x;
         door.IsOpen = x;
-        Debug.Log("문 열기 실행 1");
+        //Debug.Log("문 열기 실행 1");
     }
     private void DoorControl(bool t)
     {
-        Debug.Log("문 열기 실행 2");
+        //Debug.Log("문 열기 실행 2");
         //Open
         if (t)
         {
@@ -96,7 +96,10 @@ public class Door : MonoBehaviour
     {
         bool result = false;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, checkRange, LayerMask.GetMask("floor"));
+        Vector3 box = new Vector3(0.1f, checkRange, 0);
+        Collider[] colliders = Physics.OverlapBox(transform.position, box, transform.rotation, LayerMask.GetMask("floor"));
+        //Physics.OverlapSphere(transform.position, checkRange, LayerMask.GetMask("floor"));
+
         //Debug.Log("탐지");
         if (colliders.Length > 0)
         {
@@ -120,7 +123,12 @@ public class Door : MonoBehaviour
         {
             SetInfo();
             IsOpen = false;
-            room.StartSpawn();
+            room.PlayerInThisRoom();
+            //room.StartSpawn();
+        }
+        else if (room.isClear)
+        {
+            door.room.StartSpawn();
         }
     }
 

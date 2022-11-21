@@ -61,7 +61,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
-        //Debug.Log(rayHits[0]);
+        Debug.Log(rayHits[0]);
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
         if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {
@@ -159,7 +159,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
-        //EnemyHealth.instance.SetCurrentHealth(currentHP);
+        EnemyHealth.instance.SetCurrentHealth(currentHP);
     }
 
     public void Attack(GameObject target, int damage)

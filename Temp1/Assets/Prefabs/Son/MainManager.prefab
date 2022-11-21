@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfStageEnemy: 0
   numOfDieEnemy: 0
+  clearUIWindos: {fileID: 0}
   spawnManager: {fileID: 0}
+  gold: 0
 --- !u!114 &871639914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creater: {fileID: 0}
   player: {fileID: 0}
+  isFirstRoomSpawn: 1
 --- !u!114 &762380313743942940
 MonoBehaviour:
   m_ObjectHideFlags: 0

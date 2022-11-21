@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 361872475092456761}
   - component: {fileID: 6045393989888986947}
   - component: {fileID: 1436966241}
-  - component: {fileID: 3664363133274142952}
   - component: {fileID: -7042802846493123821}
+  - component: {fileID: 2737140416707092176}
+  - component: {fileID: 858726333864914062}
   m_Layer: 0
   m_Name: Arrows
   m_TagString: Weapon
@@ -73,19 +74,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &3664363133274142952
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030886390429175683}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.13, y: 0.1, z: 1.18}
-  m_Center: {x: 0, y: 0, z: 0.48}
 --- !u!114 &-7042802846493123821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +88,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   value: 2
+--- !u!114 &2737140416707092176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030886390429175683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b64859cbfb8c54590554ac8b59ba81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialSpeed: 10
+--- !u!136 &858726333864914062
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030886390429175683}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17
+  m_Height: 1.27
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.45}
 --- !u!1 &1984956701284454672
 GameObject:
   m_ObjectHideFlags: 0

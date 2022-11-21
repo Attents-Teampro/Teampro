@@ -51,6 +51,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 858726333864914062, guid: 3148b8d68e8343939f58244212435bd5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 858726333864914062, guid: 3148b8d68e8343939f58244212435bd5, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1030886390429175683, guid: 3148b8d68e8343939f58244212435bd5, type: 3}
       propertyPath: m_Name
       value: Arrows Variant

@@ -15,8 +15,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     public int currentHP;
     public int maxHP;
 
-    private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
-    private Transform mageStaff;
+    private Transform shotPosition;   //발사체(projectile) 생성 위치
 
 
     protected override void Awake()
@@ -29,8 +28,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        mageStaff = transform.GetChild(2);
-        mageBulletPosition = mageStaff.GetChild(0);
+        shotPosition = transform.GetChild(2);
     }
 
     
@@ -62,7 +60,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
-        Debug.Log(rayHits[0]);
+        //Debug.Log(rayHits[0]);
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
         if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {
@@ -82,7 +80,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         DangerLineOn();
         anim.SetTrigger("doAttack");
         yield return new WaitForSeconds(0.4f);
-        Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
+        Instantiate(projectile, shotPosition.position, Quaternion.identity);
         
         yield return new WaitForSeconds(2f);
         Debug.Log("메이지 대기");
@@ -93,7 +91,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     void DangerLineOn()
     {
-        Instantiate(dangerLine, mageBulletPosition.position, Quaternion.identity);
+        Instantiate(dangerLine, shotPosition.position, Quaternion.identity);
     }
     /// <summary>
     /// Enemy 죽는 함수

@@ -11,6 +11,7 @@ using static UnityEngine.UI.Image;
 public class Enemy_Bat : EnemyBase, ICharacter
 {
     public GameObject projectile;
+    public GameObject dangerLine;
     public int currentHP;
     public int maxHP;
 
@@ -78,7 +79,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        
+        DangerLineOn();
         anim.SetTrigger("doAttack");
         yield return new WaitForSeconds(0.4f);
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
@@ -88,6 +89,11 @@ public class Enemy_Bat : EnemyBase, ICharacter
         isAttack = false;
         isChase = true;
         yield return new WaitForSeconds(attackInterval);
+    }
+
+    void DangerLineOn()
+    {
+        Instantiate(dangerLine, mageBulletPosition.position, Quaternion.identity);
     }
     /// <summary>
     /// Enemy 죽는 함수

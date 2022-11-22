@@ -15,6 +15,8 @@ public class EnemyBase : MonoBehaviour
         Mage,
         Shell,
         Boss,
+        Bat,
+        Dragon,
     }
 
     public EnemyType enemyType;

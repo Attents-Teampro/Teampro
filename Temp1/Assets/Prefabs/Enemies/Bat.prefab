@@ -637,6 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4353946734237038}
   - component: {fileID: 95803094613959610}
+  - component: {fileID: 1479372589757099842}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -681,6 +682,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1479372589757099842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522199433267968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bec9357c2b7d5745bbde28bd76ed322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyData: {fileID: 11400000, guid: 0c4743a3ae2a95b47a10963532bc7506, type: 2}
+  target: {fileID: 0}
+  meleeAttack: {fileID: 0}
+  nav: {fileID: 0}
+  capsuleCollider: {fileID: 0}
+  anim: {fileID: 0}
+  mainManager: {fileID: 0}
+  meshs: []
+  isChase: 0
+  isAttack: 0
+  isDead: 0
+  isGetHit: 0
+  isPlaeyerFind: 0
+  sightRange: 5
+  attackInterval: 2
+  dropItems: []
+  projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
+  dangerLine: {fileID: 0}
+  currentHP: 0
+  maxHP: 0
 --- !u!1 &1558640783962364
 GameObject:
   m_ObjectHideFlags: 0

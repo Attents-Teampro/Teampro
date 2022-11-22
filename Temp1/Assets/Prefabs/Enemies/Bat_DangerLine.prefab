@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1398628936}
   - component: {fileID: -4503832635787534415}
   m_Layer: 0
-  m_Name: Bat_Projectile
+  m_Name: Bat_DangerLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ceb13770afec940a72bf09443bcb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 49e6adf5005e59f4182beb7e36f3a221, type: 2}
+  enemyData: {fileID: 11400000, guid: 0c4743a3ae2a95b47a10963532bc7506, type: 2}
 --- !u!54 &-4503832635787534415
 Rigidbody:
   m_ObjectHideFlags: 0

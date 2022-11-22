@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: f7f1d926a2c56c04383de1c5f2f9e617
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - enemyData: {fileID: 11400000, guid: 0c4743a3ae2a95b47a10963532bc7506, type: 2}
+  - target: {instanceID: 0}
+  - meleeAttack: {instanceID: 0}
+  - nav: {instanceID: 0}
+  - rb: {instanceID: 0}
+  - capsuleCollider: {instanceID: 0}
+  - anim: {instanceID: 0}
+  - mainManager: {instanceID: 0}
+  - projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Arrows : MonoBehaviour, ICharacter
 {
 
-    public float initialSpeed = 10.0f;
+    public float arrowSpeed = 10.0f;
     Rigidbody rigid;
 
     private void Awake()
@@ -16,17 +16,20 @@ public class Arrows : MonoBehaviour, ICharacter
 
     private void Start()
     {
-        rigid.velocity = transform.forward * initialSpeed;
+        rigid.velocity = transform.forward * arrowSpeed;
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
             Attack(other.gameObject, Player.instance.pDamage);
+            Destroy(this.gameObject);
         }
         Destroy(this.gameObject, 1.0f);
     }
+
 
     public void Die()
     {

@@ -63,5 +63,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrows Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2737140416707092176, guid: 3148b8d68e8343939f58244212435bd5, type: 3}
+      propertyPath: initialSpeed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3148b8d68e8343939f58244212435bd5, type: 3}

@@ -14,6 +14,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     public GameObject dangerLine;
     public int currentHP;
     public int maxHP;
+    public Vector3 offset;
 
     private Transform shotPosition;   //발사체(projectile) 생성 위치
 
@@ -28,14 +29,17 @@ public class Enemy_Bat : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
+        offset = new Vector3(0, 1.35f, 0.38f);
         shotPosition = transform.GetChild(2);
     }
 
-    
+
 
     protected override void Update()
     {
         base.Update();
+       
+        shotPosition.localRotation = transform.root.rotation;
     }
 
     protected override void SearchPlayer()
@@ -53,18 +57,22 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     protected override void Targeting()
     {
-        
+        transform.LookAt(target.transform.position);
+
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
-
-        //Debug.Log(rayHits[0]);
-        // 레이캐스트에 Player 오브젝트가 판별되면 어택
-        if (rayHits.Length > 0 && !isAttack && !isGetHit)
+        if (rayHits.Length > 0)
         {
-            StartCoroutine(enemyAttack());
+            Debug.Log(rayHits[0]);
+            // 레이캐스트에 Player 오브젝트가 판별되면 어택
+            if (!isAttack && !isGetHit)
+            {
+                StartCoroutine(enemyAttack());
+            }
+
         }
     }
 
@@ -77,11 +85,11 @@ public class Enemy_Bat : EnemyBase, ICharacter
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        DangerLineOn();
+
         anim.SetTrigger("doAttack");
-        yield return new WaitForSeconds(0.4f);
-        Instantiate(projectile, shotPosition.position, Quaternion.identity);
-        
+        yield return new WaitForSeconds(1f);
+        Instantiate(projectile, shotPosition.position, transform.rotation);
+
         yield return new WaitForSeconds(2f);
         Debug.Log("메이지 대기");
         isAttack = false;
@@ -133,7 +141,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         yield return new WaitForSeconds(0.1f);
 
         HitColor(false);
-        
+
         if (currentHP < 0)
         {
             Die();

@@ -6,42 +6,44 @@ using static UnityEngine.GraphicsBuffer;
 public class DangerLine : MonoBehaviour
 {
     private float speed = 10f;
-    Vector3 targetPoint;
-
-    Rigidbody rb;
+    public Vector3 targetPoint;
+    TrailRenderer tr;
     GameObject player;
    
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-        //10.11 수정. 
-        //기존의 Player를 오브젝트 이름으로 찾는 방식이 
-        //업데이트마다 플레이어 오브젝트의 이름이 변경될 시 에러가 뜰 위험이 있고 지금도 뜨고 있어서
-        //클래스를 찾는 방식으로 변경했습니다.
-        //기존 코드 player = GameObject.Find("Player").GetComponent<Transform>();
         player = FindObjectOfType<Player>().gameObject;//수정코드
-        //by 손동욱
-        
+        tr= GetComponent<TrailRenderer>();
         targetPoint = player.transform.position + new Vector3(0, 1f, 0);
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 3f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position,targetPoint, speed * Time.deltaTime);
+        DangerlineShot();
+        //transform.position = Vector3.Lerp(transform.position,targetPoint, speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void DangerlineShot()
     {
-        if (other.CompareTag("Player"))
+        Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 30f, LayerMask.GetMask("Player"));
+        targetPoint= hit.point;
+        Debug.Log("데인저 라인 플레이어 발견" + targetPoint);
+        if(targetPoint!=null)
         {
-            Destroy(this.gameObject);
-        }
-        else if (!other.CompareTag("Enemy"))
-        {
+            transform.position = Vector3.Lerp(transform.position, targetPoint, speed * Time.deltaTime);
         }
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //    else if (!other.CompareTag("Enemy"))
+    //    {
+    //    }
+    //}
 }

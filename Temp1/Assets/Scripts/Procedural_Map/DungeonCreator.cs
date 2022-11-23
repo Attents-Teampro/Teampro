@@ -60,7 +60,7 @@ public class DungeonCreator : MonoBehaviour
     }
     private void Start()
     {
-        CreateDungeon(); // 던전 생성 매서드
+        // CreateDungeon(); // 던전 생성 매서드
 
         //11.10 추가 by 손동욱
         //네브메쉬 활성화하는게 주석 중에 뭔지 몰라서 다 활성화 했습니다.

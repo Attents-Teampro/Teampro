@@ -17,4 +17,4 @@ MonoBehaviour:
   moveSpeed: 0
   rotationSpeed: 0
   targetRadius: 1
-  targetRange: 7
+  targetRange: 9

@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Projectile_Bat : MonoBehaviour, ICharacter
 {
     public EnemyData enemyData;
-    private float projectileSpeed = 10f;
+    public float projectileSpeed = 5f;
     //Vector3 targetPoint;
 
     Rigidbody rb;

@@ -15,6 +15,8 @@ public class EnemyBase : MonoBehaviour
         Mage,
         Shell,
         Boss,
+        Bat,
+        Dragon,
     }
 
     public EnemyType enemyType;
@@ -96,10 +98,11 @@ public class EnemyBase : MonoBehaviour
     protected virtual void MoveToTarget()
     {
         isChase = true;
+        float stopPoint = nav.stoppingDistance;
 
         if (!isGetHit && !isAttack)
         {
-            if (Vector3.Distance(transform.position, target.position) < 2f)
+            if (Vector3.Distance(transform.position, target.position) < stopPoint)
             {
                 StopNavMesh(true);
             }
@@ -139,6 +142,7 @@ public class EnemyBase : MonoBehaviour
     }
     protected virtual void Targeting()
     {
+        
     }
     /// <summary>
     /// 근접 몬스터 MeleeAttack Collision 켜고/끄기

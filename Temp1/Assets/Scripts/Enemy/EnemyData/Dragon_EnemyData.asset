@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b87546db3c8b6474b8072d2969e51537, type: 3}
-  m_Name: Enemy Data
+  m_Name: Dragon_EnemyData
   m_EditorClassIdentifier: 
   enemyType: 
   eHP: 0

@@ -6,10 +6,6 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [SerializeField]
-    string enemyType;
-    public string EnemyType { get { return enemyType; }}
-
-    [SerializeField]
     int eHP;
     public int EHP { get { return eHP; }}
 

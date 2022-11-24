@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 19801364}
   - component: {fileID: 19998858}
   m_Layer: 0
-  m_Name: FX_FlameThrower
+  m_Name: Dragon_Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

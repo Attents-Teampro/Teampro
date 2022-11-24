@@ -174,6 +174,9 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForSeconds(attackInterval);
         isAttack = false;
     }
+
+    public virtual void FireFlameOn(){}
+    public virtual void FireFlameOff(){}
     /// <summary>
     /// SearchPlayer() 의 범위를 에디터에서만 표시
     /// </summary>

@@ -11,11 +11,12 @@ using static UnityEngine.UI.Image;
 public class Enemy_Dragon : EnemyBase, ICharacter
 {
     public GameObject projectile;
+    public GameObject flame;
     public int currentHP;
     public int maxHP;
 
-    private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
-    private Transform mageStaff;
+    private Transform flamePos;
+    ParticleSystem ps;
 
 
     protected override void Awake()
@@ -28,11 +29,10 @@ public class Enemy_Dragon : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        mageStaff = transform.GetChild(2);
-        mageBulletPosition = mageStaff.GetChild(0);
+        flamePos = transform.GetChild(2);
+        ps = flamePos.GetComponentInChildren<ParticleSystem>();
+        flamePos.gameObject.SetActive(false);
     }
-
-    
 
     protected override void Update()
     {
@@ -54,7 +54,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
 
     protected override void Targeting()
     {
-        
+
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
@@ -77,17 +77,27 @@ public class Enemy_Dragon : EnemyBase, ICharacter
     {
         isChase = false;
         isAttack = true;
+        nav.isStopped = true;
         anim.SetBool("isWalk", false);
-        
         anim.SetTrigger("doAttack");
-        yield return new WaitForSeconds(0.4f);
-        Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
-        
         yield return new WaitForSeconds(2f);
-        Debug.Log("메이지 대기");
-        isAttack = false;
+        FireFlameOff();
+        Debug.Log("드래곤 대기");
         isChase = true;
+        nav.isStopped = false;
         yield return new WaitForSeconds(attackInterval);
+        isAttack = false;
+    }
+
+    public override void FireFlameOn()
+    {
+        flamePos.gameObject.SetActive(true);
+
+    }
+
+    public override void FireFlameOff()
+    {
+        flamePos.gameObject.SetActive(false);
     }
     /// <summary>
     /// Enemy 죽는 함수
@@ -129,7 +139,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
         yield return new WaitForSeconds(0.1f);
 
         HitColor(false);
-        
+
         if (currentHP < 0)
         {
             Die();

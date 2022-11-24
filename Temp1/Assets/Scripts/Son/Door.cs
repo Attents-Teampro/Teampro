@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.UIElements.ToolbarMenu;
 
 public class Door : MonoBehaviour
 {
@@ -10,11 +12,11 @@ public class Door : MonoBehaviour
     public Door door;
 
     public bool isSpawn = false;
+    bool isRelationDoorSpawn = false;
     //해당 문과 연결된 방 저장 변수
     GameObject thisRoom = null;
 
     Room room;
-
     //컴포넌트 변수
     BoxCollider col;
     MeshRenderer mr;
@@ -40,8 +42,7 @@ public class Door : MonoBehaviour
     {
         col = GetComponent<BoxCollider>();
         mr = GetComponent<MeshRenderer>();
-        //sphereCol = GetComponent<SphereCollider>();
-        checkRange = transform.localScale.y * 0.5f +5f;
+        checkRange = 5f;
     }
 
     private void Start()
@@ -50,15 +51,9 @@ public class Door : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //if (CheckRoom())
-        //{
-        //    //Debug.Log($"방 찾기 성공\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 {thisRoom}입니다.");
-        //}
-        //else
-        //{
-        //    //Debug.Log($"방 찾기 실패\n해당 문 {transform.parent.parent.name}자식 {name}의 방은 찾지못했습니다.");
-        //    Destroy(gameObject);
-        //}
+        //SetPosition();
+        SetPositionver2();
+
     }
 
     /// <summary>
@@ -71,17 +66,25 @@ public class Door : MonoBehaviour
         //문 체크 변수 변경
         IsOpen = x;
         door.IsOpen = x;
-        //Debug.Log("문 열기 실행 1");
     }
     private void DoorControl(bool t)
     {
-        //Debug.Log("문 열기 실행 2");
         //Open
         if (t)
         {
+            if (room.index == 0)
+            {
+
+            }
+            else
+            {
+
+
+            }
             mr.enabled = false;
             col.isTrigger = true;
             SetColliderSize(true);
+
         }
         //Close
         else
@@ -96,29 +99,41 @@ public class Door : MonoBehaviour
     {
         bool result = false;
 
-        Vector3 box = new Vector3(0.1f, checkRange, 0);
-        Collider[] colliders = Physics.OverlapBox(transform.position, box, transform.rotation, LayerMask.GetMask("floor"));
-        //Physics.OverlapSphere(transform.position, checkRange, LayerMask.GetMask("floor"));
+        Vector3 box = new Vector3(0, checkRange, 0);
+        Collider[] colliders = Physics.OverlapBox(transform.position-new Vector3(0,transform.localScale.y,0), box, transform.rotation, LayerMask.GetMask("floor"));
 
-        //Debug.Log("탐지");
         if (colliders.Length > 0)
         {
-            //Debug.Log("실행");
             //변수에 방 대입
             thisRoom = colliders[0].gameObject;
             //방에 문 대입
             room = thisRoom.GetComponent<Room>();
             room.door.Add(this);
-            //Debug.Log(room.door);
-
-            //thisRoom.GetComponent<Room>().StartSpawn();
             result = true;
         }
+        if (!result)
+        {
+            Collider[] colliders1 = Physics.OverlapBox(transform.position - new Vector3(0, transform.localScale.y, 0) + transform.localPosition*3, box, transform.rotation, LayerMask.GetMask("floor"));
 
+            if (colliders1.Length > 0)
+            {
+                //변수에 방 대입
+                thisRoom = colliders1[0].gameObject;
+                //방에 문 대입
+                room = thisRoom.GetComponent<Room>();
+                room.door.Add(this);
+                result = true;
+            }
+        }
         return result;
     }
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log($"인. {gameObject.name}");
+        //Debug.Log($"정보 : \n" +
+        //    $"태그 : {other.gameObject.CompareTag("Player")} \n" +
+        //    $"isSpawn : {isSpawn}\n" +
+        //    $"room.isClear : {room.isClear} ");
         if (other.gameObject.CompareTag("Player") && !isSpawn && !room.isClear)
         {
             SetInfo();
@@ -126,15 +141,19 @@ public class Door : MonoBehaviour
             room.PlayerInThisRoom();
             //room.StartSpawn();
         }
-        else if (room.isClear)
+        else if (room.isClear && !isRelationDoorSpawn && !door.room.isClear)
         {
             door.room.StartSpawn();
+            isRelationDoorSpawn = true;
+            //door.isSpawn = true;
         }
     }
 
     public void SetInfo()
     {
+        //해당 문이 스폰기능 실행했는지 여부
         isSpawn = true;
+        
     }
     public void SetColliderSize(bool isFront)
     {
@@ -147,27 +166,118 @@ public class Door : MonoBehaviour
 
 
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Player") && !room.isClear)
-    //    {
-    //        room.StartSpawn();
-    //    }
-    //}
+    public void SetPositionver2()
+    {
+        BoxCollider p = transform.parent.parent.gameObject.GetComponent<BoxCollider>();
+        float colliderX = p.bounds.size.x * 0.5f;
+        float colliderZ = p.bounds.size.z * 0.5f;
+        float minValue = float.MaxValue;
+        //문 포지션
+        Vector2 thisPositionVertual = new Vector2(transform.position.x, transform.position.z) ;
+        //최종 목적지 포지션(복도 방향에 맞고, 문이 튀어나오거나 안으로 빠지지 않는 최적의 위치)
+        Vector2 destination = Vector2.zero;
+        //Debug.Log($"가상 포지션은 {thisPositionVertual}이다.");
 
+        Vector2[] arr = new Vector2[4];
+        arr[0] = new Vector2(0, colliderZ) + new Vector2(p.center.x, p.center.z);
+        arr[1] = new Vector2(0, -colliderZ) + new Vector2(p.center.x, p.center.z);
+        arr[2] = new Vector2(colliderX, 0) + new Vector2(p.center.x, p.center.z);
+        arr[3] = new Vector2(-colliderX, 0) + new Vector2(p.center.x, p.center.z);
+        int count = 0;
+        foreach (var i in arr)
+        {
+            
+            Vector2 dis = thisPositionVertual - i;
+            float distence = dis.sqrMagnitude;
+            if(distence < minValue)
+            {
+                minValue = distence;
+                destination = i;
+                count++;
+            }
+        }
+        transform.position = new Vector3(destination.x, transform.position.y, destination.y - p.center.y);
+
+
+
+    }
+    public void SetPosition(Collider parant =null)
+    {
+        //혹시 복도 오브젝트의 콜리더가 지정안되어있으면 지정
+        if (parant == null)
+        {
+            parant = transform.parent.parent.gameObject.GetComponent<BoxCollider>();
+        }
+        //복도 오브젝트 중심점 구하기
+        Vector3 parantPosition = parant.bounds.center;
+        //복도 오브젝트의 어떤 축에 복도가 붙어있는지 구하기
+
+        //어디 축에 붙어있는지 확인
+        //x축 = true, z축 = false
+        bool isAxis = false;
+
+        //축의 어디 방향인지 체크
+        int isSign = 0;
+
+        //x축 체크
+        if(parantPosition.x < room.roomPosition.x + room.boxCol.bounds.size.x && parantPosition.x > room.roomPosition.x - room.boxCol.bounds.size.x)
+        {
+            //x축 안에 있을 경우
+            isAxis = true;
+            //방에서 복도 위치가 z축 기준으로 +인지 -인지 구분
+            if(parantPosition.z < room.roomPosition.z)
+            {
+                isSign = -1;
+            }
+            else
+            {
+                isSign = 1;
+            }
+        }
+        //z축 체크
+        else if(parantPosition.z < room.roomPosition.z + room.boxCol.bounds.size.z && parantPosition.z > room.roomPosition.z - room.boxCol.bounds.size.z)
+        {
+            //z축 안에 있을 경우
+            isAxis = false;
+            if (parantPosition.x < room.roomPosition.x)
+            {
+                isSign = -1;
+            }
+            else
+            {
+                isSign = 1;
+            }
+        }
+        //에러(대각선 생성일 때
+        else
+        {
+            Debug.Log("에러 발생. 복도 위치가 방의 x축과 z축 어디에도 붙어있지 않음.");
+        }
+
+
+        float parantX = parant.bounds.extents.x;
+        float parantZ = parant.bounds.extents.z;
+        float thisPositionX = transform.position.x;
+        float thisPositionZ = transform.position.z; 
+        //z축 방향으로 방이 나열되어 있을 때
+        if (isAxis)
+        {
+            thisPositionZ = parant.bounds.size.z * isSign;
+        }
+        else 
+        {
+            thisPositionX = parant.bounds.size.x * isSign;
+        }
+
+        transform.position = new Vector3(thisPositionX, transform.position.y, thisPositionZ) + transform.parent.position;
+
+        Debug.Log($"{transform.parent.parent.name}의 문 {transform.name}의 위치는 {transform.position}이다.");
+    }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position, checkRange);
     }
 
-    ////방이 이미 콜리더 안에 있기 때문에 stay사용
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Room"))
-    //    {
-
-    //    }
-    //}
 
 }

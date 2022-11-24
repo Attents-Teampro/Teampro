@@ -7,17 +7,19 @@ public class Room : MonoBehaviour
 {
     public int index;
     public Spawner[] spawners;
-    public List<Door> door = new List<Door>(3);
+    public List<Door> door = new List<Door>(4);
     public Vector3 roomPosition;
     public bool isClear = false;
+    public BoxCollider boxCol;
 
-    
+    private void Awake()
+    {
+        boxCol = GetComponent<BoxCollider>();
+    }
     private void Start()
     {
-        //Debug.Log("ㅇㅇ1");
         if (index == 0)
         {
-            //Debug.Log("ㅇㅇ2");
             OpenAllDoor();
             foreach(Door d in door)
             {
@@ -48,18 +50,14 @@ public class Room : MonoBehaviour
     }
     void OpenAllDoor()
     {
-        //Debug.Log($"실행. {name}은 함수 실행 완료");
         foreach (var i in door)
         {
-            //Debug.Log($"{transform.name}의 문 열기 실행 0");
             i.ClearAndClose(true);
         }
         isClear = true;
 
-        if (index != 1)
-        {
-            MainManager.instance.onClearthisRoom -= OpenAllDoor;
-        }
+        
+        MainManager.instance.onClearthisRoom -= OpenAllDoor;
     }
 
     void CloseAllDoor()

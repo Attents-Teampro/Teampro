@@ -59,7 +59,6 @@ public class MainManager : Singleton<MainManager>
     /// <param name="isBoss">ture면 보스가 죽었을 때 실행되는 클리어 함수</param>
     public void StageClear(bool isBoss = false)
     {
-        Debug.Log("스테이지 클리어");
         onClearthisRoom?.Invoke();
 
         //portalObject.SetActive(true);

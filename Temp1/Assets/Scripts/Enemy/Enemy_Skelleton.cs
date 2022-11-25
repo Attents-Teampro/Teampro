@@ -60,6 +60,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     IEnumerator enemyAttack()
     {
+        transform.LookAt(target.transform.position);
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);

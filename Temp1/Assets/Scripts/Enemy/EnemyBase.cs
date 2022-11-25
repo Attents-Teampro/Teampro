@@ -142,7 +142,7 @@ public class EnemyBase : MonoBehaviour
     }
     protected virtual void Targeting()
     {
-        
+        transform.LookAt(target.transform.position);
     }
     /// <summary>
     /// 근접 몬스터 MeleeAttack Collision 켜고/끄기

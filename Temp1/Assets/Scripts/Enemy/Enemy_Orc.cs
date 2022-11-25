@@ -73,6 +73,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     IEnumerator enemyAttack()
     {
         MeleeAttackTrigger(true);
+        transform.LookAt(target.transform.position);
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
@@ -143,23 +144,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
                 mesh.material.color = Color.white;
         }
     }
-    //void PlaySound(string action)
-    //{
-    //    switch (action)
-    //    {
-    //        case "Atack":
-    //            audioSource.clip = attackSnd;
-    //            break;
-    //        case "GetHit":
-    //            audioSource.clip = getHitSnd;
-    //            break;
-    //        case "Die":
-    //            audioSource.clip = dieSnd;
-    //            break;
-    //    }
-    //    audioSource.Play();
-
-    //}
+    
     public void Die()
     {
         StartCoroutine(OnDead());

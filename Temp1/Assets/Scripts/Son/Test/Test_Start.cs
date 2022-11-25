@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Test_Start : Test_Base
 {
     public Room room;
-    public Door door;
+
     //던전 절차적 생성
     protected override void Test1(InputAction.CallbackContext _)
     {
@@ -26,6 +26,6 @@ public class Test_Start : Test_Base
     //room에 저장된 몬스터 모두 처치
     protected override void Test3(InputAction.CallbackContext obj)
     {
-        room.StartSpawn();
+        
     }
 }

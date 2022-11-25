@@ -13,14 +13,12 @@ public class GameStart : MonoBehaviour
     private void Start()
     {
         creater.SetActive(true);
-        creater.GetComponent<DungeonCreator>().CreateDungeon();
         player.SetActive(true);
         if (isFirstRoomSpawn)
         {
 
             Room r = creater.transform.GetChild(1).GetComponent<Room>();
-            r.StartSpawn();
-            //Debug.Log($"첫 번째 차일드는 {creater.transform.GetChild(1).name}");
+            Debug.Log($"첫 번째 차일드는 {creater.transform.GetChild(1).name}");
             //Room[] r = creater.transform.GetComponentsInChildren<Room>();
             //foreach (Room room in r)
             //{

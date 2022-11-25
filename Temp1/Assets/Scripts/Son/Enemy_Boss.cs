@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class Enemy_Boss : MonoBehaviour, ICharacter
 {
-    MainManager mainManager;
+    public MainManager mainManager;
     public GameObject projectile_FireBall;
     //public int curHealth;
     //public int maxHealth;
@@ -52,7 +52,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     string aniType = "";//공격 타입 index에 맞는 string 값이 저장될 변수. 수동으로 입력한 애니메이션 각 공격 트리거의 트리거 변수값을 그대로 받는다.
     private void Awake()
     {
-        
+        mainManager = FindObjectOfType<MainManager>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -62,7 +62,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void Start()
     {
-        mainManager = MainManager.instance;
         if (target == null)
         {
             target = FindObjectOfType<Player>().transform;
@@ -118,6 +117,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                     //원거리 공격 범위에 적이 있을 때
                     if (rayHits.Length != 0)
                     {
+                        Debug.Log("인식");
                         //원거리 공격 타이머 재기
                         longAttackTimer += Time.deltaTime * 100;
 
@@ -280,16 +280,11 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         anim.SetTrigger("doDie");
         isDead = true;
         mainManager.numOfDieEnemy++;
-        //if (mainManager.numOfDieEnemy == mainManager.numOfStageEnemy)
-        //{
-        //    mainManager.StageClear(true);
-        //}
-        
+        if (mainManager.numOfDieEnemy == mainManager.numOfStageEnemy)
+        {
+            mainManager.StageClear(true);
+        }
         Destroy(gameObject, 1.7f * 2f);
-    }
-    private void OnDestroy()
-    {
-        mainManager.StageClear(true);
     }
     //공격 받을 때 실행
     public void Attacked(int d)

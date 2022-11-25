@@ -52,7 +52,7 @@ MonoBehaviour:
   target: {fileID: 0}
   damage: 1
   lifeTime: 9.82
-  speed: 20
+  speed: 4.86
 --- !u!54 &5860410832041268542
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -45,14 +45,5 @@ public class FireBall : MonoBehaviour
             Debug.Log($"{name} 발사체의 공격 적중");
             Destroy(gameObject);
         }
-        else if (other.CompareTag("Enemy"))
-        {
-
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
     }
 }

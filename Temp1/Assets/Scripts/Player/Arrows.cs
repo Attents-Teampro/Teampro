@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Arrows : MonoBehaviour, ICharacter
 {
 
-    public float arrowSpeed = 10.0f;
+    public float arrowSpeed = 1.0f;
+
+    //Vector3 targetPoint;
+    EnemyBase enemy;
     Rigidbody rigid;
 
     private void Awake()
@@ -17,6 +22,13 @@ public class Arrows : MonoBehaviour, ICharacter
     private void Start()
     {
         rigid.velocity = transform.forward * arrowSpeed;
+        //enemy = FindObjectOfType<EnemyBase>();
+        //targetPoint = enemy.transform.position + new Vector3(0, 1f, 0);
+    }
+
+    private void Update()
+    {
+        //transform.position = Vector3.MoveTowards(transform.position, targetPoint, arrowSpeed * Time.deltaTime);
     }
 
 

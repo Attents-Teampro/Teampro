@@ -42,40 +42,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DodgeUp",
-                    "type": "Value",
-                    "id": "fec367d9-a710-4962-9a3a-0617ce872605",
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "deca2ee0-fba1-4388-9aa1-3aeee5249063",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "DodgeDown",
-                    "type": "Value",
-                    "id": "ae928646-3311-4dfa-b464-b5c63ca1bbd5",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "DodgeLeft",
-                    "type": "Value",
-                    "id": "78ca00ee-a29b-4350-b686-351b92ea34b1",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "DodgeRight",
-                    "type": "Value",
-                    "id": "4c98421b-fe4d-40f3-87c8-ba99e2a194f9",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -168,136 +141,26 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "One Modifier",
-                    "id": "f3b1177d-f029-4229-82f8-e72892793e58",
-                    "path": "OneModifier",
+                    "name": "",
+                    "id": "e7621de3-18e6-4909-a6c7-8daee7d10cff",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "DodgeUp",
-                    "isComposite": true,
+                    "groups": "KM",
+                    "action": "LockOn",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "modifier",
-                    "id": "c4e81938-af43-4dbe-8daf-b1c90bc042e6",
-                    "path": "<Keyboard>/space",
+                    "name": "",
+                    "id": "7752bbd8-7f10-48ed-b6b2-287d46fd7fa2",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KM",
-                    "action": "DodgeUp",
+                    "action": "LockOn",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "7bcb36db-d80d-4a25-83e1-aec28783b971",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeUp",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "dc1286c8-2dfe-4c42-89c0-0f6546ab759f",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DodgeDown",
-                    "isComposite": true,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "5e601ece-45aa-49d0-8fce-fd186268d31f",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeDown",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "4b0a4973-1755-473c-bc71-dd0c3b1d540a",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeDown",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "d6632b14-7556-427d-ba24-ef8334bef5a4",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DodgeLeft",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "bc49cc9e-0df2-4bc5-8fb5-3e56e50842e4",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "831f1756-1609-4eee-99fd-b1aa5a5711ba",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "87fbff61-fd19-4464-b97f-fdde92e5359c",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DodgeRight",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "667eb43e-79c5-4a54-a60f-2e6d9ffc1084",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DodgeRight",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "7a307afc-770d-4f6f-ab0f-31db92be2386",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "DodgeRight",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },

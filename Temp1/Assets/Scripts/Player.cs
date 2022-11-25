@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, ICharacter
     public float speed;
     public GameObject[] weapons;
     public bool[] hasWeapons;
+    public CapsuleCollider dodgeinv;
 
     //플레이어 hp와 최대hp 설정 - 양해인 1104
     public int pHP;
@@ -65,6 +66,16 @@ public class Player : MonoBehaviour, ICharacter
     int equipWeaponIndex = -1;
     float fireDelay;
 
+    ///// <summary>
+    ///// 락온 이펙트
+    ///// </summary>
+    //LockOnEffect lockOnEffect;
+
+    ///// <summary>
+    ///// 락온 범위
+    ///// </summary>
+    //float lockOnRange = 5.0f;
+
     //-------------------------------------------------
 
     public int attackPower = 10;      // 공격력
@@ -104,6 +115,8 @@ public class Player : MonoBehaviour, ICharacter
     public Action<int> pHPChange { get; set; }
     public Action onDie { get; set; }
 
+    //public Transform LockOnTransform => lockOnEffect.transform.parent;
+
     //--------------------------------------------------------------------
 
     private void Awake()
@@ -112,8 +125,21 @@ public class Player : MonoBehaviour, ICharacter
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
 
-        //10.11 추가 
-        if (instance != null)
+        dodgeinv = GetComponent<CapsuleCollider>();
+        //11.10 추가 by 손동욱
+        //mellArea가 null이면 에러가 계속 나와서 수정
+        if (dodgeinv == null)
+        {
+            //Debug.Log("에러, Weapon스크립트의 meleeArea변수가 null입니다.");
+        }
+        else
+        {
+            dodgeinv.enabled = true;
+        }
+
+
+            //10.11 추가 
+            if (instance != null)
         {
             Destroy(gameObject);
             return;
@@ -175,13 +201,14 @@ public class Player : MonoBehaviour, ICharacter
         inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Dodge.performed += OnDodge;
         inputActions.Player.Attack.performed += OnAttacking;
-
+        //inputActions.Player.LockOn.performed += OnLockOn;
     }
 
 
 
     private void OnDisable()
     {
+        //inputActions.Player.LockOn.performed -= OnLockOn;
         inputActions.Player.Attack.performed -= OnAttacking;
         inputActions.Player.Dodge.performed -= OnDodge;
         inputActions.Player.Move.canceled -= OnMove;
@@ -274,8 +301,19 @@ public class Player : MonoBehaviour, ICharacter
             dodgeVec = inputDir;
             speed *= 2;
             anim.SetTrigger("doDodge");
+            StartCoroutine("Dodgeinv");
             Debug.Log("구르기");
+            
         }
+    }
+
+    IEnumerator Dodgeinv()
+    {
+        yield return new WaitForSeconds(0.0f);  // 0.1초 대기
+        dodgeinv.enabled = false;
+
+        yield return new WaitForSeconds(0.9f);
+        dodgeinv.enabled = true;
     }
 
 
@@ -403,4 +441,57 @@ public class Player : MonoBehaviour, ICharacter
         ic.Attacked(d);
         //Debug.Log($"{gameObject.name}가 {target.name}을 공격. {d}만큼의 피해를 입혔습니다.\n현재{target.name}의 HP는 {target.GetComponent<Enemy>().curHealth}");
     }
+
+    //public void LockOnToggle()
+    //{
+    //    LockOn();
+
+    //    //if(lockOnEffect.activeSelf)
+    //    //{
+    //    //    LockOff();
+    //    //}
+    //    //else
+    //    //{
+    //    //    LockOn();
+    //    //}
+    //}
+
+    //void LockOn()
+    //{
+    //    // lockOnRange 거리 안에 있는 Enemy오브젝트 찾기
+    //    Collider[] enemies = Physics.OverlapSphere(transform.position, lockOnRange, LayerMask.GetMask("Enemy"));
+    //    if (enemies.Length > 0)
+    //    {
+    //        // 찾은 적 중 가장 가까이 있는 적 찾기
+    //        Transform nearest = null;
+    //        float nearestDistance = float.MaxValue;
+    //        foreach (var enemy in enemies)
+    //        {
+    //            Vector3 dir = enemy.transform.position - transform.position;
+    //            float distanceSqr = dir.sqrMagnitude;   // root 연산은 느리기 때문에 sqrMagnitude 사용
+    //            if (dir.sqrMagnitude < nearestDistance)
+    //            {
+    //                nearestDistance = dir.sqrMagnitude;
+    //                nearest = enemy.transform;
+    //            }
+    //        }
+
+    //        // 가장 가까이에 있는 적에세 LockOnEffect 붙이기
+    //        lockOnEffect.SetLockOnTarget(nearest);      // 부모지정과 위치 변경
+    //    }
+    //    else
+    //    {
+    //        LockOff();  // 주면에 적이 없는데 락온을 시도하면 락온 해제
+    //    }
+    //}
+
+    //void LockOff()
+    //{
+    //    lockOnEffect.SetLockOnTarget(null);
+    //}
+
+    //private void OnLockOn(InputAction.CallbackContext context)
+    //{
+    //    LockOnToggle();
+    //}
 }

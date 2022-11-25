@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87546db3c8b6474b8072d2969e51537, type: 3}
   m_Name: Dragon_EnemyData
   m_EditorClassIdentifier: 
-  enemyType: 
-  eHP: 0
-  eDamage: 0
+  eHP: 100
+  eDamage: 10
   moveSpeed: 0
   rotationSpeed: 0
-  targetRadius: 0
-  targetRange: 0
+  targetRadius: 0.5
+  targetRange: 5

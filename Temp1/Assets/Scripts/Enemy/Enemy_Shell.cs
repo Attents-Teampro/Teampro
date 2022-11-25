@@ -47,6 +47,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
     }
     protected override void Targeting()
     {
+        base.Targeting();
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)

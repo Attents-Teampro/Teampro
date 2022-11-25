@@ -142,7 +142,9 @@ public class EnemyBase : MonoBehaviour
     }
     protected virtual void Targeting()
     {
-        transform.LookAt(target.transform.position);
+        //타겟의 방향으로 회전
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+        Quaternion.LookRotation(target.position - transform.position), 0.3f);
     }
     /// <summary>
     /// 근접 몬스터 MeleeAttack Collision 켜고/끄기
@@ -160,6 +162,15 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    public virtual void MeleeAttackOn()
+    {
+        meleeAttack.SetActive(true);
+    }
+
+    public virtual void MeleeAttackOff()
+    {
+        meleeAttack.SetActive(false);
+    }
     /// <summary>
     /// 몬스터 공격 대기 시간
     /// 몬스터 공격 대기 시간
@@ -174,6 +185,9 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForSeconds(attackInterval);
         isAttack = false;
     }
+
+    public virtual void FireFlameOn() { }
+    public virtual void FireFlameOff() { }
     /// <summary>
     /// SearchPlayer() 의 범위를 에디터에서만 표시
     /// </summary>

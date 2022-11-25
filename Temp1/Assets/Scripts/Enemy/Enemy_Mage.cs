@@ -54,7 +54,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
 
     protected override void Targeting()
     {
-        
+        base.Targeting();
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
@@ -83,7 +83,6 @@ public class Enemy_Mage : EnemyBase, ICharacter
         Instantiate(projectile, mageBulletPosition.position, Quaternion.identity);
         
         yield return new WaitForSeconds(2f);
-        Debug.Log("메이지 대기");
         isAttack = false;
         isChase = true;
         yield return new WaitForSeconds(attackInterval);

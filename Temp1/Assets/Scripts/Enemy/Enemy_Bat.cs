@@ -38,7 +38,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     protected override void Update()
     {
         base.Update();
-       
+
         shotPosition.localRotation = transform.root.rotation;
     }
 
@@ -57,7 +57,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     protected override void Targeting()
     {
-        transform.LookAt(target.transform.position);
+        base.Targeting();
 
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw

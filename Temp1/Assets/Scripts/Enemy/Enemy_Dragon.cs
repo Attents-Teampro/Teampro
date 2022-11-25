@@ -54,14 +54,24 @@ public class Enemy_Dragon : EnemyBase, ICharacter
 
     protected override void Targeting()
     {
-
+        base.Targeting();
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, enemyData.TargetRadius,
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
 
-        Debug.Log(rayHits[0]);
+        //Collider[] collider =
+        //    Physics.OverlapSphere(transform.position, enemyData.TargetRange,
+        //    LayerMask.GetMask("Player"));
+
+        //if(collider.Length > 0)
+        //{
+        //    Debug.Log("타겟 발견");
+        //    //transform.LookAt(collider[0].transform);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation,
+        //    Quaternion.LookRotation(collider[0].transform.position - transform.position), 1f);
+        //}
         // 레이캐스트에 Player 오브젝트가 판별되면 어택
         if (rayHits.Length > 0 && !isAttack && !isGetHit)
         {

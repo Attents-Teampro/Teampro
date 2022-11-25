@@ -57,6 +57,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     }
     protected override void Targeting()
     {
+        base.Targeting();
         //https://ssabi.tistory.com/29
         //https://www.youtube.com/watch?v=voEFSbIPYjw
         //SphereCastAll(생성위치, 반지름,구가 생겨야 할 방향(벡터), 최대 길이, 체크할 레이어 마스크(체크할 레이어의 물체가 아니면 무시)
@@ -77,9 +78,8 @@ public class Enemy_Orc : EnemyBase, ICharacter
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-        meleeAttack.SetActive(true);            //meleeAttack Coliision 킴
         audioSource.PlayOneShot(attackSfx);
-        yield return new WaitForSeconds (1f);   //AudioPlay 를 위한 지연 시간
+        yield return new WaitForSeconds(1f);   //AudioPlay 를 위한 지연 시간
         StartCoroutine(WaitForAttack());
     }
 
@@ -110,8 +110,8 @@ public class Enemy_Orc : EnemyBase, ICharacter
         anim.SetBool("isWalk", false);
         isGetHit = true;
         anim.SetTrigger("doGetHit");
-        MeleeAttackTrigger(false);   //meleeAttack Collision 끔
-        audioSource.PlayOneShot(getHitSfx); 
+        MeleeAttackOff();   //meleeAttack Collision 끔
+        audioSource.PlayOneShot(getHitSfx);
         HitColor(true);
 
         yield return new WaitForSeconds(0.1f);

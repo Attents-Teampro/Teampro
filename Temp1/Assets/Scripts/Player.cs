@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, ICharacter
 
     public int attackPower = 10;      // 공격력
     public int defencePower = 3;      // 방어력
-    bool isAlive = true;            // 살아있는지 죽었는지 확인용
+    public bool isAlive = true;            // 살아있는지 죽었는지 확인용
 
     public int AttackPower => attackPower;
 
@@ -381,6 +381,7 @@ public class Player : MonoBehaviour, ICharacter
         anim.SetLayerWeight(1, 0.0f);       // 애니메이션 레이어 가중치 제거
         anim.SetBool("IsAlive", isAlive);   // 죽었다고 표시해서 사망 애니메이션 재생
         onDie?.Invoke();
+        
     }
 
     //private void OnCollisionEnter(Collision collision)

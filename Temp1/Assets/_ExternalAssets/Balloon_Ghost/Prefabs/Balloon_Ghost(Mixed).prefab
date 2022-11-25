@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2911597060502401786}
   - component: {fileID: 2911597060502401787}
   - component: {fileID: 3777315659942775772}
+  - component: {fileID: 4833653667364187347}
   m_Layer: 0
   m_Name: Balloon_Ghost(Mixed)
   m_TagString: Untagged
@@ -83,6 +84,7 @@ MonoBehaviour:
   ghost_normal: {fileID: 4187144168491269354, guid: db22502f7e763c441afb7962d6b19d22, type: 3}
   ghost_Parts: {fileID: 1018494401351371775, guid: 485ef9375707a814e9fdd1c1b45fca82, type: 3}
   ghost: {fileID: 2911597059970714854}
+  player: {fileID: 0}
 --- !u!54 &3777315659942775772
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -99,6 +101,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &4833653667364187347
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911597060502401789}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.3416038
+  m_Height: 9.703417
+  m_Direction: 1
+  m_Center: {x: 0.10263467, y: -1.1084538, z: 0}
 --- !u!1 &2911597060888555931
 GameObject:
   m_ObjectHideFlags: 0

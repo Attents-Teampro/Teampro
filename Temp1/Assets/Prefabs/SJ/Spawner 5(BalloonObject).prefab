@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyObject: {fileID: 2911597060502401789, guid: 04f7a9876908a5f41adfac2b9668eaab, type: 3}
-  numOfEnemy: 4
+  numOfEnemy: 3
   isBoss: 0
   bossPosition: {x: 0, y: 0, z: 0}

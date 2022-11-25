@@ -39,8 +39,9 @@ public class EnemyBase : MonoBehaviour
     public bool isPlaeyerFind = false;  //플레이어 발견 상태
 
     public float sightRange = 5f;       //플레이어 발견 거리
-    public float attackInterval = 2f;
+    public float attackInterval = 2f;   //이너미 공격 속도
 
+    Player player;
     [Header("-------[ 드롭 아이템 ]")]
     public GameObject[] dropItems;
 
@@ -62,19 +63,22 @@ public class EnemyBase : MonoBehaviour
     {
         //10.11 수정. 이름으로 찾는 방식이 합칠 때마다 에러가 뜰 위험이 있어서 클래스를 찾는 방식으로 변경했습니다.
         //target = GameObject.Find("Player").GetComponent<Transform>();
-        target = FindObjectOfType<Player>().transform;
+        player = FindObjectOfType<Player>();
+        target = player.transform;
         //by 손동욱
-
     }
 
     protected virtual void Update()
     {
-        //몬스터 기본 행동 패턴
-        SearchPlayer();
-        if (!isAttack && !isDead && isPlaeyerFind)
+        if (player.isAlive)
         {
-            MoveToTarget(); // 타겟을 향이 이동하는 메소드
-            Targeting();
+            //몬스터 기본 행동 패턴
+            SearchPlayer();
+            if (!isAttack && !isDead && isPlaeyerFind)
+            {
+                MoveToTarget(); // 타겟을 향이 이동하는 메소드
+                Targeting();
+            }
         }
     }
     /// <summary>

@@ -104,7 +104,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
         HitColor(false);
 
-        if (currentHP < 0)
+        if (currentHP <= 0)
         {
             Die();
         }

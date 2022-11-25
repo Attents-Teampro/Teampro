@@ -119,7 +119,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
         HitColor(false);
 
-        if (currentHP < 0)
+        if (currentHP <= 0)
         {
             Die();
         }

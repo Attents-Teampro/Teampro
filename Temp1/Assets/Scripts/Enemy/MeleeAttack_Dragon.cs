@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class MeleeAttack : MonoBehaviour, ICharacter
+public class MeleeAttack_Dragon : MonoBehaviour, ICharacter
 {
     public EnemyData enemyData;
     Enemy_Orc orc;
     Enemy_Skelleton skeleton;
     Enemy_Shell shell;
+    Enemy_Dragon dragon;
     Player player;
 
     EnemyBase parent;
@@ -32,6 +33,10 @@ public class MeleeAttack : MonoBehaviour, ICharacter
             case EnemyBase.EnemyType.Skeleton:
                 skeleton = GetComponentInParent<Enemy_Skelleton>();
                 damage = skeleton.enemyData.EDamage;
+                break;
+            case EnemyBase.EnemyType.Dragon:
+                dragon = GetComponentInParent<Enemy_Dragon>();
+                damage = dragon.enemyData.EDamage;
                 break;
         }
         player = FindObjectOfType<Player>();

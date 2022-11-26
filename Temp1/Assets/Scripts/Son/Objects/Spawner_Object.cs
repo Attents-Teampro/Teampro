@@ -15,7 +15,7 @@ public class Spawner_Object : MonoBehaviour
     //public BoxCollider floor;
 
     //생성할 몬스터 수
-    public int numOfEnemy = Random.Range(1,4);
+    public int numOfEnemy = 0;
 
     //floor오브젝트의 위치값을 저장 및 랜덤함수를 돌릴 변수
     Vector3 sizeOfGround;

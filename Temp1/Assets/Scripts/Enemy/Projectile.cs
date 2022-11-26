@@ -46,6 +46,7 @@ public class Projectile : MonoBehaviour, ICharacter
         }
         else if (!other.CompareTag("Enemy"))
         {
+            Destroy(this.gameObject);
         }
     }
 

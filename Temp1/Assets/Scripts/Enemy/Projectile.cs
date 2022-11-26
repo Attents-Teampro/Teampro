@@ -6,12 +6,12 @@ using static UnityEngine.GraphicsBuffer;
 public class Projectile : MonoBehaviour, ICharacter
 {
     public EnemyData enemyData;
-    private float projectileSpeed = 10f;
+    public float projectileSpeed = 10f;
     Vector3 targetPoint;
 
     Rigidbody rb;
     GameObject player;
-   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,16 +23,20 @@ public class Projectile : MonoBehaviour, ICharacter
         //클래스를 찾는 방식으로 변경했습니다.
         //기존 코드 player = GameObject.Find("Player").GetComponent<Transform>();
         player = FindObjectOfType<Player>().gameObject;//수정코드
-        //by 손동욱
-        
+                                                       //by 손동욱
+
         targetPoint = player.transform.position + new Vector3(0, 1f, 0);
         Destroy(gameObject, 2f);
+        Vector3 dir = (player.transform.position - transform.position);
+        dir.y = 0.4f;
+        rb.velocity = dir * projectileSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position,targetPoint, projectileSpeed * Time.deltaTime);
+
+        //transform.position = Vector3.MoveTowards(transform.position,targetPoint, projectileSpeed * Time.deltaTime);
         //transform.Translate(Vector3.forward*projectileSpeed*Time.deltaTime);
     }
 
@@ -54,7 +58,7 @@ public class Projectile : MonoBehaviour, ICharacter
     {
     }
     public void Attacked(int damage)
-    {        
+    {
     }
 
     public void Attack(GameObject target, int damage)

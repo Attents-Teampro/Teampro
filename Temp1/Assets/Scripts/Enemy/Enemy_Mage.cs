@@ -28,8 +28,8 @@ public class Enemy_Mage : EnemyBase, ICharacter
     protected override void Start()
     {
         base.Start();
-        mageStaff = transform.GetChild(2);
-        mageBulletPosition = mageStaff.GetChild(0);
+        //mageStaff = transform.GetChild(0);
+        mageBulletPosition = transform.GetChild(3);
     }
 
     

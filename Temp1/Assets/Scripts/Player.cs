@@ -15,6 +15,7 @@ using static UnityEditor.Progress;
 public class Player : MonoBehaviour, ICharacter
 {
     public int countCurrentRoom = 0;
+    public AttackState attackState;
 
     //10.11 추가 by 손동욱
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
@@ -64,6 +65,9 @@ public class Player : MonoBehaviour, ICharacter
 
     Rigidbody rigid;
     Animator anim;
+
+    ParticleSystem weaponPS;
+    Transform weapon_r;
 
     GameObject nearObject;
     Weapon equipWeapon;
@@ -127,6 +131,7 @@ public class Player : MonoBehaviour, ICharacter
 
     private void Awake()
     {
+
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -164,6 +169,7 @@ public class Player : MonoBehaviour, ICharacter
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
 
+        weaponPS = equipWeapon.weaponPS;
 
 
         isAlive = true;
@@ -448,6 +454,43 @@ public class Player : MonoBehaviour, ICharacter
         ic.Attacked(d);
         //Debug.Log($"{gameObject.name}가 {target.name}을 공격. {d}만큼의 피해를 입혔습니다.\n현재{target.name}의 HP는 {target.GetComponent<Enemy>().curHealth}");
     }
+
+    public void WeaponEffectSwitch(bool on)
+    {
+        if (weaponPS != null)
+        {
+            if (on)
+            {
+                weaponPS.Play();    // 파티클 이팩트 재생 시작
+            }
+            else
+            {
+                weaponPS.Stop();    // 파티클 이팩트 재생 중지
+            }
+        }
+    }
+
+    ///// <summary>
+    ///// 무기가 공격 행동을 할 때 무기의 트리거 켜는 함수
+    ///// </summary>
+    //public void WeaponBladeEnable()
+    //{
+    //    if (weaponBlade != null)
+    //    {
+    //        weaponBlade.enabled = true;
+    //    }
+    //}
+
+    ///// <summary>
+    ///// 무기가 공격 행동이 끝날 때 무기의 트리거를 끄는 함수
+    ///// </summary>
+    //public void WeaponBladeDisable()
+    //{
+    //    if (weaponBlade != null)
+    //    {
+    //        weaponBlade.enabled = false;
+    //    }
+    //}
 
     //public void LockOnToggle()
     //{

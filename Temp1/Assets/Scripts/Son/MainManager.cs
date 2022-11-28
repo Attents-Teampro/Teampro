@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class MainManager : Singleton<MainManager>
 {
-    
+    Player player;
+
+    public Player Player => player;
+
     public static MainManager instance;
 
     //포탈 오브젝트. 포탈을 담은 빈 오브젝트를 비활성화 상태로 두고, 필요할 때만 활성화
@@ -87,6 +90,11 @@ public class MainManager : Singleton<MainManager>
     public void GameStartFunc()
     {
         gameStart.DungeonCreate();   
+    }
+
+    protected override void Initialize()
+    {
+        player = FindObjectOfType<Player>();
     }
 
     /*

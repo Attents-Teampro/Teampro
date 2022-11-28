@@ -171,7 +171,6 @@ public class Enemy_Bat : EnemyBase, ICharacter
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
-        EnemyHealth.instance.SetCurrentHealth(currentHP);
     }
 
     public void Attack(GameObject target, int damage)

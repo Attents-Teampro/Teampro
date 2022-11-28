@@ -72,15 +72,6 @@ public class Door : MonoBehaviour
         //Open
         if (t)
         {
-            if (room.index == 0)
-            {
-
-            }
-            else
-            {
-
-
-            }
             mr.enabled = false;
             col.isTrigger = true;
             SetColliderSize(true);
@@ -100,7 +91,9 @@ public class Door : MonoBehaviour
         bool result = false;
 
         Vector3 box = new Vector3(0, checkRange, 0);
-        Collider[] colliders = Physics.OverlapBox(transform.position-new Vector3(0,transform.localScale.y,0), box, transform.rotation, LayerMask.GetMask("floor"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position - new Vector3(0, transform.localScale.y*0.5f, 0),0.1f,  LayerMask.GetMask("floor"));
+
+        //Collider[] colliders = Physics.OverlapBox(transform.position-new Vector3(0,transform.localScale.y,0), box, transform.rotation, LayerMask.GetMask("floor"));
 
         if (colliders.Length > 0)
         {
@@ -113,7 +106,10 @@ public class Door : MonoBehaviour
         }
         if (!result)
         {
-            Collider[] colliders1 = Physics.OverlapBox(transform.position - new Vector3(0, transform.localScale.y, 0) + transform.localPosition*3, box, transform.rotation, LayerMask.GetMask("floor"));
+           Debug.Log($"실패 {transform.localPosition}\n결과 : {transform.position + (transform.localPosition * 1.5f) - new Vector3(0, transform.localScale.y * 0.5f, 0)}");
+            Collider[] colliders1 = Physics.OverlapSphere(transform.position - new Vector3(0, transform.localScale.y * 0.5f, 0)+
+                (transform.localPosition * 3), 0.1f, LayerMask.GetMask("floor"));
+            //Collider[] colliders1 = Physics.OverlapBox(transform.position - new Vector3(0, transform.localScale.y, 0) + transform.localPosition*3, box, transform.rotation, LayerMask.GetMask("floor"));
 
             if (colliders1.Length > 0)
             {
@@ -134,19 +130,35 @@ public class Door : MonoBehaviour
         //    $"태그 : {other.gameObject.CompareTag("Player")} \n" +
         //    $"isSpawn : {isSpawn}\n" +
         //    $"room.isClear : {room.isClear} ");
-        if (other.gameObject.CompareTag("Player") && !isSpawn && !room.isClear)
+
+        //플레이어 들어오면 실행
+        if (other.gameObject.CompareTag("Player"))
         {
-            SetInfo();
-            IsOpen = false;
-            room.PlayerInThisRoom();
-            //room.StartSpawn();
+            //해당 문의 스폰 기능이 실행된 적 없고, 연결된 방이 클리어된 적이 없을 때 실행
+            //=>플레이어가 방에 진입 했을 때 실행
+            if (!isSpawn && !room.isClear)
+            {
+                //스폰 기능이 실행되었다고 bool 변수들 초기화
+                SetInfo();
+                //문 닫기
+                IsOpen = false;
+                //Room 스크립트의 플레이어 방 들어왔을 때 실행 함수 호출
+                room.PlayerInThisRoom();
+            }
+            //해당 문과 연결된 방이 클리어되었고, 연결된 반대편 문을 스폰하지 않았고, 연결된 반대편 문이 클리어되지 않았으면 실행 
+            else if (room.isClear && !isRelationDoorSpawn && !door.room.isClear)
+            {
+                //현재 플레이어가 몇 번째 방인지 체크하는 변수 저장 및 계산
+                int roomIndex = other.gameObject.GetComponent<Player>().countCurrentRoom++;
+                //door.room.spawners = MainManager.instance.spawnManager.spawners[roomIndex];
+                door.room.indexPlayerIn = roomIndex;
+                //반대편 문과 연결된 방 스폰 시작
+                door.room.StartSpawn();
+                //해당 문은 반대편 문을 스폰했던 적이 있다고 bool 변수 초기화
+                isRelationDoorSpawn = true;
+            }
         }
-        else if (room.isClear && !isRelationDoorSpawn && !door.room.isClear)
-        {
-            door.room.StartSpawn();
-            isRelationDoorSpawn = true;
-            //door.isSpawn = true;
-        }
+        
     }
 
     public void SetInfo()
@@ -276,7 +288,8 @@ public class Door : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, checkRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position - new Vector3(0, transform.localScale.y * 0.5f, 0), 0.1f);
     }
 
 

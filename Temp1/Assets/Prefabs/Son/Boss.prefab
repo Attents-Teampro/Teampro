@@ -2142,13 +2142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65b18c48c0a5f8469ccb9452bde8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainManager: {fileID: 0}
   projectile_FireBall: {fileID: 730210141538243382, guid: 49571b124e5896b46a750caf59713e2b, type: 3}
   target: {fileID: 0}
   moveSpeed: 3
   attackSpeed: 2.1
-  targetRadiusSleeping: 8.4
-  targetRadius: 4.31
+  targetRadiusSleeping: 6
+  targetRadius: 3
   targetRange: 0
   delayStart: 1.02
   eHP: 100

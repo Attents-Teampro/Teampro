@@ -25,6 +25,10 @@ public class MainManager : Singleton<MainManager>
     GameStart gameStart;
     public SpawnManager spawnManager;
     public int gold = 0;
+    /// <summary>
+    /// 스테이지가 모두 클리어되었을 때(보스가 죽고 클리어 UI가 나왔을 때 true가 되는 변수
+    /// </summary>
+    public bool isClear = false;
     private void Awake()
     {
         //활성화 될 때 이미 메인 매너지 클래스가 있을 시 이 오브젝트를 삭제하는 코드
@@ -68,8 +72,12 @@ public class MainManager : Singleton<MainManager>
         //보스가 처치되면
         if (isBoss)
         {
+            //클리어 bool 변수 초기화
+            isClear = true;
+
             //클리어UI 창 활성화
             clearUIWindos.SetActive(true);
+            
         }
     }
 

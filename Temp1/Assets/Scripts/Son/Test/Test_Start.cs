@@ -18,10 +18,11 @@ public class Test_Start : Test_Base
     //room에 저장된 방 스폰 시작
     protected override void Test2(InputAction.CallbackContext _)
     {
-        foreach (var i in room.spawners)
-        {
-            i.KillAllMonsters();
-        }
+        //foreach (var i in room.spawners)
+        //{
+        //    i.KillAllMonsters();
+        //}
+        room.spawners.KillAllMonsters();
     }
     //room에 저장된 몬스터 모두 처치
     protected override void Test3(InputAction.CallbackContext obj)

@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006f9a30892724849bbcacf37ee16296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
-  numOfEnemy: 2
   isBoss: 0
   bossPosition: {x: 0, y: 0, z: 0}
+  spawnData: {fileID: 11400000, guid: 7c209a84c7b06cd499e6e10fd3520b78, type: 2}

@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    //생성할 몬스터 프리팹, 몬스터가 생성되는 위치 계산을 위한 벽 오브젝트
-    public GameObject enemyObject;//, Wall;
-
+    
+    ////, Wall;
+    ////생성할 몬스터 프리팹, 몬스터가 생성되는 위치 계산을 위한 벽 오브젝트
+    //public GameObject enemyObject;
+    ////생성할 몬스터 수
+    //public int numOfEnemy;
     //생성된 몬스터 수를 저장할 매니저 스크립트
     //시작할 때 메인 매니저에게 값을 넘긴다. 메인 매니저는 넘겨진 값들을 합해서 총 몬스터 수를 구한다.
     //public MainManager mainManager;
@@ -14,8 +20,6 @@ public class Spawner : MonoBehaviour
     //변수 floor에는 Ground 오브젝트 넣으면 됩니다.
     //public BoxCollider floor;
 
-    //생성할 몬스터 수
-    public int numOfEnemy = 5;
 
     //floor오브젝트의 위치값을 저장 및 랜덤함수를 돌릴 변수
     Vector3 sizeOfGround;
@@ -33,31 +37,71 @@ public class Spawner : MonoBehaviour
     MeshRenderer mr;
     //Room 스크립트 변수
     Room room;
-
+    [Header("해당 방에 스폰될 몬스터 총 정보.")]
+    public SpawnData spawnData;
+    int totalSpawnMonster = 0;
     //테스트용 변수
     GameObject[] mon;
     public void StartSpawn(GameObject obj)
     {
+        
         mr = obj.GetComponent<MeshRenderer>();
         room = obj.GetComponent<Room>();
-        SpawnerStart();
+        if(spawnData != null && !isBoss)
+        {
+            for(int i = 0; i< spawnData.SpawnArr.Length;i++)
+            {
+                SpawnerStart(i);
+            }
+        }else if (isBoss)
+        {
+            Instantiate(spawnData.SpawnArr[0].enemyObject, bossPosition, Quaternion.identity);
+            //return;
+            return;
+        }
+        
+        
     }
-    void SpawnerStart()
+    public void AddMainToSpawnNum()
     {
+        int sum = 0;
+        if (!isBoss)
+        {
+            for (int i = 0; i < spawnData.SpawnArr.Length; i++)
+            {
+                int numOfEnemy = spawnData.SpawnArr[i].numOfEnemy;
+                MainManager.instance.numOfStageEnemy += numOfEnemy;
+                sum += numOfEnemy;
+            }
+            if(sum != totalSpawnMonster)
+            {
+                //MainManager.instance.numOfStageEnemy = 
+            }
+        }
+        else
+        {
+            MainManager.instance.numOfStageEnemy += spawnData.SpawnArr[0].numOfEnemy;
+        }
+        
+    }
+    void SpawnerStart(int index)
+    {
+        GameObject enemyObject = spawnData.SpawnArr[index].enemyObject;
+        int numOfEnemy = spawnData.SpawnArr[index].numOfEnemy;
 
         //메인 매니저에게 생성될 몬스터의 수를 넘긴다.
 
         //mainManager = FindObjectOfType<MainManager>();
-        MainManager.instance.numOfStageEnemy += numOfEnemy;
+        //MainManager.instance.numOfStageEnemy += numOfEnemy;
         //Debug.Log($"값 {numOfEnemy}를 메인에 넘겨줌");
 
-        //보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
-        if (isBoss)
-        {
-            Instantiate(enemyObject, bossPosition, Quaternion.identity);
-            //return;
-            return;
-        }
+        ////보스 몬스터를 스폰하는 경우 지정된 위치 bossPosition에 보스 게임오브젝트 생성 후 클래스 종료
+        //if (isBoss)
+        //{
+        //    Instantiate(enemyObject, bossPosition, Quaternion.identity);
+        //    //return;
+        //    return;
+        //}
         //11.10 주석 by 손동욱
         //벽이 바뀌어서 주석 처리 
         ////차일드 0번aa부터 순서대로 오른쪽 왼쪽 위 아래 벽. 순서가 맞아야 아래 이프문이 정상 실행
@@ -103,6 +147,7 @@ public class Spawner : MonoBehaviour
                 }
             }
         }
+        totalSpawnMonster = mon.Length;
     }
 
     public void KillAllMonsters()

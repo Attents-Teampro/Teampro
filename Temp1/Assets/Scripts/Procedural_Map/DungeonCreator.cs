@@ -250,23 +250,37 @@ public class DungeonCreator : MonoBehaviour
         //메인매니저 스폰매니저의 스폰 배열 변수
         Spawner[] sp = MainManager.instance.spawnManager.spawners;
 
+        r.isBossIndex = count_BossCheck + 2;
+        r.spawners = sp[sp.Length - 1];
+
         //만약 방이 마지막 방이면
-        if (count == count_BossCheck)
-        {
-            r.spawners = new Spawner[1];
-            r.spawners[0] = sp[sp.Length - 1];
-            r.spawners[0].bossPosition = roomCollider[count - 1].center;
-        }
-        else
-        {
-            r.spawners = new Spawner[sp.Length - 1];
-            for (int i = 0; i < sp.Length - 1; i++)
-            {
-                r.spawners[i] = sp[i];
-            }
-        }
+        //if (count == count_BossCheck)
+        //{
+        //    r.spawners = new Spawner[1];
+        //    r.spawners[0] = sp[sp.Length - 1];
+        //    r.spawners[0].bossPosition = roomCollider[count - 1].center;
+        //}
+        //else
+        //{
+        //    r.spawners = new Spawner[sp.Length - 1];
+        //    for (int i = 0; i < sp.Length - 1; i++)
+        //    {
+        //        r.spawners[i] = sp[i];
+        //    }
+        //}
         
-        
+        //if(count == count_BossCheck)
+        //{
+
+        //}
+        //else
+        //{
+        //    r.spawners = new Spawner[sp.Length - 1];
+        //    for(int i=0; i < sp.Length; i++)
+        //    {
+        //        r.spawners[i] = sp(i);
+        //    }
+        //}
 
 
         //랜덤으로 스폰 가져오기

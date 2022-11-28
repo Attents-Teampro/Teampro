@@ -5,21 +5,29 @@ using UnityEngine.UI;
 
 public class BossHpBar : MonoBehaviour
 {
+    GameObject parent;
+    Slider slider;
+    Enemy_Boss enemy_Boss;
+    float eMaxHP;
 
-    public Slider slider;
-
-
-
-    public void SetMaxHealth(float health)
+    private void Awake()
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider = GetComponent<Slider>();
+        parent = transform.parent.gameObject;
+        enemy_Boss = GetComponentInParent<Enemy_Boss>();
+        eMaxHP = enemy_Boss.eHP;
     }
 
-    public void SetHealth(float health)
+  
+
+    private void Update()
     {
-        slider.value = health;
+        slider.value = (float)enemy_Boss.eHP / (float)eMaxHP;
+       
     }
+
 
     
+
+
 }

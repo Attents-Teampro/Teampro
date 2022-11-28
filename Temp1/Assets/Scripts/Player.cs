@@ -14,6 +14,8 @@ using static UnityEditor.Progress;
 //by 손동욱
 public class Player : MonoBehaviour, ICharacter
 {
+    public int countCurrentRoom = 0;
+
     //10.11 추가 by 손동욱
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
     public static Player instance;
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour, ICharacter
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public CapsuleCollider dodgeinv;
+
+     
 
     //플레이어 hp와 최대hp 설정 - 양해인 1104
     public int pHP;
@@ -77,6 +81,8 @@ public class Player : MonoBehaviour, ICharacter
     //float lockOnRange = 5.0f;
 
     //-------------------------------------------------
+
+    
 
     public int attackPower = 10;      // 공격력
     public int defencePower = 3;      // 방어력

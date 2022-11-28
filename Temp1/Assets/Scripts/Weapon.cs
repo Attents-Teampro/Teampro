@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour, ICharacter
 {
+    public GameObject hitEffect;
     public enum Type { Melee, Range };  // 근거리 원거리
     public Type type;
 
@@ -14,6 +15,7 @@ public class Weapon : MonoBehaviour, ICharacter
     public BoxCollider meleeArea;   // 공격 범위
     public Transform arrowPos;
     public GameObject arrow;
+    ParticleSystem weaponPS;
 
     // 11.11
     public EnemyData enemyData;
@@ -51,6 +53,7 @@ public class Weapon : MonoBehaviour, ICharacter
         {
             StopCoroutine("Swing");
             StartCoroutine("Swing");
+            
         }
         else if (type == Type.Range)
         {
@@ -58,6 +61,7 @@ public class Weapon : MonoBehaviour, ICharacter
             
         }
     }
+
         IEnumerator Swing()
         {
             yield return new WaitForSeconds(0.1f);  // 0.1초 대기
@@ -100,6 +104,9 @@ public class Weapon : MonoBehaviour, ICharacter
         {
             Attack(other.gameObject, Player.instance.pDamage);
             Debug.Log($"{other.gameObject.name}");
+            Vector3 impactPoint = transform.position + transform.up;
+            Vector3 effectPoint = other.ClosestPoint(impactPoint);
+            Instantiate(hitEffect, effectPoint, Quaternion.identity);   // 이펙트를 대충 부딪친 지점에 생성
         }
     }
 

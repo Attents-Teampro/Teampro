@@ -137,17 +137,35 @@ public class EnemyHealthPreferences : MonoBehaviour
         else
         {
 #if UNITY_EDITOR
-            //foreach (Transform child in fullHeartsContainer.transform)
-            //    아래 코드가 게임 종료 후 에러가 생성됩니다.by 손동욱 11.04
-                //EditorApplication.delayCall += () => DestroyImmediate(child.gameObject);
-            /// 에러 메세지
-            /// InvalidOperationException: Destroying a GameObject inside a Prefab instance is not allowed.
-            /// UnityEngine.Object.DestroyImmediate(UnityEngine.Object obj)(at < 823fb226a3f9439cb41fdcb61f9c86a1 >:0)
-            /// HealthPreferences +<> c__DisplayClass17_0.< RemoveAll > b__0()(at Assets / Scripts / UI / HealthPreferences.cs:90)
-            /// UnityEditor.EditorApplication.Internal_CallDelayFunctions()(at < 1135c66e5f4c41a7831fa5798849d8b6 >:0)
+            foreach (Transform child in fullHeartsContainer.transform)
+            {
+                if (PrefabUtility.IsPartOfPrefabInstance(fullHeartsContainer.transform))
+                {
+                    Object prefabInstance = PrefabUtility.GetPrefabInstanceHandle(fullHeartsContainer.transform);
+                    GameObject.DestroyImmediate(prefabInstance);
+                }
 
-            //foreach (Transform child in emptyHeartsContainer.transform)
-                //EditorApplication.delayCall += () => DestroyImmediate(child.gameObject);
+                EditorApplication.delayCall += () => DestroyImmediate(child.gameObject,true);
+
+                //    아래 코드가 게임 종료 후 에러가 생성됩니다.by 손동욱 11.04
+                /// 에러 메세지
+                /// InvalidOperationException: Destroying a GameObject inside a Prefab instance is not allowed.
+                /// UnityEngine.Object.DestroyImmediate(UnityEngine.Object obj)(at < 823fb226a3f9439cb41fdcb61f9c86a1 >:0)
+                /// HealthPreferences +<> c__DisplayClass17_0.< RemoveAll > b__0()(at Assets / Scripts / UI / HealthPreferences.cs:90)
+                /// UnityEditor.EditorApplication.Internal_CallDelayFunctions()(at < 1135c66e5f4c41a7831fa5798849d8b6 >:0)
+
+            }
+
+            foreach (Transform child in emptyHeartsContainer.transform)
+            {
+                if (PrefabUtility.IsPartOfPrefabInstance(emptyHeartsContainer.transform))
+                {
+                    Object prefabInstance = PrefabUtility.GetPrefabInstanceHandle(emptyHeartsContainer.transform);
+                    GameObject.DestroyImmediate(prefabInstance);
+                }
+
+                EditorApplication.delayCall += () => DestroyImmediate(child.gameObject,true);
+            }
 #endif
         }
     }

@@ -70,6 +70,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+
         if (player.isAlive)
         {
             //몬스터 기본 행동 패턴
@@ -148,7 +149,7 @@ public class EnemyBase : MonoBehaviour
     {
         //타겟의 방향으로 회전
         transform.rotation = Quaternion.Slerp(transform.rotation,
-        Quaternion.LookRotation(target.position - transform.position), 0.3f);
+        Quaternion.LookRotation(target.position - transform.position), 0.5f);
     }
     /// <summary>
     /// 근접 몬스터 MeleeAttack Collision 켜고/끄기

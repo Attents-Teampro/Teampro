@@ -36,6 +36,7 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
         }
         else if (!other.CompareTag("Enemy"))
         {
+            Destroy(this.gameObject);
         }
     }
 

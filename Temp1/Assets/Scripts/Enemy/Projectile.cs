@@ -36,8 +36,6 @@ public class Projectile : MonoBehaviour, ICharacter
     void Update()
     {
 
-        //transform.position = Vector3.MoveTowards(transform.position,targetPoint, projectileSpeed * Time.deltaTime);
-        //transform.Translate(Vector3.forward*projectileSpeed*Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)

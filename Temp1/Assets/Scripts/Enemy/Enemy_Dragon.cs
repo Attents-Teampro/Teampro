@@ -118,6 +118,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
         capsuleCollider.enabled = false;
 
         anim.SetTrigger("doDie");
+        FireFlameOff();
         isDead = true;
         yield return new WaitForSeconds(1.5f);
 

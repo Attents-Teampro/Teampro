@@ -134,6 +134,7 @@ MonoBehaviour:
   meleeArea: {fileID: 3100388773501976193}
   arrowPos: {fileID: 0}
   arrow: {fileID: 0}
+  weaponPS: {fileID: 0}
   enemyData: {fileID: 0}
 --- !u!198 &2563677513747576925
 ParticleSystem:
@@ -218,8 +219,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.5
+      scalar: 0.4
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:

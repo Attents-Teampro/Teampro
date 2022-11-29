@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour, ICharacter
     public BoxCollider meleeArea;   // 공격 범위
     public Transform arrowPos;
     public GameObject arrow;
-    ParticleSystem weaponPS;
+    public ParticleSystem weaponPS;
 
     // 11.11
     public EnemyData enemyData;
@@ -46,6 +46,11 @@ public class Weapon : MonoBehaviour, ICharacter
         player = FindObjectOfType<Player>();
 
     }
+
+    //private void Start()
+    //{
+    //    weaponPS
+    //}
 
     public void Use()
     {

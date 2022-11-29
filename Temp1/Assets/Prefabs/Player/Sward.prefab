@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c3fcf32824a1344bafaccd9010208d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffect: {fileID: 0}
   type: 0
   iDamage: 100
   rate: 0.5
@@ -151,7 +152,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

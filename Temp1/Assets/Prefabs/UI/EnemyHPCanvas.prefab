@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2746015262735503489}
   - component: {fileID: 5059852399467968208}
-  - component: {fileID: 6809172632551786863}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -65,20 +64,6 @@ MonoBehaviour:
   radial90Direction: 0
   radial180Direction: 0
   radial360Direction: 0
---- !u!114 &6809172632551786863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2746015262735503490}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c28ea736d8b4a364183a111290b94d38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
 --- !u!1 &2746015262960885179
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +204,7 @@ GameObject:
   - component: {fileID: 3985814318105986822}
   - component: {fileID: 2579250616394403586}
   m_Layer: 3
-  m_Name: testCanvas
+  m_Name: EnemyHPCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 1
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0

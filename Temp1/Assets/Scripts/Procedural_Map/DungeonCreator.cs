@@ -159,7 +159,7 @@ public class DungeonCreator : MonoBehaviour
 
         // NavMesh를 위한 정적으로 만들기 
         wallPrefab.isStatic = true;
-        // wallPrefab.AddComponent<BoxCollider>();
+        wallPrefab.AddComponent<BoxCollider>();
         
     }
 

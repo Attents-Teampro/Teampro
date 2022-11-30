@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnArr:
   - enemyObject: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
-    numOfEnemy: 2
-  - enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
     numOfEnemy: 4
+  - enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
+    numOfEnemy: 2
+  - enemyObject: {fileID: 1522199433267968, guid: 51154c9b11af8514cae9442b163e310e, type: 3}
+    numOfEnemy: 2

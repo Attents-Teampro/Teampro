@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Data_Room_1
   m_EditorClassIdentifier: 
   SpawnArr:
-  - enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
-    numOfEnemy: 1
+  - enemyObject: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+    numOfEnemy: 4
+  - enemyObject: {fileID: 4158859801316043186, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+    numOfEnemy: 2

@@ -5,7 +5,9 @@ using System.Text;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 using static UnityEditor.Progress;
 
 //11.04 인터페이스 ICharacter가 빠져있어서 추가했습니다. 
@@ -29,7 +31,15 @@ public class Player : MonoBehaviour, ICharacter
     public bool[] hasWeapons;
     public CapsuleCollider dodgeinv;
 
-     
+    public Image skillFilter;
+    //public Text coolTimeCounter; //남은 쿨타임을 표시할 텍스트
+
+    public float coolTime;
+
+    private float currentCoolTime; //남은 쿨타임을 추적 할 변수
+
+    private bool canUseSkill = true; //스킬을 사용할 수 있는지 확인하는 변수
+
 
     //플레이어 hp와 최대hp 설정 - 양해인 1104
     public int pHP;
@@ -54,6 +64,7 @@ public class Player : MonoBehaviour, ICharacter
     bool isDodge;
     bool isSwap;
     bool isFireReady;
+    bool isColltime;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -173,7 +184,10 @@ public class Player : MonoBehaviour, ICharacter
 
 
         isAlive = true;
+        isColltime = false;
         anim.SetBool("IsAlive", isAlive);
+
+        skillFilter.fillAmount = 0; //처음에 스킬 버튼을 가리지 않음
 
         //HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
         //healthP.SetPlayer(this);
@@ -186,7 +200,7 @@ public class Player : MonoBehaviour, ICharacter
         GetInput();
         Swap();
         Interation();
-
+        //UseSkill();
     }
 
     void FixedUpdate()
@@ -270,6 +284,9 @@ public class Player : MonoBehaviour, ICharacter
         if (isFireReady && !isDodge && !isSwap)
         {
             equipWeapon.Use();
+            int comboState = anim.GetInteger("ComboState"); // ComboState를 애니메이터에서 읽어와서 
+            comboState++;   // 콤보 상태 1 증가 시키기
+            anim.SetInteger("ComboState", comboState);      // 애니메이터에 증가된 콤보 상태 설정
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             fireDelay = 0;
         }
@@ -308,15 +325,16 @@ public class Player : MonoBehaviour, ICharacter
 
     void OnDodge(InputAction.CallbackContext context)
     {
-        if (inputDir != Vector3.zero)
-        {
-            dodgeVec = inputDir;
-            speed *= 2;
-            anim.SetTrigger("doDodge");
-            StartCoroutine("Dodgeinv");
-            Debug.Log("구르기");
-            
-        }
+        
+            UseSkill();
+        //if (inputDir != Vector3.zero && !isColltime)
+        //{
+        //    dodgeVec = inputDir;
+        //    speed *= 2;
+        //    anim.SetTrigger("doDodge");
+        //    StartCoroutine("Dodgeinv");
+        //    Debug.Log("구르기");
+        //}
     }
 
     IEnumerator Dodgeinv()
@@ -327,6 +345,64 @@ public class Player : MonoBehaviour, ICharacter
         yield return new WaitForSeconds(0.9f);
         dodgeinv.enabled = true;
     }
+
+    public void UseSkill()
+    {
+        if (canUseSkill)
+        {
+            Debug.Log("Use Skill");
+            skillFilter.fillAmount = 1; //스킬 버튼을 가림
+            StartCoroutine("Cooltime");
+
+            currentCoolTime = coolTime;
+            //coolTimeCounter.text = "" + currentCoolTime;
+
+            //StartCoroutine("CoolTimeCounter");
+
+            canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
+
+            if (inputDir != Vector3.zero && !isColltime)
+            {
+                dodgeVec = inputDir;
+                speed *= 2;
+                anim.SetTrigger("doDodge");
+                StartCoroutine("Dodgeinv");
+                Debug.Log("구르기");
+            }
+        }
+        else
+        {
+            Debug.Log("아직 스킬을 사용할 수 없습니다.");
+        }
+    }
+
+    IEnumerator Cooltime()
+    {
+        while (skillFilter.fillAmount > 0)
+        {
+            skillFilter.fillAmount -= 1 * Time.smoothDeltaTime / coolTime;
+
+            yield return null;
+        }
+
+        canUseSkill = true; //스킬 쿨타임이 끝나면 스킬을 사용할 수 있는 상태로 바꿈
+
+        yield break;
+    }
+
+    ////남은 쿨타임을 계산할 코르틴을 만들어줍니다.
+    //IEnumerator CoolTimeCounter()
+    //{
+    //    while (currentCoolTime > 0)
+    //    {
+    //        yield return new WaitForSeconds(1.0f);
+
+    //        currentCoolTime -= 1.0f;
+    //        coolTimeCounter.text = "" + currentCoolTime;
+    //    }
+
+    //    yield break;
+    //}
 
 
     void Swap()

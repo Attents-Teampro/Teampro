@@ -37,6 +37,12 @@ public class AttackState : StateMachineBehaviour
         //GameManager.Inst.Player.WeaponEffectSwitch(false);  // 무기 이팩트 끄기
         MainManager.instance.Player.WeaponEffectSwitch(false);
 
+        animator.SetInteger("ComboState", 0);
         animator.ResetTrigger("doSwing");        // 어택 트리거도 일단 초기화
+    }
+
+    override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
+    {
+        
     }
 }

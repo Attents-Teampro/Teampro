@@ -16,12 +16,20 @@ public class Test_Base : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        inputActions.Test.Enable();
-        inputActions.Test.Test1.performed += Test1;
-        inputActions.Test.Test2.performed += Test2;
-        inputActions.Test.Test3.performed += Test3;
-        inputActions.Test.Test4.performed += Test4;
-        inputActions.Test.Test5.performed += Test5;
+        if (inputActions == null)
+        {
+
+        }
+        else
+        {
+            inputActions.Test.Enable();
+            inputActions.Test.Test1.performed += Test1;
+            inputActions.Test.Test2.performed += Test2;
+            inputActions.Test.Test3.performed += Test3;
+            inputActions.Test.Test4.performed += Test4;
+            inputActions.Test.Test5.performed += Test5;
+        }
+        
 
     }
 

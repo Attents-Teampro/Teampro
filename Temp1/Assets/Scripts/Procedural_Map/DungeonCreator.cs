@@ -143,13 +143,14 @@ public class DungeonCreator : MonoBehaviour
         {
             CreateWall(wallParent, wallPosition, wallVertical);
         }
-
+        
         //wallParent.AddComponent<BoxCollider>();
         //11.10 추가 by 손동욱
         //주석처리되어 있는데 네브매쉬에 필요한건지 잘 모르겠어서 활성화해뒀습니다.
         // NavMesh를 위한 정적으로 만들기
         surface.BuildNavMesh();
-        
+        // wallPrefab.AddComponent<BoxCollider>();
+
     }
 
     private void CreateWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)

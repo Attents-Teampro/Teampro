@@ -144,7 +144,7 @@ public class DungeonCreator : MonoBehaviour
             CreateWall(wallParent, wallPosition, wallVertical);
         }
 
-        wallParent.AddComponent<BoxCollider>();
+        //wallParent.AddComponent<BoxCollider>();
         //11.10 추가 by 손동욱
         //주석처리되어 있는데 네브매쉬에 필요한건지 잘 모르겠어서 활성화해뒀습니다.
         // NavMesh를 위한 정적으로 만들기
@@ -159,7 +159,7 @@ public class DungeonCreator : MonoBehaviour
 
         // NavMesh를 위한 정적으로 만들기 
         wallPrefab.isStatic = true;
-        wallPrefab.AddComponent<BoxCollider>();
+        //wallPrefab.AddComponent<BoxCollider>();
         
     }
 

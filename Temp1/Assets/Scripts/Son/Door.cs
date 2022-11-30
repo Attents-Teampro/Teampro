@@ -106,9 +106,9 @@ public class Door : MonoBehaviour
         }
         if (!result)
         {
-           Debug.Log($"실패 {transform.localPosition}\n결과 : {transform.position + (transform.localPosition * 1.5f) - new Vector3(0, transform.localScale.y * 0.5f, 0)}");
+           //Debug.Log($"실패 {transform.localPosition}\n결과 : {transform.position + (transform.localPosition * 1.5f) - new Vector3(0, transform.localScale.y * 0.5f, 0)}");
             Collider[] colliders1 = Physics.OverlapSphere(transform.position - new Vector3(0, transform.localScale.y * 0.5f, 0)+
-                (transform.localPosition * 3), 0.1f, LayerMask.GetMask("floor"));
+                (transform.localPosition * 1.5f), 0.1f, LayerMask.GetMask("floor"));
             //Collider[] colliders1 = Physics.OverlapBox(transform.position - new Vector3(0, transform.localScale.y, 0) + transform.localPosition*3, box, transform.rotation, LayerMask.GetMask("floor"));
 
             if (colliders1.Length > 0)

@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, ICharacter
 
     public float moveSpeed = 3.0f;
     public float turnSpeed = 10.0f;
+    public float rotateSpeed = 180.0f;
 
     public float speed;
     public GameObject[] weapons;
@@ -39,6 +40,10 @@ public class Player : MonoBehaviour, ICharacter
     private float currentCoolTime; //남은 쿨타임을 추적 할 변수
 
     private bool canUseSkill = true; //스킬을 사용할 수 있는지 확인하는 변수
+
+
+    float moveDir = 0.0f;
+    float rotateDir = 0.0f;
 
 
     //플레이어 hp와 최대hp 설정 - 양해인 1104
@@ -70,6 +75,7 @@ public class Player : MonoBehaviour, ICharacter
     Vector3 dodgeVec;
 
     Vector3 inputDir = Vector3.zero;
+
     Quaternion targetRotation = Quaternion.identity;
 
     PlayerInputAction inputActions;
@@ -205,15 +211,17 @@ public class Player : MonoBehaviour, ICharacter
 
     void FixedUpdate()
     {
-
+        
         //10.11 수정. 기존 Attack 함수가 ICharacter의 Attack함수와 이름 동일하여 기존 Attack함수를 Attacking으로 수정
         Attacking();
         //AttackPos();
 
         if (IsAlive)
         {
-            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
+            Move();
+            Rotate();
+            //transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
         }
     }
 
@@ -252,23 +260,42 @@ public class Player : MonoBehaviour, ICharacter
             if (isSwap)
                 moveVec = Vector3.zero;
 
-            Vector2 input = context.ReadValue<Vector2>();
-            inputDir.x = input.x;
-            inputDir.y = 0.0f;
-            inputDir.z = input.y;
+            //Vector2 input = context.ReadValue<Vector2>();
+            //inputDir.x = input.x * Time.deltaTime;
+            //inputDir.y = 0.0f;
+            //inputDir.z = input.y * Time.deltaTime;
 
-            if (!context.canceled)
-            {
-                Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-                inputDir = cameraYRotation * inputDir;
+            //if (!context.canceled)
+            //{
 
-                targetRotation = Quaternion.LookRotation(inputDir);
-            }
+            //    Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+            //    inputDir = cameraYRotation * inputDir;
+
+            //}
+            //    targetRotation = Quaternion.LookRotation(inputDir);
+
+            Vector2 input = context.ReadValue<Vector2>();   // 입력된 값을 읽어오기
+            moveDir = input.y;      // w : +1,  s : -1   전진인지 후진인지 결정
+            rotateDir = input.x;
             anim.SetBool("isRun", !context.canceled);
         }
     }
+    void Move()
+    {
+        // 리지드바디로 이동 설정
+        rigid.MovePosition(rigid.position + moveSpeed * Time.fixedDeltaTime * moveDir * transform.forward);
+    }
 
-    void GetInput()
+    void Rotate()
+    {
+        Quaternion rotate = Quaternion.AngleAxis(rotateDir * rotateSpeed * Time.fixedDeltaTime, transform.up);
+        rigid.MoveRotation(rigid.rotation * rotate);
+    }
+
+
+
+
+        void GetInput()
     {
         //hAxis = Input.GetAxisRaw("Horizontal");
         //vAxis = Input.GetAxisRaw("Vertical");
@@ -361,6 +388,16 @@ public class Player : MonoBehaviour, ICharacter
 
             canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
 
+            //if (inputDir != Vector3.zero && !isColltime)
+            //{
+            //    dodgeVec = inputDir;
+            //    speed *= 2;
+            //    anim.SetTrigger("doDodge");
+            //    StartCoroutine("Dodgeinv");
+            //    Debug.Log("구르기");
+            //}
+
+            inputDir = new Vector3(moveDir, 0, rotateDir);
             if (inputDir != Vector3.zero && !isColltime)
             {
                 dodgeVec = inputDir;

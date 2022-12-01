@@ -1894,7 +1894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2695719696565848032
 Transform:
   m_ObjectHideFlags: 0
@@ -2009,6 +2009,8 @@ MonoBehaviour:
   - {fileID: 2154094371128111848}
   hasWeapons: 01010101
   dodgeinv: {fileID: 0}
+  skillFilter: {fileID: 0}
+  coolTime: 5
   pHP: 100
   pMaxHp: 200
   damage: 1
@@ -10274,41 +10276,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.7, z: 0.1}
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &595088757803183975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844209166339471337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01993a042335a714992cadb195a50fe9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 4
-  value: 0
---- !u!114 &5806096668206236950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844209166339471337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c3fcf32824a1344bafaccd9010208d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitEffect: {fileID: 0}
-  type: 0
-  iDamage: 100
-  rate: 0.5
-  meleeArea: {fileID: 8796972001486954981}
-  arrowPos: {fileID: 0}
-  arrow: {fileID: 0}
-  weaponPS: {fileID: 0}
-  enemyData: {fileID: 0}
 --- !u!198 &961323914
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -15147,6 +15114,41 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &595088757803183975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844209166339471337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01993a042335a714992cadb195a50fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  value: 0
+--- !u!114 &5806096668206236950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844209166339471337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c3fcf32824a1344bafaccd9010208d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffect: {fileID: 0}
+  type: 0
+  iDamage: 100
+  rate: 0.5
+  meleeArea: {fileID: 8796972001486954981}
+  arrowPos: {fileID: 0}
+  arrow: {fileID: 0}
+  weaponPS: {fileID: 0}
+  enemyData: {fileID: 0}
 --- !u!4 &4472795100044766547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7989824334958907706, guid: 2371f43a13174ee3986eba2fd841cd76, type: 3}

@@ -17,3 +17,7 @@ MonoBehaviour:
     numOfEnemy: 4
   - enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
     numOfEnemy: 2
+  - enemyObject: {fileID: 5596601445860562083, guid: 5d17314e39640054584d7d941cb616ed, type: 3}
+    numOfEnemy: 2
+  - enemyObject: {fileID: 3517879895472461613, guid: 6eb9c1a7396765d439d5507205233510, type: 3}
+    numOfEnemy: 2

@@ -403,7 +403,7 @@ public class Player : MonoBehaviour, ICharacter
                 dodgeVec = inputDir;
                 speed *= 2;
                 anim.SetTrigger("doDodge");
-                StartCoroutine("Dodgeinv");
+                //StartCoroutine("Dodgeinv");
                 Debug.Log("±¸¸£±â");
             }
         }

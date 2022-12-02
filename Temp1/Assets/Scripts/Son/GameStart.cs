@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameStart : MonoBehaviour
 {
-    public GameObject creater, player;
+    public DungeonCreator creater;
+    public Player player;
     //public GameObject[] room;
     //BoxCollider col;
     //Vector3 roomPosition;
@@ -12,9 +13,11 @@ public class GameStart : MonoBehaviour
     bool isFirstRoomSpawn = false;
     private void Start()
     {
-        creater.SetActive(true);
-        creater.GetComponent<DungeonCreator>().CreateDungeon();
-        player.SetActive(true);
+        creater.gameObject.SetActive(true);
+        creater.player = player.gameObject;
+        creater.CreateDungeon();
+        
+        player.gameObject.SetActive(true);
         if (isFirstRoomSpawn)
         {
 
@@ -33,8 +36,15 @@ public class GameStart : MonoBehaviour
     /// </summary>
     public void DungeonCreate()
     {
-        creater.SetActive(true);
-        player.SetActive(true);
+        if(creater == null)
+        {
+            creater = FindObjectOfType<DungeonCreator>();
+        }else if(player== null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+        creater.gameObject.SetActive(true);
+        player.gameObject.SetActive(true);
         //creater.GetComponent<DungeonCreator>().CreateDungeon();
         //player.transform.position = creater.GetComponent<DungeonCreator>().roomCollider[0].center;
     }
@@ -51,7 +61,7 @@ public class GameStart : MonoBehaviour
         //    roomPosition += (i == 1) ? col.center : Vector3.zero;
 
         //}
-        player.transform.position = creater.GetComponent<DungeonCreator>().roomCollider[0].center;
+        player.transform.position = creater.roomCollider[0].center;
         //Debug.Log($"현재 플레이어 위치 {player.transform.position}");
     }
 }

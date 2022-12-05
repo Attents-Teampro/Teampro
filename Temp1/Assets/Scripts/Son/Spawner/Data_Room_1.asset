@@ -15,9 +15,13 @@ MonoBehaviour:
   SpawnArr:
   - enemyObject: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
     numOfEnemy: 4
+    isObject: 0
   - enemyObject: {fileID: 4158859801316043186, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
     numOfEnemy: 2
+    isObject: 0
   - enemyObject: {fileID: 2911597060502401789, guid: 82ac877b4759148409d52da95cdebe9b, type: 3}
     numOfEnemy: 2
+    isObject: 1
   - enemyObject: {fileID: 5596601445860562083, guid: 5d17314e39640054584d7d941cb616ed, type: 3}
     numOfEnemy: 2
+    isObject: 1

@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStart : MonoBehaviour
 {
-    public GameObject creater, player;
+    [NonSerialized]
+    public GameObject creater;
+    [NonSerialized]
+    public GameObject player;
     //public GameObject[] room;
     //BoxCollider col;
     //Vector3 roomPosition;
@@ -12,6 +16,8 @@ public class GameStart : MonoBehaviour
     bool isFirstRoomSpawn = false;
     private void Start()
     {
+        player = MainManager.instance.Player.gameObject;
+        creater = FindObjectOfType<DungeonCreator>().gameObject;
         creater.SetActive(true);
         creater.GetComponent<DungeonCreator>().CreateDungeon();
         player.SetActive(true);

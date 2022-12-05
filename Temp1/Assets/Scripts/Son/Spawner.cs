@@ -42,6 +42,9 @@ public class Spawner : MonoBehaviour
     int totalSpawnMonster = 0;
     //테스트용 변수
     GameObject[] mon;
+
+    [SerializeField]
+    bool isObject = false;
     public void StartSpawn(GameObject obj)
     {
         
@@ -64,18 +67,15 @@ public class Spawner : MonoBehaviour
     }
     public void AddMainToSpawnNum()
     {
-        int sum = 0;
         if (!isBoss)
         {
             for (int i = 0; i < spawnData.SpawnArr.Length; i++)
             {
                 int numOfEnemy = spawnData.SpawnArr[i].numOfEnemy;
-                MainManager.instance.numOfStageEnemy += numOfEnemy;
-                sum += numOfEnemy;
-            }
-            if(sum != totalSpawnMonster)
-            {
-                //MainManager.instance.numOfStageEnemy = 
+                if (!spawnData.SpawnArr[i].isObject)
+                {
+                    MainManager.instance.numOfStageEnemy += numOfEnemy;
+                }
             }
         }
         else

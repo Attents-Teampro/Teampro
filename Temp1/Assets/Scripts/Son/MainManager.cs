@@ -89,6 +89,14 @@ public class MainManager : Singleton<MainManager>
     /// </summary>
     public void GameStartFunc()
     {
+        if (gameStart.player == null) 
+        {
+            gameStart.player = Player.gameObject; 
+        }
+        if(gameStart.creater == null)
+        {
+            gameStart.creater = FindObjectOfType<DungeonCreator>().gameObject;
+        }
         gameStart.DungeonCreate();   
     }
 

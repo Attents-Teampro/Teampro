@@ -12,9 +12,13 @@ public class SpawnData : ScriptableObject
         public GameObject enemyObject;
         //생성할 몬스터 수
         public int numOfEnemy;
-
+        //오브젝트인지 아닌지
+        public bool isObject;
     }
     [Header("해당 방에 스폰될 몬스터 총 정보.")]
     public enemySpawnInfo[] SpawnArr;
+
+    
+    
 }
  

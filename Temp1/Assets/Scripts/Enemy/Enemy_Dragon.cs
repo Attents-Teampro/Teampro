@@ -34,9 +34,9 @@ public class Enemy_Dragon : EnemyBase, ICharacter
         flamePos.gameObject.SetActive(false);
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
 
     protected override void SearchPlayer()

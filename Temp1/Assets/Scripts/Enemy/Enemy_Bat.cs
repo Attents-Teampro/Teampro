@@ -35,9 +35,9 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
 
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         shotPosition.localRotation = transform.root.rotation;
     }
@@ -85,7 +85,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         isChase = false;
         isAttack = true;
         anim.SetBool("isWalk", false);
-        Instantiate(dangerLine, shotPosition.position, transform.rotation);
+        Instantiate(dangerLine, transform.position, transform.rotation);
         anim.SetTrigger("doAttack");
         yield return new WaitForSeconds(1f);
         Instantiate(projectile, shotPosition.position, transform.rotation);

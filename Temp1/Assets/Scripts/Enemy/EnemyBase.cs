@@ -68,7 +68,7 @@ public class EnemyBase : MonoBehaviour
         //by 손동욱
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
 
         if (player.isAlive)

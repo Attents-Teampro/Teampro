@@ -46,7 +46,7 @@ public class DungeonCreator : MonoBehaviour
     NavMeshSurface surface;
     NavMeshSurface[] surfaces;
     int count, count_BossCheck;
-    public GameObject player;
+    GameObject player;
     public GameObject door;
 
     private void Awake()
@@ -73,12 +73,11 @@ public class DungeonCreator : MonoBehaviour
 
         //11.10 추가 by 손동욱
         //플레이어와 카메라를 활성화하고, 시작 위치로 이동시키는 코드
+        player = MainManager.instance.Player.gameObject;
         player.SetActive(true);
         player.transform.position = roomCollider[0].center;
-        
+
     }
-
-
     public void CreateDungeon()
     {
         DestroyAllChildren();// 모든걸 지운다.

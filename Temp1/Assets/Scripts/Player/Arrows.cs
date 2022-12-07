@@ -17,6 +17,7 @@ public class Arrows : MonoBehaviour, ICharacter
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+
     }
 
     private void Start()
@@ -29,6 +30,7 @@ public class Arrows : MonoBehaviour, ICharacter
     private void Update()
     {
         //transform.position = Vector3.MoveTowards(transform.position, targetPoint, arrowSpeed * Time.deltaTime);
+        
     }
 
 
@@ -39,7 +41,10 @@ public class Arrows : MonoBehaviour, ICharacter
             Attack(other.gameObject, Player.instance.pDamage);
             Destroy(this.gameObject);
         }
-        Destroy(this.gameObject, 1.0f);
+        else
+        {
+            Destroy(this.gameObject, 1);
+        }
     }
 
 

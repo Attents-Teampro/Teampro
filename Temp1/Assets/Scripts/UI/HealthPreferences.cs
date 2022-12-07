@@ -145,7 +145,7 @@ public class HealthPreferences : MonoBehaviour
             case Image.FillMethod.Vertical: imgFull.fillOrigin = (int)verticalDirection; break;
             case Image.FillMethod.Radial90: imgFull.fillOrigin = (int)radial90Direction; break;
             case Image.FillMethod.Radial180: imgFull.fillOrigin = (int)radial180Direction; break;
-            case Image.FillMethod.Radial360: imgFull.fillOrigin = (int)radial360Direction; break;
+            case Image.FillMethod.Radial360: imgFull.fillOrigin = (int)radial360Direction; imgFull.fillClockwise = false; break;
         }
 
         valuePerImage = maxHealth / imagesAmount;

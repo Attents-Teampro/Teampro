@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using static UnityEditor.Progress;
+using UnityEngine.XR;
 
 //11.04 인터페이스 ICharacter가 빠져있어서 추가했습니다. 
 //왜 빼신지 모르겠는데 일단 ICharacter로 enemy랑 enemy_Boss에서 ICharacter로 데미지를 적용하고 있어서
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour, ICharacter
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public CapsuleCollider dodgeinv;
+    public SkinnedMeshRenderer[] skinMesh;
+    public MeshRenderer[] meshs;
 
     public Image skillFilter;
     //public Text coolTimeCounter; //남은 쿨타임을 표시할 텍스트
@@ -125,6 +128,7 @@ public class Player : MonoBehaviour, ICharacter
                 Debug.Log("공격받음, 이프문 실행");
                 pHP = value;
                 anim.SetTrigger("Hit");
+                StartCoroutine("HitColor");
                 if (pHP <= 0)
                 {
                     Debug.Log("죽음");
@@ -133,7 +137,7 @@ public class Player : MonoBehaviour, ICharacter
                 pHP = Mathf.Clamp(pHP, 0, pMaxHp);
 
                 pHPChange?.Invoke(pHP / pMaxHp);
-            }
+            }  
         }
     }
     public int MaxHP => pMaxHp;
@@ -148,6 +152,8 @@ public class Player : MonoBehaviour, ICharacter
 
     private void Awake()
     {
+        skinMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshs = GetComponentsInChildren<MeshRenderer>();
 
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
@@ -507,6 +513,35 @@ public class Player : MonoBehaviour, ICharacter
         anim.SetBool("IsAlive", isAlive);   // 죽었다고 표시해서 사망 애니메이션 재생
         onDie?.Invoke();
         
+    }
+    
+    IEnumerator HitColor()
+    {
+        yield return new WaitForSeconds(0.1f);  // 0.1초 대기
+        HitColor(true);
+
+        yield return new WaitForSeconds(0.2f);
+        HitColor(false);
+    }
+
+
+    void HitColor(bool isHit)
+    {
+        if (isHit)
+        {
+            foreach (SkinnedMeshRenderer mesh in skinMesh)
+                mesh.material.color = Color.red;
+            foreach (MeshRenderer mesh in meshs)
+                mesh.material.color = Color.red;
+
+        }
+        else
+        {
+            foreach (SkinnedMeshRenderer mesh in skinMesh)
+                mesh.material.color = Color.white;
+            foreach (MeshRenderer mesh in meshs)
+                mesh.material.color = Color.white;
+        }
     }
 
     //private void OnCollisionEnter(Collision collision)

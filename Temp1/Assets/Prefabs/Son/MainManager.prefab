@@ -51,6 +51,7 @@ MonoBehaviour:
   clearUIWindos: {fileID: 0}
   spawnManager: {fileID: 0}
   gold: 0
+  isClear: 0
 --- !u!114 &871639914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,9 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e421d8405cde544b48732d35db2791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creater: {fileID: 0}
-  player: {fileID: 0}
-  isFirstRoomSpawn: 1
+  isFirstRoomSpawn: 0
 --- !u!114 &762380313743942940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,4 +81,10 @@ MonoBehaviour:
   - {fileID: 6480546422584917300, guid: 6ed491af2ee67f04e856dfe19c02e20c, type: 3}
   - {fileID: 6480546422584917300, guid: 9f8d5255f5937d94a81623137374c7c3, type: 3}
   - {fileID: 6480546422584917300, guid: 127d556f6521f1d459531b0d6052c4bd, type: 3}
+  - {fileID: 6480546422584917300, guid: 33e86a594e03c9f43ac1e4ab9e932991, type: 3}
+  - {fileID: 6480546422584917300, guid: c1c55152b5abf8440a78d9f407dd9a50, type: 3}
+  - {fileID: 6480546422584917300, guid: c21a0b7b8c576c64b94e7176dba7245f, type: 3}
+  - {fileID: 6480546422584917300, guid: 1103eb9f3948c48468d5115fb0818dbe, type: 3}
+  - {fileID: 6480546422584917300, guid: 1b86e60ef379d124499a84e26850ab28, type: 3}
+  - {fileID: 6480546422584917300, guid: 2eb665bc4bc932e40943bb23f77b9752, type: 3}
   - {fileID: 3966909394043465796, guid: 3fb7c5f6f69993942bafe606adeeb6fa, type: 3}

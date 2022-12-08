@@ -103,6 +103,12 @@ public class MainManager : Singleton<MainManager>
     protected override void Initialize()
     {
         player = FindObjectOfType<Player>();
+        gameStart = GetComponent<GameStart>();
+        spawnManager = GetComponent<SpawnManager>();
+        if (clearUIWindos == null)
+        {
+            
+        }
     }
 
     /*

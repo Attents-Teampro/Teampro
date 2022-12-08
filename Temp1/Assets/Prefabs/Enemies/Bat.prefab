@@ -736,7 +736,8 @@ MonoBehaviour:
   isPlaeyerFind: 0
   sightRange: 11
   attackInterval: 2
-  dropItems: []
+  dropItems:
+  - {fileID: 9158437562956330169, guid: 929a07dfeb678db41ad0f6772802a916, type: 3}
   projectile: {fileID: 8997336932865730918, guid: 699aabc34bb5bca44bbd4e45a62da339, type: 3}
   dangerLine: {fileID: 8997336932865730918, guid: 495b86f4aecca4444b9a51dd42b16da6, type: 3}
   currentHP: 0

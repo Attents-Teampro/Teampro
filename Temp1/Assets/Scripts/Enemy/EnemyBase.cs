@@ -149,7 +149,7 @@ public class EnemyBase : MonoBehaviour
     {
         //타겟의 방향으로 회전
         transform.rotation = Quaternion.Slerp(transform.rotation,
-        Quaternion.LookRotation(target.position - transform.position), 0.5f);
+        Quaternion.LookRotation(target.position - transform.position), 1f * Time.fixedDeltaTime);
     }
     /// <summary>
     /// 근접 몬스터 MeleeAttack Collision 켜고/끄기

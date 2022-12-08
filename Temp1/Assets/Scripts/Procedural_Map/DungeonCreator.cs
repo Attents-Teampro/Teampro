@@ -44,7 +44,8 @@ public class DungeonCreator : MonoBehaviour
     //11.10 추가 by 손동욱
     //네브메쉬 활성화하는게 주석 중에 뭔지 몰라서 다 했습니다.
     NavMeshSurface surface;
-    NavMeshSurface[] surfaces;
+    // NavMeshSurface[] surfaces;
+
     int count, count_BossCheck;
     GameObject player;
     public GameObject door;
@@ -54,6 +55,7 @@ public class DungeonCreator : MonoBehaviour
         //11.10 추가 by 손동욱
         //네브메쉬 활성화하는게 주석 중에 뭔지 몰라서 다 활성화 했습니다.
         surface = GetComponent<NavMeshSurface>();
+        surface.BuildNavMesh();
 
         //11.10 추가 by 손동욱
 
@@ -64,11 +66,11 @@ public class DungeonCreator : MonoBehaviour
 
         //11.10 추가 by 손동욱
         //네브메쉬 활성화하는게 주석 중에 뭔지 몰라서 다 활성화 했습니다.
-        surfaces = GetComponents<NavMeshSurface>();
-        for (int i = 0; i < surfaces.Length; i++)
-        {
-            surfaces[i].BuildNavMesh();
-        }
+        //surfaces = GetComponents<NavMeshSurface>();
+        //for (int i = 0; i < surfaces.Length; i++)
+        //{
+        //    surfaces[i].BuildNavMesh();
+        //}
         //Debug.Log("ㅁ");
 
         //11.10 추가 by 손동욱

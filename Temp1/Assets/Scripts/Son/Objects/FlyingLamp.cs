@@ -12,6 +12,14 @@ public class FlyingLamp : MonoBehaviour
 
     public Transform player;
 
+    GameObject lightObject;
+    private void Start()
+    {
+        lightObject = transform.GetChild(1).gameObject;
+        lightObject.SetActive(false);
+
+    }
+
     void Update()
     {
         var pos = transform.position;
@@ -19,5 +27,21 @@ public class FlyingLamp : MonoBehaviour
         transform.position = new Vector3(pos.x, newY, pos.z);
 
         transform.LookAt(player);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            lightObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            lightObject.SetActive(false);
+        }
     }
 }

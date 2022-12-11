@@ -19,7 +19,7 @@ public class PoisonCloud : MonoBehaviour
     {
         if(poisonCloud.CompareTag("Player"))
         {
-            player.pHP--;
+            player.moveSpeed *= 0.75f;
         }
     }
 }

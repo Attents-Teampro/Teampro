@@ -35,6 +35,7 @@ public class Player : MonoBehaviour, ICharacter
     public SkinnedMeshRenderer[] skinMesh;
     public MeshRenderer[] meshs;
 
+    public AudioClip attackSfx;
     public AudioClip getHitSfx;
     AudioSource audioSource;
 
@@ -164,6 +165,8 @@ public class Player : MonoBehaviour, ICharacter
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
 
+        SkillBtn p = FindObjectOfType<SkillBtn>();
+
         dodgeinv = GetComponent<CapsuleCollider>();
         //11.10 추가 by 손동욱
         //mellArea가 null이면 에러가 계속 나와서 수정
@@ -197,8 +200,8 @@ public class Player : MonoBehaviour, ICharacter
         equipWeapon = weapons[0].GetComponent<Weapon>();
         equipWeapon.gameObject.SetActive(true);
 
-        weaponPS = equipWeapon.weaponPS;
 
+        weaponPS = equipWeapon.weaponPS;
 
         isAlive = true;
         isColltime = false;
@@ -319,13 +322,14 @@ public class Player : MonoBehaviour, ICharacter
 
     private void OnAttacking(InputAction.CallbackContext obj)
     {
-        if (isFireReady && !isDodge && !isSwap)
+        if (isFireReady && !isDodge && !isSwap && isAlive)
         {
             equipWeapon.Use();
             int comboState = anim.GetInteger("ComboState"); // ComboState를 애니메이터에서 읽어와서 
             comboState++;   // 콤보 상태 1 증가 시키기
             anim.SetInteger("ComboState", comboState);      // 애니메이터에 증가된 콤보 상태 설정
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
+            audioSource.PlayOneShot(attackSfx);
             fireDelay = 0;
         }
     }

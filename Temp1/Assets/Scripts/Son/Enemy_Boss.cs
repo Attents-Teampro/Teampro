@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Enemy_Boss : MonoBehaviour, ICharacter
 {
@@ -14,8 +16,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //public int curHealth;
     //public int maxHealth;
 
-    [SerializeField]
-    float moveSpeed = default;             //이동 속도
+    //[SerializeField]
+    //float moveSpeed = default;             //이동 속도
     [SerializeField]
     float attackSpeed = 3f;
     //public float rotSpeed = 1.0f;
@@ -30,7 +32,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// <summary>
     /// sphere을 쏘아내는 거리(0으로 해서 리소스 아낌, 굳이 일직선으로 설정 안하는게 좋을 것 같음
     /// </summary>
-    [SerializeField] float targetRange = 0f;
+    //[SerializeField] float targetRange = 0f;
     /// <summary>
     /// 실시간 변경되는 보스의 HP. 
     /// </summary>
@@ -45,7 +47,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// <summary>
     /// 피격 시 이 변수만큼 시간이 지난 후 피격가능
     /// </summary>
-    [SerializeField] const float godTime = 1f;
+    [SerializeField] float godTime = 1f;
     /// <summary>
     /// 원거리 공격 텀. 근접 공격 중 올라가지 않음. 플레이어를 쫒을 때만 타이머 작동
     /// </summary>
@@ -58,16 +60,19 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// 파이어볼 생성 위치 변수_Y
     /// </summary>
     [SerializeField] float frontOfMouse_Y = 1.7f;
-
+    /// <summary>
+    /// 피격 시 무적인지 판별 변수
+    /// </summary>
+    [NonSerialized]
+    public bool isGod = false; //전투 중 피격 시 피격무적 체크
 
     bool isSleeping = false; //보스 전투 전 상태 체크
     bool isActive = false; //인트로(포효) 끝났는지 체크
-    bool isChase = false;  //이동 체크
+   // bool isChase = false;  //이동 체크
     bool isAttack = false; //공격 중인지(플레이어가 사거리 안에 있어야만) 체크
     bool isDead = false; //HP가 0인지 체크
-    bool isBattle = false; //전투(공격 중인지) 중인지 체크
+    //bool isBattle = false; //전투(공격 중인지) 중인지 체크
     bool isAttacked = false;
-    bool isGod = false; //전투 중 피격 시 피격무적 체크
     public int eDamage = 0;
     float attackTimer = 0;
     float longAttackTimer = 0;
@@ -235,7 +240,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     IEnumerator MeleeAniAttack()
     {
         anim.SetBool("isWalk", false);
-        randomType = Random.Range(0, 2);//Random.Range는 Max 벨류가 Exclusive라 포함되지 않는(미만)이기 때문에 Max값을 +1 해야함
+        randomType = UnityEngine.Random.Range(0, 2);//Random.Range는 Max 벨류가 Exclusive라 포함되지 않는(미만)이기 때문에 Max값을 +1 해야함
                                         //Debug.Log(randomType);
                                         //+randomType 변수를 랜덤하게 지정, 랜덤 패턴으로 공격할 수 있도록 변경 예정 by 손동욱 10.19
                                         //aniType = "";

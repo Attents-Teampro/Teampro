@@ -43,8 +43,8 @@ public class Spawner : MonoBehaviour
     //테스트용 변수
     GameObject[] mon;
 
-    [SerializeField]
-    bool isObject = false;
+    //[SerializeField]
+    //bool isObject = false;
     public void StartSpawn(GameObject obj)
     {
         

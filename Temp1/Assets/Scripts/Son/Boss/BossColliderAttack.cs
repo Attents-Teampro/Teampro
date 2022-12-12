@@ -15,6 +15,11 @@ public class BossColliderAttack : MonoBehaviour
     private void OnEnable()
     {
         isAttack = false;
+        c.isTrigger= true;
+    }
+    private void OnDisable()
+    {
+        //isAttack = false;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -41,9 +46,20 @@ public class BossColliderAttack : MonoBehaviour
             i.Attacked(boss.eDamage);
         }
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit(Collision other)
     {
-        c.isTrigger = true;
+        
+        //c.isTrigger = true;
+        if (other.gameObject.CompareTag("Player")&& !isAttack)
+        {
+
+            //실제 공격에 적용되었을 때 공격 콜리더에 부딫히게 트리거 on/off설정
+            c.isTrigger = false;
+            //공격 적용 시 다시 적용되지 않게 true변경
+            isAttack = true;
+            ICharacter i = other.gameObject.GetComponent<ICharacter>();
+            i.Attacked(boss.eDamage);
+        }
     }
 
 

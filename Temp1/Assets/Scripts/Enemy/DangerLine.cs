@@ -5,49 +5,30 @@ using static UnityEngine.GraphicsBuffer;
 
 public class DangerLine : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 1f;
     public float destoyTime;
-    //public Vector3 targetPoint;
     Rigidbody rb;
     TrailRenderer tr;
+    float scaleZ;
     //GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        //player = FindObjectOfType<Player>().gameObject;//수정코드
-        tr = GetComponent<TrailRenderer>();
+        //tr = GetComponent<TrailRenderer>();
         rb= GetComponent<Rigidbody>();
-      //  targetPoint = player.transform.position + new Vector3(0, 1f, 0);
         Destroy(gameObject, 1f);
         rb.velocity = transform.forward * speed;
+        //rb.velocity = transform.right * speed;
+        scaleZ = transform.localScale.z;
+        
     }
 
-    // Update is called once per frame
-    void Update()
+     void Update()
     {
-        //DangerlineShot();
-        //transform.position = Vector3.Lerp(transform.position,targetPoint, speed * Time.deltaTime);
+        this.transform.localScale += new Vector3(0.0f, 0.0f, 5.0f * Time.deltaTime);
+
+
     }
 
-    void DangerlineShot()
-    {
-        //Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 30f, LayerMask.GetMask("Player"));
-        //targetPoint = hit.point;
-        //Debug.Log("데인저 라인 플레이어 발견" + targetPoint);
-        //if (targetPoint != null)
-        //{
-        //    transform.position = Vector3.Lerp(transform.position, targetPoint, speed * Time.deltaTime);
-        //}
-    }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        Destroy(this.gameObject);
-    //    }
-    //    else if (!other.CompareTag("Enemy"))
-    //    {
-    //    }
-    //}
 }

@@ -62,8 +62,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.790812, y: 13.044579, z: 12.256307}
-  m_Center: {x: 0.9043703, y: -0.3459034, z: -0.40418768}
+  m_Size: {x: 30.413313, y: 13.044579, z: 21.875355}
+  m_Center: {x: -2.7838507, y: -0.3459034, z: -1.2034092}
 --- !u!1 &3880781198849586817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,7 +1745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8054302601185374063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.34, z: 0.81}
+  m_LocalPosition: {x: 0, y: 0.78, z: 0.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1764,7 +1764,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.6037736, g: 0.49290565, b: 0.24720542, a: 1}
-  m_Intensity: 10
+  m_Intensity: 15
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

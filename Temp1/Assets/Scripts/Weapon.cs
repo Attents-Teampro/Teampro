@@ -17,6 +17,10 @@ public class Weapon : MonoBehaviour, ICharacter
     public GameObject arrow;
     public ParticleSystem weaponPS;
 
+    public AudioClip attackSfx;
+    public AudioClip getHitSfx;
+    AudioSource audioSource;
+
     // 11.11
     public EnemyData enemyData;
     Enemy_Orc orc;
@@ -44,6 +48,7 @@ public class Weapon : MonoBehaviour, ICharacter
         orc = GetComponentInParent<Enemy_Orc>();
         skelleton = GetComponentInParent<Enemy_Skelleton>();
         player = FindObjectOfType<Player>();
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -71,8 +76,9 @@ public class Weapon : MonoBehaviour, ICharacter
         {
             yield return new WaitForSeconds(0.1f);  // 0.1√  ¥Î±‚
             meleeArea.enabled = true;
+            audioSource.PlayOneShot(attackSfx);
 
-            yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.2f);
             meleeArea.enabled = false;
         }
 

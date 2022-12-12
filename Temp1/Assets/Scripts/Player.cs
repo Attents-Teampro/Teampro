@@ -35,6 +35,9 @@ public class Player : MonoBehaviour, ICharacter
     public SkinnedMeshRenderer[] skinMesh;
     public MeshRenderer[] meshs;
 
+    public AudioClip getHitSfx;
+    AudioSource audioSource;
+
     public Image skillFilter;
     //public Text coolTimeCounter; //남은 쿨타임을 표시할 텍스트
 
@@ -128,6 +131,7 @@ public class Player : MonoBehaviour, ICharacter
                 Debug.Log("공격받음, 이프문 실행");
                 pHP = value;
                 anim.SetTrigger("Hit");
+                
                 StartCoroutine("HitColor");
                 if (pHP <= 0)
                 {
@@ -154,6 +158,7 @@ public class Player : MonoBehaviour, ICharacter
     {
         skinMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         meshs = GetComponentsInChildren<MeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
@@ -592,6 +597,7 @@ public class Player : MonoBehaviour, ICharacter
         Debug.Log("어택드 실행");
         Debug.Log($"현재 플레이어 pHP = {pHP}");
         PHP -= d;
+        audioSource.PlayOneShot(getHitSfx);
         //UI에 플레이어 pHP 값을 전달 -양해인 11.04
         Health.instance.SetCurrentHealth(pHP);
     }

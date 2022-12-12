@@ -17,9 +17,23 @@ public class GameStart : MonoBehaviour
     private void Start()
     {
         player = MainManager.instance.Player.gameObject;
-        creater = FindObjectOfType<DungeonCreator>().gameObject;
-        creater.SetActive(true);
-        creater.GetComponent<DungeonCreator>().CreateDungeon();
+        if(creater== null)
+        {
+            DungeonCreator d = FindObjectOfType<DungeonCreator>();
+            if (d != null)
+            {
+                creater = FindObjectOfType<DungeonCreator>().gameObject;
+                creater.SetActive(true);
+                creater.GetComponent<DungeonCreator>().CreateDungeon();
+            }
+        }
+        else
+        {
+            creater.SetActive(true);
+            creater.GetComponent<DungeonCreator>().CreateDungeon();
+        }
+        
+        
         player.SetActive(true);
         if (isFirstRoomSpawn)
         {
@@ -39,7 +53,11 @@ public class GameStart : MonoBehaviour
     /// </summary>
     public void DungeonCreate()
     {
-        creater.SetActive(true);
+        if(creater != null )
+        {
+            creater.SetActive(true);
+        }
+        
         player.SetActive(true);
         //creater.GetComponent<DungeonCreator>().CreateDungeon();
         //player.transform.position = creater.GetComponent<DungeonCreator>().roomCollider[0].center;

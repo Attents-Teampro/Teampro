@@ -78,8 +78,16 @@ public class MainManager : Singleton<MainManager>
             //클리어 bool 변수 초기화
             isClear = true;
 
-            //클리어UI 창 활성화
-            clearUIWindos.SetActive(true);
+            if(clearUIWindos!= null)
+            {
+                //클리어UI 창 활성화
+                clearUIWindos.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("에러. 클리어UI 미지정. MainManager에 clearUIWindows에 수동 지정하거나 찾는 방식 변경이 필요");
+            }
+            
             
         }
     }
@@ -95,7 +103,12 @@ public class MainManager : Singleton<MainManager>
         }
         if(gameStart.creater == null)
         {
-            gameStart.creater = FindObjectOfType<DungeonCreator>().gameObject;
+            DungeonCreator d = FindObjectOfType<DungeonCreator>();
+            if(d != null)
+            {
+                gameStart.creater = d.gameObject;
+            }
+            
         }
         gameStart.DungeonCreate();   
     }

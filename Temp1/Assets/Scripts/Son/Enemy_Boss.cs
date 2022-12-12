@@ -5,38 +5,61 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy_Boss : MonoBehaviour, ICharacter
 {
-    MainManager mainManager;
+    
     public GameObject projectile_FireBall;
     //public int curHealth;
     //public int maxHealth;
-    public Transform target;            //플레이어 타겟
-    public float moveSpeed = default;             //이동 속도
-    public float attackSpeed = 3f;
+
+    [SerializeField]
+    float moveSpeed = default;             //이동 속도
+    [SerializeField]
+    float attackSpeed = 3f;
     //public float rotSpeed = 1.0f;
-    public float targetRadiusSleeping = 15f; //보스가 자는 상태에서 플레이어를 감지하는 원의 반지름 거리
-    public float targetRadius = 2.5f;   //sphere의 반지름 => 보스가 플레이어를 인식하는 공격 사거리로 이용
-    public float targetRange = 0f; //sphere을 쏘아내는 거리(0으로 해서 리소스 아낌, 굳이 일직선으로 설정 안하는게 좋을 것 같음
-    public float delayStart = 3f;
+    /// <summary>
+    /// 보스가 자는 상태에서 플레이어를 감지하는 원의 반지름 거리
+    /// </summary>
+    [SerializeField] float targetRadiusSleeping = 15f;
+    /// <summary>
+    /// sphere의 반지름 => 보스가 플레이어를 인식하는 공격 사거리로 이용
+    /// </summary>
+    [SerializeField] float targetRadius = 2.5f;
+    /// <summary>
+    /// sphere을 쏘아내는 거리(0으로 해서 리소스 아낌, 굳이 일직선으로 설정 안하는게 좋을 것 같음
+    /// </summary>
+    [SerializeField] float targetRange = 0f;
+    /// <summary>
+    /// 실시간 변경되는 보스의 HP. 
+    /// </summary>
     public int eHP = 100;
-    public int damage = 100;
-    public const float godTime = 1f; //피격 시 무적인 시간
-    public float longAttackTurm = 3f;  //원거리 공격을 하는 간격. 걷는 모션 중에 타이머가 작동하여 해당 변수보다 타이머가 커지면 원거리 공격 실행
-    public float frontOfMouse_X = 3f;
-    public float frontOfMouse_Y = 1.7f;
+    /// <summary>
+    /// 보스의 공격 배율이 되는 데미지 값. 
+    /// 깨물기 = *1
+    /// 꼬리 공격 = *2
+    /// 파이어볼 = *3
+    /// </summary>
+    [SerializeField] int damage = 100;
+    /// <summary>
+    /// 피격 시 이 변수만큼 시간이 지난 후 피격가능
+    /// </summary>
+    [SerializeField] const float godTime = 1f;
+    /// <summary>
+    /// 원거리 공격 텀. 근접 공격 중 올라가지 않음. 플레이어를 쫒을 때만 타이머 작동
+    /// </summary>
+    [SerializeField] float longAttackTurm = 3f; 
+    /// <summary>
+    /// 파이어볼 생성 위치 변수_X
+    /// </summary>
+    [SerializeField] float frontOfMouse_X = 3f;
+    /// <summary>
+    /// 파이어볼 생성 위치 변수_Y
+    /// </summary>
+    [SerializeField] float frontOfMouse_Y = 1.7f;
 
-    //GameObject player;
-    //public GameObject projectile;       //원거리용 발사체
-    //public BoxCollider meleeAttack;     //밀리 어택용 컬리젼 박스
-    //public CapsuleCollider capsuleCollider;     //피격에 사용되는 기본 컬리젼
-    NavMeshAgent agent;            //네비 매쉬를 사용
-    //-agent의 stopdistance는 근접 공격 사거리
 
-    Animator anim;
-    RaycastHit[] rayHits;
-    Vector3 targetDirection;
     bool isSleeping = false; //보스 전투 전 상태 체크
     bool isActive = false; //인트로(포효) 끝났는지 체크
     bool isChase = false;  //이동 체크
@@ -45,17 +68,34 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     bool isBattle = false; //전투(공격 중인지) 중인지 체크
     bool isAttacked = false;
     bool isGod = false; //전투 중 피격 시 피격무적 체크
-    int eDamage = 0;
+    public int eDamage = 0;
     float attackTimer = 0;
     float longAttackTimer = 0;
     int randomType = 0; //공격 타입 index를 저장할 변수. 0=일반, 1=꼬리, 2=불구슬날리기... 더 늘 수 있음
     string aniType = "";//공격 타입 index에 맞는 string 값이 저장될 변수. 수동으로 입력한 애니메이션 각 공격 트리거의 트리거 변수값을 그대로 받는다.
+
+    enum attackType
+    {
+        isBasicAttack = 0,
+        isTailAttack = 1
+    }
+    attackType attackState;
+    GetAttackCollider colliders;
+    GameObject mouse, tail;
+    MainManager mainManager;
+    Transform target;            //타겟팅할 플레이어
+    NavMeshAgent agent;            //네비 매쉬를 사용
+    Animator anim;
+    RaycastHit[] rayHits;
+    Vector3 targetDirection;
     private void Awake()
     {
         
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
+        colliders = GetComponent<GetAttackCollider>();
+        mouse = colliders.mouseCollider.gameObject;
+        tail = colliders.tailCollider.gameObject;
         isSleeping = true;
         //일정 시간이(deley변수) 지난 후에 보스가 액티브 되도록
         //StartCoroutine(DelayStart());
@@ -65,7 +105,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         mainManager = MainManager.instance;
         if (target == null)
         {
-            target = FindObjectOfType<Player>().transform;
+            Player p = FindObjectOfType<Player>();
+            if(p != null)
+            {
+                target = p.transform;
+            }
+            
         }
         //target.position = new Vector3(target.position.x, 0, target.position.y);
     }
@@ -194,17 +239,19 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                                         //Debug.Log(randomType);
                                         //+randomType 변수를 랜덤하게 지정, 랜덤 패턴으로 공격할 수 있도록 변경 예정 by 손동욱 10.19
                                         //aniType = "";
-
+        
         //근접 공격 랜덤 switch 문
         switch (randomType)
         {
             case 0:
                 aniType = "isBasicAttack";
                 eDamage = damage;
+                attackState = attackType.isBasicAttack;
                 break;
             case 1:
                 aniType = "isTailAttack";
                 eDamage = damage * 2;
+                attackState = attackType.isTailAttack;
                 break;
             //주석 이유 : 원거리 공격은 따로 만들어야 플레이 적으로 괜찮을 것 같아서 변경
             /*
@@ -405,23 +452,60 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     //애니메이션이 끝나면 실행되는 코루틴 함수. 
 
-    //공격 애니메이션 끝날 때 호출. 애니메이션에 맞춰서 공격이 플레이어에게 적용
-    IEnumerator CalculateRealAttack()
+    //공격 애니메이션이 시작될 때 호출.
+    IEnumerator AttackOn()
     {
-        //isAttack(공격속도를 타이머로 재서 true, false로 변하는 bool 변수)이 굳이 필요하진 않지만, 기왕 만들었으니 사용
-        //!isAttacked(공격받는 중인지 true, false로 변하는 bool 변수)는 공격 받는 중에는 경직 및 GetHit 애니메이션이 실행되므로 실제 데미지를 입히는건 안맞는 듯
-        if (!isAttacked && isAttack)
+        Debug.Log("어택 실행");
+        switch (attackState)
         {
-            if (gameObject != null && !isDead)
-            {
-                //공격을 했을 때 이미 rayHits가 플레이어를 잡았을거라 예상되는데 혹시 몰라서 다시 찾아놓기
-                if (rayHits == null)
-                {
-                    rayHits = Physics.SphereCastAll(transform.position, targetRadius,
-                    transform.forward, targetRange, LayerMask.GetMask("Player"));
-                }
-                Attack(rayHits[0].transform.gameObject, eDamage); //실제 데미지 적용
-            }
+            case attackType.isBasicAttack:
+                mouse.SetActive(true);
+                break;
+            case attackType.isTailAttack:
+                tail.SetActive(true);
+                break;
+            default:
+                break;
+                    
+        }
+        
+        ////isAttack(공격속도를 타이머로 재서 true, false로 변하는 bool 변수)이 굳이 필요하진 않지만, 기왕 만들었으니 사용
+        ////!isAttacked(공격받는 중인지 true, false로 변하는 bool 변수)는 공격 받는 중에는 경직 및 GetHit 애니메이션이 실행되므로 실제 데미지를 입히는건 안맞는 듯
+        //if (!isAttacked && isAttack)
+        //{
+        //    if (gameObject != null && !isDead)
+        //    {
+
+        //        //공격을 했을 때 이미 rayHits가 플레이어를 잡았을거라 예상되는데 혹시 몰라서 다시 찾아놓기
+        //        if (rayHits == null)
+        //        {
+        //            rayHits = Physics.SphereCastAll(transform.position, targetRadius,
+        //            transform.forward, targetRange, LayerMask.GetMask("Player"));
+        //        }
+        //        Attack(rayHits[0].transform.gameObject, eDamage); //실제 데미지 적용
+        //    }
+
+        //}
+        yield return null;
+    }
+
+    /// <summary>
+    /// 공격 애니메이션이 끝날 때 호출
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AttackOff()
+    {
+        Debug.Log("어택 종료");
+        switch (attackState)
+        {
+            case attackType.isBasicAttack:
+                mouse.SetActive(false);
+                break;
+            case attackType.isTailAttack:
+                tail.SetActive(false);
+                break;
+            default:
+                break;
 
         }
         yield return null;

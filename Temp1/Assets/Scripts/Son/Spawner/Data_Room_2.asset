@@ -23,5 +23,5 @@ MonoBehaviour:
     numOfEnemy: 1
     isObject: 1
   - enemyObject: {fileID: 3517879895472461613, guid: 6eb9c1a7396765d439d5507205233510, type: 3}
-    numOfEnemy: 1
+    numOfEnemy: 10
     isObject: 1

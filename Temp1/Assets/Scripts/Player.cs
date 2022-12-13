@@ -110,7 +110,7 @@ public class Player : MonoBehaviour, ICharacter
 
     //-------------------------------------------------
 
-    
+
 
     public int attackPower = 10;      // 공격력
     public int defencePower = 3;      // 방어력
@@ -160,6 +160,8 @@ public class Player : MonoBehaviour, ICharacter
         skinMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         audioSource = GetComponent<AudioSource>();
+
+        //lockOnEffect = GetComponentInChildren<LockOnEffect>();
 
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
@@ -325,9 +327,10 @@ public class Player : MonoBehaviour, ICharacter
         if (isFireReady && !isDodge && !isSwap && isAlive)
         {
             equipWeapon.Use();
-            int comboState = anim.GetInteger("ComboState"); // ComboState를 애니메이터에서 읽어와서 
-            comboState++;   // 콤보 상태 1 증가 시키기
-            anim.SetInteger("ComboState", comboState);      // 애니메이터에 증가된 콤보 상태 설정
+            //int comboState = anim.GetInteger("ComboState"); // ComboState를 애니메이터에서 읽어와서 
+            //comboState++;   // 콤보 상태 1 증가 시키기
+            //anim.SetInteger("ComboState", comboState);      // 애니메이터에 증가된 콤보 상태 설정
+
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
             audioSource.PlayOneShot(attackSfx);
             fireDelay = 0;
@@ -653,15 +656,6 @@ public class Player : MonoBehaviour, ICharacter
     //public void LockOnToggle()
     //{
     //    LockOn();
-
-    //    //if(lockOnEffect.activeSelf)
-    //    //{
-    //    //    LockOff();
-    //    //}
-    //    //else
-    //    //{
-    //    //    LockOn();
-    //    //}
     //}
 
     //void LockOn()

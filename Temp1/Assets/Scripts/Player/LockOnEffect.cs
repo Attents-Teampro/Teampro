@@ -9,7 +9,7 @@ public class LockOnEffect : MonoBehaviour
     ///// <summary>
     ///// 락온 대상 설정
     ///// </summary>
-    ///// <param name="newParent">새로운 락온 대상(무조건 Enemy이어야 한다.). null아면 끄기</param>
+    ///// <param name = "newParent" > 새로운 락온 대상(무조건 Enemy이어야 한다.). null아면 끄기</param>
     //public void SetLockOnTarget(Transform newParent)
     //{
     //    if (TargetHealth != null)    // 기존 대상이 있었으면

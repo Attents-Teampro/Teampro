@@ -148,8 +148,9 @@ public class Door : MonoBehaviour
             //해당 문과 연결된 방이 클리어되었고, 연결된 반대편 문을 스폰하지 않았고, 연결된 반대편 문이 클리어되지 않았으면 실행 
             else if (room.isClear && !isRelationDoorSpawn && !door.room.isClear)
             {
+                
                 //현재 플레이어가 몇 번째 방인지 체크하는 변수 저장 및 계산
-                int roomIndex = other.gameObject.GetComponent<Player>().countCurrentRoom++;
+                int roomIndex = ++other.gameObject.GetComponent<Player>().countCurrentRoom;
                 //door.room.spawners = MainManager.instance.spawnManager.spawners[roomIndex];
                 door.room.indexPlayerIn = roomIndex;
                 //반대편 문과 연결된 방 스폰 시작

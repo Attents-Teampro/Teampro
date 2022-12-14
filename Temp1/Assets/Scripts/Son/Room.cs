@@ -30,13 +30,14 @@ public class Room : MonoBehaviour
                 d.SetInfo();
             }
         }
+        isBossIndex -= 3;
     }
     public void StartSpawn()
     {
         //일반 방 일 때
         if (isBossIndex!=indexPlayerIn && MainManager.instance.spawnManager.spawners.Length-1 >= indexPlayerIn)
         {
-            spawners = MainManager.instance.spawnManager.spawners[indexPlayerIn];
+            spawners = MainManager.instance.spawnManager.spawners[indexPlayerIn-1];
             spawners.StartSpawn(gameObject);
         }
         //보스 방 일 때(던전크리에이터에서 마지막 방 생성 시 spanwer을 설정해주므로)

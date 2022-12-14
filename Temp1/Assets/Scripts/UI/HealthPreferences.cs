@@ -57,7 +57,7 @@ public class HealthPreferences : MonoBehaviour
 
     private void OnValidate()
     {
-        
+
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);  //현재체력은 0에서 base 값 사이를 벗어나지 않는다
 
         if (gameObject.scene.IsValid()) //씬이 없다면?
@@ -76,15 +76,15 @@ public class HealthPreferences : MonoBehaviour
         }
     }
 
-    
+
 
 
     //플레이로 전환했을때 
-    private void RemoveAll() 
+    private void RemoveAll()
     {
         if (Application.isPlaying)
         {
-            foreach(Transform child in fullHeartsContainer.transform)
+            foreach (Transform child in fullHeartsContainer.transform)
                 Destroy(child.gameObject);
 
             foreach (Transform child in emptyHeartsContainer.transform)
@@ -111,7 +111,7 @@ public class HealthPreferences : MonoBehaviour
     /// <summary>
     /// 이미지 생성
     /// </summary>
-    public void Init(int amount) 
+    public void Init(int amount)
     {
         imagesAmount = amount;
         //Debug.Log("init");
@@ -129,7 +129,7 @@ public class HealthPreferences : MonoBehaviour
     /// </summary>
     private void CreateImage(int index)
     {
-        GameObject heartFull = new GameObject(); 
+        GameObject heartFull = new GameObject();
         heartFull.tag = "Heart Full";
         Image imgFull = heartFull.AddComponent<Image>();
         imgFull.sprite = fullHeartSprite;
@@ -145,7 +145,7 @@ public class HealthPreferences : MonoBehaviour
             case Image.FillMethod.Vertical: imgFull.fillOrigin = (int)verticalDirection; break;
             case Image.FillMethod.Radial90: imgFull.fillOrigin = (int)radial90Direction; break;
             case Image.FillMethod.Radial180: imgFull.fillOrigin = (int)radial180Direction; break;
-            case Image.FillMethod.Radial360: imgFull.fillOrigin = (int)radial360Direction; break;
+            case Image.FillMethod.Radial360: imgFull.fillOrigin = (int)radial360Direction; imgFull.fillClockwise = false; break;
         }
 
         valuePerImage = maxHealth / imagesAmount;
@@ -179,7 +179,7 @@ public class HealthPreferences : MonoBehaviour
     /// </summary>
     private void UpdateHealth()
     {
-        
+
         valuePerImage = maxHealth / imagesAmount;
         //이미지 당 값 =  기본 체력 /하트 갯수   =33.33 100/3
         for (int i = 0; i < imagesAmount; i++)
@@ -199,37 +199,37 @@ public class HealthPreferences : MonoBehaviour
         }
     }
 
-    
+
     public void SetCurrentHealth(float amount)
     {
         currentHealth = Mathf.Clamp(amount, 0, maxHealth);
         UpdateHealth();
     }
 
-    
+
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-   
+
     public float GetTotalHealth()
     {
         return maxHealth;
     }
 
-    
-    public void SetTotalHealth(float amount) 
+
+    public void SetTotalHealth(float amount)
     {
         maxHealth = amount;
         UpdateHealth();
     }
 
-  
+
     //misc
     //public void AddDamage(float amount)
     //{
-        
+
     //        Debug.Log("HPref-add damage");
     //        currentHealth -= amount;
 
@@ -237,7 +237,7 @@ public class HealthPreferences : MonoBehaviour
     //            currentHealth = 0;
 
     //        UpdateHealth();
-        
+
     //}
 
     ///// <summary>
@@ -274,12 +274,12 @@ public class HealthPreferences : MonoBehaviour
     //    }
     //}
 
-   
+
     //public void SetFillType(Image.FillMethod type)
     //{
     //    fillMethod = type;
     //    Init(imagesAmount);
     //}
 
-   
+
 }

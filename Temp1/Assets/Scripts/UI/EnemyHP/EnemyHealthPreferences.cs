@@ -42,6 +42,8 @@ public class EnemyHealthPreferences : MonoBehaviour
     Enemy_Mage mage;
     Enemy_Shell shell;
     Enemy_Skelleton skeleton;
+    Enemy_Bat bat;
+    Enemy_Dragon dragon;
 
     EnemyBase parent;
 
@@ -77,6 +79,16 @@ public class EnemyHealthPreferences : MonoBehaviour
                 maxHealth = skeleton.maxHP;
                 currentHealth = skeleton.currentHP;
                 break;
+            case EnemyBase.EnemyType.Bat:
+                bat = GetComponentInParent<Enemy_Bat>();
+                maxHealth = bat.maxHP;
+                currentHealth = bat.currentHP;
+                break;
+            case EnemyBase.EnemyType.Dragon:
+                dragon = GetComponentInParent<Enemy_Dragon>();
+                maxHealth = dragon.maxHP;
+                currentHealth = dragon.currentHP;
+                break;
         }
     }
 
@@ -97,6 +109,12 @@ public class EnemyHealthPreferences : MonoBehaviour
                 break;
             case EnemyBase.EnemyType.Skeleton:
                 currentHealth = skeleton.currentHP;
+                break;
+            case EnemyBase.EnemyType.Bat:
+                currentHealth = bat.currentHP;
+                break;
+            case EnemyBase.EnemyType.Dragon:
+                currentHealth = dragon.currentHP;
                 break;
         }
         UpdateHealth();

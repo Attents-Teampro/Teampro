@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scenes_SungJun/TestMap/Test_Lobby.unity
     guid: bbd42909e6c05b44999462a8e32bd79f
+  - enabled: 1
+    path: Assets/Scenes/Scenes_Haynn/Loading_Scene.unity
+    guid: acf4d6c5dfb378c4889b35243a1db2a5
   m_configObjects: {}

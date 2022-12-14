@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
@@ -10,32 +11,21 @@ public class UIController : MonoBehaviour
     /// </summary>
     public string sceneName;
 
+
     /// <summary>
     /// 다음 스테이지(로비)로 씬으로 넘어가는 버튼 
     /// </summary>
     public string nextStage;
 
-    //Canvas canvas; 삭제 예정
-    // resultPanel
-
-    //일시정지
-    //bool isPause= false;
-
-    private void Awake()
-    {
-        //resultPanel = GetComponentInChildren<Canvas>();
-
-        //resultPanel.gameObject.SetActive(false);
-    }
-
     //private void Start()
     //{
-    //    isPause = false;   
+    //    LoadingSceneController.LoadScene("Title_Scene"); //시작할대 로딩 보여주고 타이틀화면 보여주기
     //}
 
     public void GameStart()
     {
-        SceneManager.LoadScene($"{sceneName}");
+        //SceneManager.LoadScene($"{sceneName}");
+        LoadingSceneController.LoadScene($"{sceneName}"); //로딩씬을 통해 sceneName 씬을 로드
         Debug.Log($"{sceneName} will be load");
     }
 
@@ -47,24 +37,26 @@ public class UIController : MonoBehaviour
 
     public void NextStage()
     {
-        SceneManager.LoadScene($"{nextStage}");
+        //SceneManager.LoadScene($"{nextStage}");
+        LoadingSceneController.LoadScene($"{nextStage}");
         Debug.Log("test goNext");
     }
 
     public void GotoTitle()
     {
-        SceneManager.LoadScene("Title_Scene");
+        //SceneManager.LoadScene("Title_Scene");
+        LoadingSceneController.LoadScene("Title_Scene");
     }
 
 
 
-    public void ShowResult()
-    {
-        //if (resultPanel != null)
-        //{
-        //    resultPanel.gameObject.SetActive(true);
-        //}
-    }
+
+
+
+    //public void ShowResult()
+    //{
+
+    //}
 
     //public void GamePause()
     //{
@@ -73,15 +65,15 @@ public class UIController : MonoBehaviour
     //        {
     //            Time.timeScale = 0;
     //            isPause = true;
-                
+
     //        }
 
     //        else
     //        {
     //            Time.timeScale = 1;
     //            isPause = false;
-                
+
     //        }
-        
+
     //}
 }

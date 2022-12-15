@@ -13,12 +13,8 @@ public class FireBall : MonoBehaviour
     Vector3 position;
     private void Awake()
     {
-        ps = GetComponent<ParticleSystem>();
-        if(ps == null)
-        {
-            ps = GetComponentInChildren<ParticleSystem>();
-        }
-        ps.Play();
+        ps = GetComponentInChildren<ParticleSystem>();
+        
     }
     private void Start()
     {
@@ -43,7 +39,8 @@ public class FireBall : MonoBehaviour
             ICharacter player = other.GetComponent<ICharacter>();
             player.Attacked(damage);
             Debug.Log($"{name} 발사체의 공격 적중");
-            Destroy(gameObject);
+
+            Boom();
         }
         else if (other.CompareTag("Enemy"))
         {
@@ -51,8 +48,15 @@ public class FireBall : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Boom();
         }
         
+    }
+    void Boom()
+    {
+        ps.transform.parent = null;
+        ps.Play();
+        Destroy(ps.gameObject, 4.0f);
+        Destroy(gameObject);
     }
 }

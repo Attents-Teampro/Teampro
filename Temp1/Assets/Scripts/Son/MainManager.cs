@@ -85,7 +85,9 @@ public class MainManager : Singleton<MainManager>
             }
             else
             {
-                Debug.Log("에러. 클리어UI 미지정. MainManager에 clearUIWindows에 수동 지정하거나 찾는 방식 변경이 필요");
+                GameObject canvas = GameObject.Find("Canvas");
+                clearUIWindos = canvas.transform.GetChild(canvas.transform.childCount - 1).gameObject;
+                clearUIWindos.SetActive(true);
             }
             
             

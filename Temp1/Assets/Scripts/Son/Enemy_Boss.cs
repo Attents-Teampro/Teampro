@@ -460,7 +460,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //공격 애니메이션이 시작될 때 호출.
     IEnumerator AttackOn()
     {
-        Debug.Log("어택 실행");
         switch (attackState)
         {
             case attackType.isBasicAttack:
@@ -500,7 +499,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// <returns></returns>
     IEnumerator AttackOff()
     {
-        Debug.Log("어택 종료");
         switch (attackState)
         {
             case attackType.isBasicAttack:

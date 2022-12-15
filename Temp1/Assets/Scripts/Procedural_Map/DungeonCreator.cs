@@ -49,15 +49,17 @@ public class DungeonCreator : MonoBehaviour
     int count, count_BossCheck;
     GameObject player;
     public GameObject door;
+    List<GameObject> doors;
 
     private void Awake()
     {
         //11.10 추가 by 손동욱
         //네브메쉬 활성화하는게 주석 중에 뭔지 몰라서 다 활성화 했습니다.
         surface = GetComponent<NavMeshSurface>();
-        surface.BuildNavMesh();
-
+        //surface.BuildNavMesh();
+        //surface.BuildNavMesh();
         //11.10 추가 by 손동욱
+        doors = new List<GameObject>();
 
     }
     private void Start()
@@ -124,11 +126,20 @@ public class DungeonCreator : MonoBehaviour
                 CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
             }
         }
+        //네브메쉬 베이크 전에 문off
+        DoorMeshOnOff(false);
         // 벽만들기
         CreateWalls(wallParent);
+        //문on
+        DoorMeshOnOff(true);
 
-        //surface.BuildNavMesh();
-
+    }
+    void DoorMeshOnOff(bool sign)
+    {
+        foreach(GameObject g in doors)
+        {
+            g.SetActive(sign);
+        }
     }
 
     private void CreateWalls(GameObject wallParent)
@@ -205,8 +216,8 @@ public class DungeonCreator : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uvs;
         mesh.triangles = triangles;
+        mesh.RecalculateNormals();
 
-        
         GameObject dungeonFloor = new GameObject("Mesh" +bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
         
         if (dungeonFloor.name == "Mesh")
@@ -216,6 +227,7 @@ public class DungeonCreator : MonoBehaviour
 
         dungeonFloor.transform.position = Vector3.zero;
         dungeonFloor.transform.localScale = Vector3.one;
+        
         dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
         dungeonFloor.transform.parent = transform;
@@ -412,6 +424,7 @@ public class DungeonCreator : MonoBehaviour
             bool result = objDoor.transform.GetChild(i).GetComponent<Door>().CheckRoom();
             //Debug.Log($"{i} {dungeonFloor.name}의 방 찾기 결과 = {result}");
         }
+        doors.Add(objDoor);
         //몇 번째로 생성되었는지 카운트
         count++;
 

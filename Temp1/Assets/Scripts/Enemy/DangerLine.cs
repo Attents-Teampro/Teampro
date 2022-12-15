@@ -28,8 +28,6 @@ public class DangerLine : MonoBehaviour
      void Update()
     {
         this.transform.localScale += new Vector3(0.0f, 0.0f, 5.0f * Time.deltaTime);
-
-
     }
 
 }

@@ -18,6 +18,8 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, 2f);
         rb.velocity = transform.forward * projectileSpeed;
+        Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
+        bat.batOnDie += () => Destroy(this.gameObject);
     }
 
     // Update is called once per frame

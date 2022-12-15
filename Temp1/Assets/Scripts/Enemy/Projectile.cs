@@ -30,6 +30,8 @@ public class Projectile : MonoBehaviour, ICharacter
         Vector3 dir = (player.transform.position - transform.position);
         dir.y = 0.4f;
         rb.velocity = dir * projectileSpeed;
+        Enemy_Mage mage = GetComponentInParent<Enemy_Mage>();
+        mage.mageOnDie += () => Destroy(this.gameObject);
     }
 
     // Update is called once per frame

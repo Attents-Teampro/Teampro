@@ -21,7 +21,8 @@ public class DangerLine : MonoBehaviour
         rb.velocity = transform.forward * speed;
         //rb.velocity = transform.right * speed;
         scaleZ = transform.localScale.z;
-        
+        Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
+        bat.batOnDie += () => Destroy(this.gameObject);
     }
 
      void Update()

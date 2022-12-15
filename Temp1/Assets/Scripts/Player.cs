@@ -208,9 +208,11 @@ public class Player : MonoBehaviour, ICharacter
         isAlive = true;
         isColltime = false;
         anim.SetBool("IsAlive", isAlive);
-
-        skillFilter.fillAmount = 0; //처음에 스킬 버튼을 가리지 않음
-
+        skillFilter = FindObjectOfType<SkillBtn>().gameObject.GetComponent<Image>();
+        if(skillFilter != null)
+        {
+            skillFilter.fillAmount = 0; //처음에 스킬 버튼을 가리지 않음
+        }
         //HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
         //healthP.SetPlayer(this);
 

@@ -315,7 +315,7 @@ MonoBehaviour:
   sightRange: 9
   attackInterval: 2
   dropItems:
-  - {fileID: 9158437562956330169, guid: def9d7ea6746bd74d91d6962b3a13f5c, type: 3}
+  - {fileID: 6964241345556608667, guid: 99b665e575c20794fbd4c9b9e727cdbb, type: 3}
   currentHP: 0
   maxHP: 0
 --- !u!195 &5830050378594124366

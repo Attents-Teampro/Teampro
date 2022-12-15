@@ -2786,7 +2786,7 @@ MonoBehaviour:
   sightRange: 7
   attackInterval: 2
   dropItems:
-  - {fileID: 9158437562956330169, guid: 6953726dbae64c746bd1fcd6b609097e, type: 3}
+  - {fileID: 4016798501877899404, guid: 2d016a427ba8c8b47820f7ea0889c630, type: 3}
   currentHP: 150
   maxHP: 0
   attackSfx: {fileID: 8300000, guid: 5266ec6ef617fe54fb5c6b8380e7f19c, type: 3}

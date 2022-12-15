@@ -1,4 +1,5 @@
 //gitTest
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +18,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     public Vector3 offset;
 
     private Transform shotPosition;   //발사체(projectile) 생성 위치
-
+    public Action batOnDie;
 
     protected override void Awake()
     {
@@ -108,7 +109,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-
+        batOnDie?.Invoke();
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);

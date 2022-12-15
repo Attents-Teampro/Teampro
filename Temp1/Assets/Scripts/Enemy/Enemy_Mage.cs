@@ -1,4 +1,5 @@
 //gitTest
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
 
+    public Action mageOnDie;
 
     protected override void Awake()
     {
@@ -94,7 +96,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-
+        mageOnDie?.Invoke();
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);

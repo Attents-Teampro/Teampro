@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 633683108}
   - component: {fileID: 6228494159333882173}
   - component: {fileID: 4927763819903281149}
+  - component: {fileID: 809322853}
   m_Layer: 0
   m_Name: 50Coin
   m_TagString: Untagged
@@ -48,7 +49,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6228494159333882173
 MonoBehaviour:
@@ -74,9 +75,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c715e31883276f443adf3877c0b2d1bc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.525
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -160,6 +161,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &809322853
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690559849187839712}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3663318090678652148
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +282,6 @@ GameObject:
   - component: {fileID: 5081228854124977672}
   - component: {fileID: 8154889924002877869}
   - component: {fileID: 6255229832130094439}
-  - component: {fileID: 1493138671000211000}
   - component: {fileID: 1493138671000211007}
   m_Layer: 0
   m_Name: 50Coin
@@ -339,19 +355,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1493138671000211000
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606970627700671666}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.19919115
-  m_Center: {x: -0.0006971806, y: -0.00012963265, z: 0}
 --- !u!114 &1493138671000211007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,10 +425,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 795659c3d4837b4429335b23ad3214e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900006, guid: 795659c3d4837b4429335b23ad3214e5, type: 3}
-      propertyPath: m_LengthScale
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795659c3d4837b4429335b23ad3214e5, type: 3}

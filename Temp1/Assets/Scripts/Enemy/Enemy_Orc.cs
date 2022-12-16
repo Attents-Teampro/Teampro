@@ -17,6 +17,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     AudioSource audioSource;
 
     EnemyHealth health;
+    public GameObject hitEffect;
     protected override void Awake()
     {
         base.Awake();
@@ -109,6 +110,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
         MeleeAttackOff();   //meleeAttack Collision 끔

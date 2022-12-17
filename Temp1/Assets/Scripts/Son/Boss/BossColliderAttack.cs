@@ -56,6 +56,7 @@ public class BossColliderAttack : MonoBehaviour
         //공격 적용 시 다시 적용되지 않게 true변경
         isAttack = true;
         ic.Attacked(boss.eDamage);
+        boss.AttackSuccess();
         Vector3 contactPoint = (boss.transform.position - point)*0.7f;
         GameObject g =Instantiate(ps.gameObject, boss.transform.position - contactPoint + Vector3.up, Quaternion.Euler(0, 0, 0));
         g.GetComponent<ParticleSystem>().Play();

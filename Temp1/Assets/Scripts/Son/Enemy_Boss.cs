@@ -61,6 +61,21 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// </summary>
     [SerializeField] float frontOfMouse_Y = 1.7f;
     /// <summary>
+    /// 효과음 저장 배열
+    /// </summary>
+    [SerializeField]
+    AudioClip[] SFX;
+    AudioClip soundTail => SFX[0];
+    AudioClip soundBites => SFX[1];
+    AudioClip soundBreath => SFX[2];
+    AudioClip soundFireBreath => SFX[3];
+    AudioClip soundDeath => SFX[4];
+    AudioClip soundFootStep => SFX[5];
+    AudioClip soundHisses => SFX[6];
+    AudioClip soundRoar => SFX[7];
+    AudioClip soundAttacked => SFX[8];
+    AudioClip soundExplosion => SFX[9];
+    /// <summary>
     /// 피격 시 무적인지 판별 변수
     /// </summary>
     [NonSerialized]
@@ -93,9 +108,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     Animator anim;
     RaycastHit[] rayHits;
     Vector3 targetDirection;
+    AudioSource audio;
+    AudioSource audio2;
     private void Awake()
     {
-        
+        audio = GetComponent<AudioSource>();
+        audio2 = GetComponents<AudioSource>()[1];
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         colliders = GetComponent<GetAttackCollider>();
@@ -117,6 +135,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             }
             
         }
+        PlaySleepSound();
         //target.position = new Vector3(target.position.x, 0, target.position.y);
     }
     //시작 시 보스가 적을 인식하는데에 걸리는 시간 계산 코루틴.
@@ -205,7 +224,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 if (attackSpeed < attackTimer)
                 {
                     isAttack = false;
-                    Debug.Log("isAttack은 폴스 값으로변경");
+                    //Debug.Log("isAttack은 폴스 값으로변경");
                 }
 
             }
@@ -296,7 +315,6 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //원거리 랜덤 공격(현재 파이어볼 하나)
     IEnumerator LongAniAttack(GameObject obj)
     {
-        Debug.Log(obj.name);
         anim.SetBool("isWalk", false);
         randomType = Random.Range(0, 1); // 현재 하나라 0까지만 받기로..
         switch (randomType)
@@ -304,13 +322,16 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             case 0:
                 aniType = "isFireballShoot";//발사체 현재 미지정
                 eDamage = damage * 3;
+                audio.clip = soundFireBreath;
                 break;
             default:
                 Debug.Log($"인덱스에러, 입력 인덱스 : {randomType}");
                 aniType = "";
                 break;
         }
+        audio.Play();
         anim.SetTrigger(name: aniType.ToString());
+
         yield return null;
     }
 
@@ -322,12 +343,17 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             Vector3 frontOfMouse = transform.forward * frontOfMouse_X + Vector3.up * frontOfMouse_Y;
             Debug.Log("생성");
             GameObject projectile = Instantiate(projectile_FireBall, transform.position + frontOfMouse, transform.rotation);
-            projectile.GetComponent<FireBall>().target = target.gameObject;
+            FireBall fb = projectile.GetComponent<FireBall>();
+            fb.target = target.gameObject;
+            fb.boss = this;
+
         }
     }
     //죽었을 때 실행되는 함수
     public void Die()
     {
+        audio2.clip = soundDeath;
+        audio2.Play();
         isActive = false;
         anim.SetTrigger("doDie");
         isDead = true;
@@ -346,25 +372,29 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //공격 받을 때 실행
     public void Attacked(int d)
     {
-        //무적 상태일 때는 공격 안받기
-        if (isGod)
+        if (!isDead)
         {
-        }
-        //무적이 아닐 때 공격받으면 실행
-        else
-        {
-            StartCoroutine(CanHit()); //isGod 계산 코루틴
-            StartCoroutine(DelayAttacked(0.87f)); //isAttacked 컨트롤 용 코루틴
-            eHP -= d;
-            if (eHP <= 0)
+            //무적 상태일 때는 공격 안받기
+            if (isGod)
             {
-                Die();
             }
+            //무적이 아닐 때 공격받으면 실행
             else
             {
-                anim.SetTrigger("isGetHit");
+                StartCoroutine(CanHit()); //isGod 계산 코루틴
+                StartCoroutine(DelayAttacked(0.87f)); //isAttacked 컨트롤 용 코루틴
+                eHP -= d;
+                if (eHP <= 0)
+                {
+                    Die();
+                }
+                else
+                {
+                    anim.SetTrigger("isGetHit");
+                }
             }
         }
+        
     }
     //공격할 때 실행
     public void Attack(GameObject target, int d)
@@ -464,32 +494,17 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         {
             case attackType.isBasicAttack:
                 mouse.SetActive(true);
+                //audio.clip = soundBites;
+                //audio.Play();
                 break;
             case attackType.isTailAttack:
                 tail.SetActive(true);
+                //audio.clip = soundTail;
                 break;
             default:
                 break;
-                    
         }
         
-        ////isAttack(공격속도를 타이머로 재서 true, false로 변하는 bool 변수)이 굳이 필요하진 않지만, 기왕 만들었으니 사용
-        ////!isAttacked(공격받는 중인지 true, false로 변하는 bool 변수)는 공격 받는 중에는 경직 및 GetHit 애니메이션이 실행되므로 실제 데미지를 입히는건 안맞는 듯
-        //if (!isAttacked && isAttack)
-        //{
-        //    if (gameObject != null && !isDead)
-        //    {
-
-        //        //공격을 했을 때 이미 rayHits가 플레이어를 잡았을거라 예상되는데 혹시 몰라서 다시 찾아놓기
-        //        if (rayHits == null)
-        //        {
-        //            rayHits = Physics.SphereCastAll(transform.position, targetRadius,
-        //            transform.forward, targetRange, LayerMask.GetMask("Player"));
-        //        }
-        //        Attack(rayHits[0].transform.gameObject, eDamage); //실제 데미지 적용
-        //    }
-
-        //}
         yield return null;
     }
 
@@ -514,13 +529,61 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         yield return null;
     }
 
-
-    //GetHit 애니메이션에 추가할 예정이었던 함수.
-    //GetHit애니메이션에 이벤트를 달아서 플레이어의 데미지를 보스에 적용할려고 했는데 
-    //원래 맞는 애니메이션은 맞는 순간 데미지가 들어오는 거니까 굳이 안넣어도 될 것 같아서 수정
-    /*
-    IEnumerator CalculateRealGetHit()
+    void StopAudio()
     {
-        yield return null;
-    }*/
+        audio.Stop();
+        audio2.Stop();
+    }
+    public void PlayExplosionAudio()
+    {
+        
+        audio.clip = soundExplosion;
+        audio.Play();
+    }
+    void Footstep()
+    {
+        audio2.clip = soundFootStep;
+        audio2.Play();
+    }
+    void StopFootstep()
+    {
+        if(audio2.clip == soundFootStep)
+        {
+            audio2.Stop();
+        }
+    }
+    void StoAudiopLoop()
+    {
+        audio.loop = false;
+    }
+    void PlaySleepSound()
+    {
+        audio.clip = soundHisses;
+        audio.loop = true;
+        audio.Play();
+    }
+    void Roar()
+    {
+        if (audio.loop)
+        {
+            audio.loop = false;
+        }
+        audio.clip = soundRoar;
+        audio.Play();
+    }
+    void PlayAttackedSound()
+    {
+        audio.clip = soundAttacked;
+        audio.Play();
+    }
+    void PlayTailAttack()
+    {
+        audio.clip = soundTail;
+        audio.Play();
+    }
+    public void AttackSuccess()
+    {
+        audio.clip = soundBites;
+        audio.Play();
+    }
 }

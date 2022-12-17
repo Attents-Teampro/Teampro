@@ -6,9 +6,13 @@ public class FireBall : MonoBehaviour
 {
 
     public GameObject target;
-    public int damage=1;
-    public float lifeTime = 4f;
-    public float speed =2f;
+    [SerializeField]
+    int damage=1;
+    [SerializeField]
+    float lifeTime = 4f;
+    [SerializeField]
+    float speed =2f;
+    public Enemy_Boss boss;
     ParticleSystem ps;
     Vector3 position;
     private void Awake()
@@ -54,9 +58,21 @@ public class FireBall : MonoBehaviour
     }
     void Boom()
     {
-        ps.transform.parent = null;
+        if (ps.transform != null)
+        {
+            if (ps.transform.parent != null)
+            {
+                ps.transform.parent = null;
+            }
+        }
+        
         ps.Play();
-        Destroy(ps.gameObject, 4.0f);
+        boss.PlayExplosionAudio();
+        if(ps != null)
+        {
+            Destroy(ps.gameObject, 4.0f);
+        }
+        
         Destroy(gameObject);
     }
 }

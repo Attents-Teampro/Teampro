@@ -9,6 +9,9 @@ public class MainManager : Singleton<MainManager>
 {
     Player player;
 
+    [SerializeField]
+    int healAmount_StageClear= 20;
+
     public Player Player => player;
 
     public static MainManager instance;
@@ -71,7 +74,12 @@ public class MainManager : Singleton<MainManager>
         //portalObject.SetActive(true);
         numOfDieEnemy = 0;
         numOfStageEnemy = 0;
-
+        if(player != null && !isBoss)
+        {
+            ICharacter ic = player.GetComponent<ICharacter>();
+            ic.Attacked(-healAmount_StageClear);
+        }
+        
         //보스가 처치되면
         if (isBoss)
         {

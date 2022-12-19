@@ -714,12 +714,24 @@ public class Player : MonoBehaviour, ICharacter
     //추후 공격 콜리더에 적용하거나 해야 될 것 같습니다.
     public void Attacked(int d)
     {
-        Debug.Log("어택드 실행");
-        Debug.Log($"현재 플레이어 pHP = {pHP}");
-        PHP -= d;
-        audioSource.PlayOneShot(getHitSfx);
-        //UI에 플레이어 pHP 값을 전달 -양해인 11.04
-        Health.instance.SetCurrentHealth(pHP);
+        if(d < 0)
+        {
+            Heal();
+        }
+        else
+        {
+            Debug.Log("어택드 실행");
+            Debug.Log($"현재 플레이어 pHP = {pHP}");
+            PHP -= d;
+            audioSource.PlayOneShot(getHitSfx);
+            //UI에 플레이어 pHP 값을 전달 -양해인 11.04
+            Health.instance.SetCurrentHealth(pHP);
+        }
+    }
+
+    public void Heal()
+    {
+
     }
 
     public void Attack(GameObject target, int d)

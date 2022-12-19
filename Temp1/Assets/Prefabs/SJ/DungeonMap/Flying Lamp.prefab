@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   height: 0.3
-  startingY: 3
-  player: {fileID: 5585860869262248751, guid: ca3fe39e72879e341a6ad1eaa957b90d, type: 3}
+  startingY: 4
+  player: {fileID: 2695719696565848032, guid: 3e974cb15881ffb4bade49f1187ebabf, type: 3}
 --- !u!65 &5350700703775827159
 BoxCollider:
   m_ObjectHideFlags: 0

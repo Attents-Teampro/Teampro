@@ -8,8 +8,6 @@ public class ItemRotator : MonoBehaviour
     public float virticalSpeed;
     public float minHeight = 1;
     public float maxHeight;
-
-    public int coinValue;
     float timeElapsed;
     float halfDiff;
     Vector3 newPosition;
@@ -43,13 +41,13 @@ public class ItemRotator : MonoBehaviour
         transform.Rotate(0, Time.deltaTime * rotateSpeed, 0);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            MainManager.instance.gold += coinValue;
-            Destroy(this.gameObject);
-            Debug.Log($"현재 플레이어 골드 : {MainManager.instance.gold}");
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        MainManager.instance.gold += coinValue;
+    //        Destroy(this.gameObject);
+    //        Debug.Log($"현재 플레이어 골드 : {MainManager.instance.gold}");
+    //    }
+    //}
 }

@@ -591,7 +591,7 @@ MonoBehaviour:
   sightRange: 8
   attackInterval: 2
   dropItems:
-  - {fileID: 9158437562956330169, guid: 6953726dbae64c746bd1fcd6b609097e, type: 3}
+  - {fileID: 4016798501877899404, guid: 2d016a427ba8c8b47820f7ea0889c630, type: 3}
   projectile: {fileID: 8997336932865730918, guid: c92ac5b9e4b6ec041ac3b19139786ad6, type: 3}
   flame: {fileID: 182542, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
   currentHP: 0

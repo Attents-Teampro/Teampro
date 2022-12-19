@@ -25,12 +25,36 @@ public class MainManager : Singleton<MainManager>
     //스테이지 몬스터는 스포너에게, 죽은 몬스터 수는 몬스터 스크립트에서 얻는다.
     public int numOfStageEnemy = 0;
     
+    /// <summary>
+    /// 스테이지(룸)에서 죽은 몬스터 카운터
+    /// 방이 클리어되면 초기화된다.
+    /// </summary>
     public int numOfDieEnemy = 0;
 
+    /// <summary>
+    /// 전체 죽인 몬스터 개수
+    /// 방이 클리어 되어도 초기화하지 않는다.
+    /// </summary>
+    public int numOfTotalKillEnemy = 0;
+
+    /// <summary>
+    /// 획득한 총 골드
+    /// </summary>
+    public int gold = 0;
+
+    /// <summary>
+    /// 클리어 시 나올 UI윈도우
+    /// </summary>
     public GameObject clearUIWindos;
     GameStart gameStart;
+
+    /// <summary>
+    /// 스폰매니저 저장 변수
+    /// </summary>
+    [NonSerialized]
     public SpawnManager spawnManager;
-    public int gold = 0;
+
+    
     /// <summary>
     /// 스테이지가 모두 클리어되었을 때(보스가 죽고 클리어 UI가 나왔을 때 true가 되는 변수
     /// </summary>

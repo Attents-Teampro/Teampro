@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class PoisonCloud : MonoBehaviour
 {
-    // 독 늪에 있으면 HP 마이너스
-
-    ParticleSystem poisonCloud;
     Player player;
+
+    float speed;
 
     private void Start()
     {
-        poisonCloud = GetComponent<ParticleSystem>();
+        player = FindObjectOfType<Player>();
+        
+        
     }
 
-    // 파티클에 트리거를 켜서 플레이어가 닿으면 HP 가 닳도록 만듬
-    private void OnParticleTrigger()
+    private void OnTriggerEnter(Collider other)
     {
-        if(poisonCloud.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
-            player.moveSpeed *= 0.75f;
+            speed = player.moveSpeed;
+            player.moveSpeed = 2.0f;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.moveSpeed = 3.0f;
+        }
+    }
+
 }

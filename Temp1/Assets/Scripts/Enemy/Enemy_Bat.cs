@@ -17,7 +17,12 @@ public class Enemy_Bat : EnemyBase, ICharacter
     public int maxHP;
     public Vector3 offset;
 
+    [Header("-------[FX]")]
+    public GameObject hitEffect;
+    public GameObject dieEffect;
+
     private Transform shotPosition;   //발사체(projectile) 생성 위치
+    
     public Action batOnDie;
 
     protected override void Awake()
@@ -113,6 +118,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);
+        //dieEffect.GetComponent<ParticleSystem>().Play();
 
         //10.11 추가
         //메인 매니저에게 죽은 몬스터 수를 갱신
@@ -134,6 +140,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
 

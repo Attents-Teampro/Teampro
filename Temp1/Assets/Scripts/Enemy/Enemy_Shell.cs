@@ -9,6 +9,9 @@ public class Enemy_Shell : EnemyBase, ICharacter
     public int currentHP;
     public int maxHP;
 
+    [Header("-------[FX]")]
+    public GameObject hitEffect;
+
     protected override void Awake()
     {
         base.Awake();
@@ -96,6 +99,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
         MeleeAttackTrigger(false);

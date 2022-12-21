@@ -18,6 +18,8 @@ public class Enemy_Dragon : EnemyBase, ICharacter
     private Transform flamePos;
     ParticleSystem ps;
 
+    [Header("-------[FX]")]
+    public GameObject hitEffect;
 
     protected override void Awake()
     {
@@ -142,6 +144,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
 

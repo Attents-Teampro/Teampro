@@ -136,6 +136,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             
         }
         PlaySleepSound();
+        //WakeUp();
         //target.position = new Vector3(target.position.x, 0, target.position.y);
     }
     //시작 시 보스가 적을 인식하는데에 걸리는 시간 계산 코루틴.
@@ -212,10 +213,10 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 }
             }
             //수면 상태
-            else if (isSleeping)
-            {
-                SleepBoss();
-            }
+            //else if (isSleeping)
+            //{
+            //    SleepBoss();
+            //}
             //공격 속도 타이머(공격 중 + 깨어있는 상턔)
             if (isAttack && isActive) // 공격 중
             {
@@ -341,7 +342,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         if (gameObject!=null&& !isDead)
         {
             Vector3 frontOfMouse = transform.forward * frontOfMouse_X + Vector3.up * frontOfMouse_Y;
-            Debug.Log("생성");
+            //Debug.Log("생성");
             GameObject projectile = Instantiate(projectile_FireBall, transform.position + frontOfMouse, transform.rotation);
             FireBall fb = projectile.GetComponent<FireBall>();
             fb.target = target.gameObject;
@@ -414,7 +415,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         if (rayHits.Length > 0)
         {
             //Debug.Log($"{rayHits[0].transform.gameObject.name}");
-            isSleeping = false;
+            
             StartCoroutine(SleepAwake());
         }
     }
@@ -422,6 +423,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //수면 중 일정 반경 안에 플레이어가 들어오면 실행(끝나면 보스 활성화)
     IEnumerator SleepAwake()
     {
+        //슬립 bool 변수 최신화
+        isSleeping = false;
         //플레이어 바라보기
         transform.LookAt(target); //나중에 램프로 하면 부드럽게 회전할 듯 by 손동욱 10.18
         //포효하기
@@ -564,12 +567,25 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void Roar()
     {
+        //슬립 bool 변수 최신화
+        isSleeping = false;
+        //플레이어 바라보기
+        transform.LookAt(target); //나중에 램프로 하면 부드럽게 회전할 듯 by 손동욱 10.18
+        //포효하기
+        anim.SetBool("isActive", true);
+
+        
         if (audio.loop)
         {
             audio.loop = false;
         }
         audio.clip = soundRoar;
         audio.Play();
+    }
+    //포효 끝나면 보스가 플레이어를 쫒게 하기
+    void RoarEnd()
+    {
+        //isActive = true;
     }
     void PlayAttackedSound()
     {
@@ -585,5 +601,14 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         audio.clip = soundBites;
         audio.Play();
+    }
+
+    public void WakeUp()
+    {
+        //슬립 bool 변수 최신화
+        isSleeping = false;
+        //플레이어 바라보기
+        transform.LookAt(target); //나중에 램프로 하면 부드럽게 회전할 듯 by 손동욱 10.18
+        isActive = true;
     }
 }

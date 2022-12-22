@@ -5,22 +5,27 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     Vector3 offset;
-    public Transform player;
+    [SerializeField]
+    Transform player;
+
+    public bool isCinema = false;
 
     void Start()
     {
-        if(player == null)
-        {
-            player = FindObjectOfType<Player>().transform;
-        }
-        
-        
         offset = transform.position - player.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.position + offset;
+        if (isCinema)
+        {
+
+        }
+        else
+        {
+            transform.position = player.position + offset;
+        }
+        
     }
 }

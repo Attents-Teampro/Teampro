@@ -17,6 +17,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     AudioSource audioSource;
 
     EnemyHealth health;
+    [Header("-------[FX]")]
     public GameObject hitEffect;
     protected override void Awake()
     {

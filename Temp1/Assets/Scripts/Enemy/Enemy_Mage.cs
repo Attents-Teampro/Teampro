@@ -18,6 +18,9 @@ public class Enemy_Mage : EnemyBase, ICharacter
     private Transform mageBulletPosition;   //마법사 발사체(projectile) 생성 위치
     private Transform mageStaff;
 
+    [Header("-------[FX]")]
+    public GameObject hitEffect;
+
     public Action mageOnDie;
 
     protected override void Awake()
@@ -121,6 +124,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
 

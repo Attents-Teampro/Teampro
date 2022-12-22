@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class Enemy_Skelleton : EnemyBase, ICharacter
 {
-    
+    [Header("-------[ Enemy Unique Status]")]
     public int currentHP;
     public int maxHP;
 
+    [Header("-------[FX]")]
+    public GameObject hitEffect;
     protected override void Awake()
     {
         base.Awake();
@@ -94,6 +96,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     IEnumerator OnGetHit()
     {
         anim.SetBool("isWalk", false);
+        hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
         MeleeAttackTrigger(false);

@@ -18,4 +18,6 @@ interface ICharacter
     void Die();//죽었을 때 실행될 함수
     void Attacked(int damage);//공격받았을 때 실행될 함수
     void Attack(GameObject target, int damage);//공격할 때 실행될 함수
+
+
 }

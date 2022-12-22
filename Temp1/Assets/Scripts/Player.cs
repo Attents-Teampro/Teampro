@@ -15,7 +15,7 @@ using UnityEngine.XR;
 //왜 빼신지 모르겠는데 일단 ICharacter로 enemy랑 enemy_Boss에서 ICharacter로 데미지를 적용하고 있어서
 //그게 없으면 에러가 나올 수 밖에 없습니다.(플레이어가 데미지를 입을 때 에러 생성)
 //by 손동욱
-public class Player : MonoBehaviour, ICharacter
+public class Player : MonoBehaviour, ICharacter, IPlayer
 {
     public int countCurrentRoom = 0;
     public AttackState attackState;
@@ -77,6 +77,7 @@ public class Player : MonoBehaviour, ICharacter
     bool isSwap;
     bool isFireReady;
     bool isColltime;
+    bool isLookAt;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -98,15 +99,17 @@ public class Player : MonoBehaviour, ICharacter
     int equipWeaponIndex = -1;
     float fireDelay;
 
-    ///// <summary>
-    ///// 락온 이펙트
-    ///// </summary>
-    //LockOnEffect lockOnEffect;
+    /// <summary>
+    /// 락온 이펙트
+    /// </summary>
+    LockOnEffect lockOnEffect;
 
-    ///// <summary>
-    ///// 락온 범위
-    ///// </summary>
-    //float lockOnRange = 5.0f;
+    /// <summary>
+    /// 락온 범위
+    /// </summary>
+    float lockOnRange = 5.0f;
+
+    MainManager mainManager;
 
     //-------------------------------------------------
 
@@ -151,7 +154,7 @@ public class Player : MonoBehaviour, ICharacter
     public Action<int> pHPChange { get; set; }
     public Action onDie { get; set; }
 
-    //public Transform LockOnTransform => lockOnEffect.transform.parent;
+    public Transform LockOnTransform => lockOnEffect.transform.parent;
 
     //--------------------------------------------------------------------
 
@@ -161,7 +164,10 @@ public class Player : MonoBehaviour, ICharacter
         meshs = GetComponentsInChildren<MeshRenderer>();
         audioSource = GetComponent<AudioSource>();
 
-        //lockOnEffect = GetComponentInChildren<LockOnEffect>();
+        mainManager = MainManager.instance;
+
+        lockOnEffect = GetComponentInChildren<LockOnEffect>();
+        //LockOff();
 
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody>();
@@ -227,6 +233,8 @@ public class Player : MonoBehaviour, ICharacter
         Swap();
         Interation();
         //UseSkill();
+        
+
     }
 
     void FixedUpdate()
@@ -243,6 +251,16 @@ public class Player : MonoBehaviour, ICharacter
             //transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
         }
+
+        if (isLookAt == true)
+        {
+            transform.LookAt(nearest);
+        }
+        else
+        {
+            isLookAt = false;
+        }
+
     }
 
     private void OnEnable()
@@ -259,14 +277,14 @@ public class Player : MonoBehaviour, ICharacter
         inputActions.Player.DodgeLeft.performed += OnDodgeLeft;
         inputActions.Player.DodgeRight.performed += OnDodgeRight;
         inputActions.Player.Attack.performed += OnAttacking;
-        //inputActions.Player.LockOn.performed += OnLockOn;
+        inputActions.Player.LockOn.performed += OnLockOn;
     }
 
 
 
     private void OnDisable()
     {
-        //inputActions.Player.LockOn.performed -= OnLockOn;
+        inputActions.Player.LockOn.performed -= OnLockOn;
         inputActions.Player.Attack.performed -= OnAttacking;
         inputActions.Player.DodgeUp.performed -= OnDodgeUp;
         inputActions.Player.DodgeDown.performed -= OnDodgeDown;
@@ -637,7 +655,7 @@ public class Player : MonoBehaviour, ICharacter
         anim.SetLayerWeight(1, 0.0f);       // 애니메이션 레이어 가중치 제거
         anim.SetBool("IsAlive", isAlive);   // 죽었다고 표시해서 사망 애니메이션 재생
         onDie?.Invoke();
-        
+        mainManager.StageFailed();
     }
     
     IEnumerator HitColor()
@@ -716,7 +734,7 @@ public class Player : MonoBehaviour, ICharacter
     {
         if(d < 0)
         {
-            Heal();
+            Heal(d);
         }
         else
         {
@@ -729,9 +747,10 @@ public class Player : MonoBehaviour, ICharacter
         }
     }
 
-    public void Heal()
+    public void Heal(int d)
     {
-
+        PHP -= d;
+        Health.instance.SetCurrentHealth(pHP);
     }
 
     public void Attack(GameObject target, int d)
@@ -778,47 +797,53 @@ public class Player : MonoBehaviour, ICharacter
     //    }
     //}
 
-    //public void LockOnToggle()
-    //{
-    //    LockOn();
-    //}
+    public void LockOnToggle()
+    {
+        LockOn();
+    }
 
-    //void LockOn()
-    //{
-    //    // lockOnRange 거리 안에 있는 Enemy오브젝트 찾기
-    //    Collider[] enemies = Physics.OverlapSphere(transform.position, lockOnRange, LayerMask.GetMask("Enemy"));
-    //    if (enemies.Length > 0)
-    //    {
-    //        // 찾은 적 중 가장 가까이 있는 적 찾기
-    //        Transform nearest = null;
-    //        float nearestDistance = float.MaxValue;
-    //        foreach (var enemy in enemies)
-    //        {
-    //            Vector3 dir = enemy.transform.position - transform.position;
-    //            float distanceSqr = dir.sqrMagnitude;   // root 연산은 느리기 때문에 sqrMagnitude 사용
-    //            if (dir.sqrMagnitude < nearestDistance)
-    //            {
-    //                nearestDistance = dir.sqrMagnitude;
-    //                nearest = enemy.transform;
-    //            }
-    //        }
+    public Transform nearest = null;
+    void LockOn()
+    {
+        isLookAt = true;
+        if( nearest != null)
+        {
+            isLookAt = true;
+        }
+        
+        Collider[] enemies = Physics.OverlapSphere(transform.position, lockOnRange, LayerMask.GetMask("Enemy"));
+        if (enemies.Length > 0)
+        {           
+            float nearestDistance = float.MaxValue;
+            foreach (var enemy in enemies)
+            {
+                Vector3 dir = enemy.transform.position - transform.position;
+                float distanceSqr = dir.sqrMagnitude;
+                if (dir.sqrMagnitude < nearestDistance)
+                {
+                    nearestDistance = dir.sqrMagnitude;
+                    nearest = enemy.transform;
+                    transform.LookAt(nearest.position);
+                }
+            }
+            Debug.Log($"락온 활성화 {nearest}");
+            //lockOnEffect.SetLockOnTarget(nearest);      // 부모지정과 위치 변경
+        }
+        else
+        {
+            LockOff();
+            Debug.Log("락온 해제");
+        }
+    }
 
-    //        // 가장 가까이에 있는 적에세 LockOnEffect 붙이기
-    //        lockOnEffect.SetLockOnTarget(nearest);      // 부모지정과 위치 변경
-    //    }
-    //    else
-    //    {
-    //        LockOff();  // 주면에 적이 없는데 락온을 시도하면 락온 해제
-    //    }
-    //}
+    void LockOff()
+    {
+        //lockOnEffect.SetLockOnTarget(null);
+    }
 
-    //void LockOff()
-    //{
-    //    lockOnEffect.SetLockOnTarget(null);
-    //}
-
-    //private void OnLockOn(InputAction.CallbackContext context)
-    //{
-    //    LockOnToggle();
-    //}
+    private void OnLockOn(InputAction.CallbackContext context)
+    {
+        //LockOnToggle();
+        LockOn();
+    }
 }

@@ -24,6 +24,7 @@ public class DangerLine : MonoBehaviour
         Enemy_Bat bat = transform.root.GetComponent<Enemy_Bat>();
         //bat.onBatDie += SelfDestroy;
     }
+       
     void SelfDestroy()
     {
         Destroy(this.gameObject);

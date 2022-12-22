@@ -81,7 +81,7 @@ public class MainManager : Singleton<MainManager>
         //씬 이동시 삭제되지 않게 해주는 함수
         DontDestroyOnLoad(gameObject);
     }
-
+    public GameObject failUIWindow;
     protected override void Start()
     {
         base.Start();
@@ -118,7 +118,7 @@ public class MainManager : Singleton<MainManager>
             else
             {
                 GameObject canvas = GameObject.Find("Canvas");
-                clearUIWindos = canvas.transform.GetChild(canvas.transform.childCount - 1).gameObject;
+                clearUIWindos = canvas.transform.GetChild(canvas.transform.childCount - 2).gameObject;
                 clearUIWindos.SetActive(true);
             }
             
@@ -157,7 +157,25 @@ public class MainManager : Singleton<MainManager>
             
         }
     }
+    /// <summary>
+    /// 플레이어 사망시 UI 활성
+    /// </summary>
+    public void StageFailed()
+    {
 
+        if (failUIWindow != null)
+        {
+            failUIWindow.SetActive(true);
+        }
+        else
+        {
+            GameObject canvas = GameObject.Find("Canvas");
+            failUIWindow = canvas.transform.GetChild(canvas.transform.childCount - 1).gameObject;
+            failUIWindow.SetActive(true);
+        }
+
+    }
+    
     /*
     //씬 이동 시 포탈 오브젝트가 초기화 되어서 몬스터가 다 죽어도 포탈 오브젝트가 활성화되지 않는 에러가 있음
     //그래서 FixedUpdate로 

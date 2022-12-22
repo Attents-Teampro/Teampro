@@ -89,7 +89,6 @@ public class Enemy_Orc : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-
         anim.SetTrigger("doDie");
         isDead = true;
         audioSource.PlayOneShot(dieSfx);
@@ -156,7 +155,6 @@ public class Enemy_Orc : EnemyBase, ICharacter
     {
         currentHP -= damage;
         StartCoroutine(OnGetHit());
-        //EnemyHealth.instance.SetCurrentHealth(currentHP);
     }
 
     public void Attack(GameObject target, int damage)

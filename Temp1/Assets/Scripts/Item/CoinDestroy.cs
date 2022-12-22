@@ -5,29 +5,31 @@ using UnityEngine;
 public class CoinDestroy : MonoBehaviour
 {
     public int coinValue;
-    public AudioClip sfx_Coin;
+    //public AudioClip sfx_Coin;
 
     AudioSource audioSource;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = transform.GetChild(3).GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            audioSource.PlayOneShot(sfx_Coin);
+            audioSource.Play();
+            audioSource.transform.parent= null;
             MainManager.instance.gold += coinValue;
             Debug.Log($"현재 플레이어 골드 : {MainManager.instance.gold}");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
             Destroy(this.gameObject);
         }
     }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //}
 }

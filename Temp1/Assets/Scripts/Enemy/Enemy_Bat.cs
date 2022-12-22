@@ -23,7 +23,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     private Transform shotPosition;   //발사체(projectile) 생성 위치
     
-    public Action batOnDie;
+    public Action onBatDie;
 
     protected override void Awake()
     {
@@ -102,11 +102,6 @@ public class Enemy_Bat : EnemyBase, ICharacter
         isChase = true;
         yield return new WaitForSeconds(attackInterval);
     }
-
-    void DangerLineOn()
-    {
-        Instantiate(dangerLine, shotPosition.position, Quaternion.identity);
-    }
     /// <summary>
     /// Enemy 죽는 함수
     /// </summary>
@@ -114,7 +109,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-        batOnDie?.Invoke();
+        onBatDie?.Invoke();
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);

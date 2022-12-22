@@ -76,7 +76,6 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);

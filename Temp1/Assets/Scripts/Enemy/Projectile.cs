@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour, ICharacter
         dir.y = 0.4f;
         rb.velocity = dir * projectileSpeed;
         Enemy_Mage mage = GetComponentInParent<Enemy_Mage>();
-        mage.mageOnDie += () => Destroy(this.gameObject);
+        //mage.onMageDie += () => Destroy(this.gameObject);
     }
 
     // Update is called once per frame

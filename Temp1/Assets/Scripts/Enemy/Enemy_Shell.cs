@@ -79,8 +79,8 @@ public class Enemy_Shell : EnemyBase, ICharacter
 
     IEnumerator OnDead()
     {
-        MeleeAttackOff();
-        
+        meleeAttack.SetActive(false);
+        capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
         yield return new WaitForSeconds(1.5f);
 

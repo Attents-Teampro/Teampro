@@ -19,13 +19,17 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
         Destroy(gameObject, 2f);
         rb.velocity = transform.forward * projectileSpeed;
         Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
-        bat.batOnDie += () => Destroy(this.gameObject);
+        //bat.onBatDie += SelfDestroy;
     }
 
     // Update is called once per frame
     void Update()
     {
         //transform.Translate(Vector3.forward*projectileSpeed*Time.deltaTime);
+    }
+    void SelfDestroy()
+    {
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

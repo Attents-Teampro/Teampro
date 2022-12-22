@@ -13,7 +13,7 @@ public class DangerLine : MonoBehaviour
     //GameObject player;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //tr = GetComponent<TrailRenderer>();
         rb= GetComponent<Rigidbody>();
@@ -21,11 +21,14 @@ public class DangerLine : MonoBehaviour
         rb.velocity = transform.forward * speed;
         //rb.velocity = transform.right * speed;
         scaleZ = transform.localScale.z;
-        Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
-        bat.batOnDie += () => Destroy(this.gameObject);
+        Enemy_Bat bat = transform.root.GetComponent<Enemy_Bat>();
+        //bat.onBatDie += SelfDestroy;
     }
-
-     void Update()
+    void SelfDestroy()
+    {
+        Destroy(this.gameObject);
+    }
+    void Update()
     {
         this.transform.localScale += new Vector3(0.0f, 0.0f, 5.0f * Time.deltaTime);
     }

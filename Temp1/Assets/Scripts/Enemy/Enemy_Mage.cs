@@ -21,7 +21,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     [Header("-------[FX]")]
     public GameObject hitEffect;
 
-    public Action mageOnDie;
+    public Action onMageDie;
 
     protected override void Awake()
     {
@@ -99,7 +99,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         capsuleCollider.enabled = false;
-        mageOnDie?.Invoke();
+        onMageDie?.Invoke();
         anim.SetTrigger("doDie");
         isDead = true;
         yield return new WaitForSeconds(1.5f);

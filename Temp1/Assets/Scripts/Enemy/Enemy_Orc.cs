@@ -92,6 +92,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         anim.SetTrigger("doDie");
         isDead = true;
         audioSource.PlayOneShot(dieSfx);
+        StartCoroutine(StartDesolve());
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -147,6 +148,23 @@ public class Enemy_Orc : EnemyBase, ICharacter
         }
     }
     
+    IEnumerator StartDesolve()
+    {
+        Renderer renderer = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
+        Material material = renderer.material;
+        material.SetFloat("_DisolveFade", 1.0f);
+
+        float fadeValue = 1.0f;
+        float timeElipsed = 0.0f;
+        float desolveDurationNormalize = 1 / 2.0f;
+
+        while (timeElipsed < 2)
+        {
+            timeElipsed += Time.deltaTime;
+            material.SetFloat("_DisolveFade", fadeValue - (timeElipsed * desolveDurationNormalize));
+            yield return null;
+        }
+    }
     public void Die()
     {
         StartCoroutine(OnDead());

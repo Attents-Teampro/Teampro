@@ -94,7 +94,8 @@ public class MainManager : Singleton<MainManager>
     public void StageClear(bool isBoss = false)
     {
         onClearthisRoom?.Invoke();
-
+        
+        
         //portalObject.SetActive(true);
         numOfDieEnemy = 0;
         numOfStageEnemy = 0;
@@ -107,6 +108,11 @@ public class MainManager : Singleton<MainManager>
         //보스가 처치되면
         if (isBoss)
         {
+            Timer timer = FindObjectOfType<Timer>();
+            if (timer != null)
+            {
+                timer.SetTimerOff();
+            }
             //클리어 bool 변수 초기화
             isClear = true;
 
@@ -118,8 +124,11 @@ public class MainManager : Singleton<MainManager>
             else
             {
                 GameObject canvas = GameObject.Find("Canvas");
-                clearUIWindos = canvas.transform.GetChild(canvas.transform.childCount - 2).gameObject;
-                clearUIWindos.SetActive(true);
+                if(canvas != null ) 
+                {
+                    clearUIWindos = canvas.transform.GetChild(canvas.transform.childCount - 2).gameObject;
+                    clearUIWindos.SetActive(true);
+                }
             }
             
             

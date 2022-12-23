@@ -18,6 +18,10 @@ public class FireBall : MonoBehaviour
     private void Awake()
     {
         ps = GetComponentInChildren<ParticleSystem>();
+        if (ps == null)
+        {
+            ps = transform.GetChild(transform.childCount -1).GetComponent<ParticleSystem>();
+        }
         
     }
     private void Start()
@@ -42,7 +46,7 @@ public class FireBall : MonoBehaviour
         {
             ICharacter player = other.GetComponent<ICharacter>();
             player.Attacked(damage);
-            Debug.Log($"{name} 발사체의 공격 적중");
+            //Debug.Log($"{name} 발사체의 공격 적중");
 
             Boom();
         }
@@ -56,21 +60,23 @@ public class FireBall : MonoBehaviour
         }
         
     }
-    void Boom()
+    void Boom(float lifeTime = 10f)
     {
-        if (ps.transform != null)
+        ps.gameObject.SetActive(true);
+        if (ps !=null && ps.transform != null)
         {
             if (ps.transform.parent != null)
             {
                 ps.transform.parent = null;
+                ps.Play();
             }
         }
         
-        ps.Play();
+        
         boss.PlayExplosionAudio();
         if(ps != null)
         {
-            Destroy(ps.gameObject, 4.0f);
+            Destroy(ps.gameObject, lifeTime);
         }
         
         Destroy(gameObject);

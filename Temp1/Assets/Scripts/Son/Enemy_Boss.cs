@@ -567,6 +567,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void Roar()
     {
+        Debug.Log("포효 실행");
         //슬립 bool 변수 최신화
         isSleeping = false;
         //플레이어 바라보기
@@ -589,8 +590,19 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void PlayAttackedSound()
     {
-        audio.clip = soundAttacked;
-        audio.Play();
+        if (!isDead)
+        {
+            //무적 상태일 때는 공격 안받기
+            if (isGod)
+            {
+            }
+            else
+            {
+                audio.clip = soundAttacked;
+                audio.Play();
+            }
+        }
+            
     }
     void PlayTailAttack()
     {

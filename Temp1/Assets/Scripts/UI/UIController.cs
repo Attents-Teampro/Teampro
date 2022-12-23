@@ -22,6 +22,20 @@ public class UIController : MonoBehaviour
     //    LoadingSceneController.LoadScene("Title_Scene"); //시작할대 로딩 보여주고 타이틀화면 보여주기
     //}
 
+    private void Awake()
+    {
+        //var obj = FindObjectsOfType<UIController>();
+        //if (obj.Length == 1)
+        //{
+            DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //    Debug.Log("중복삭제");
+        //}
+    }
+
     public void GameStart()
     {
         //SceneManager.LoadScene($"{sceneName}");

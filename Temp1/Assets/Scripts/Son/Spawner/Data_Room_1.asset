@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Data_Room_1
   m_EditorClassIdentifier: 
   SpawnArr:
-  - enemyObject: {fileID: 3909837000738111945, guid: 105f437c969a3bf48b6c34420f0f2974, type: 3}
+  - enemyObject: {fileID: 6919170241241052080, guid: 58b03782aa36b6a4f82721ca35ae439f, type: 3}
     numOfEnemy: 4
     isObject: 0
-  - enemyObject: {fileID: 4158859801316043186, guid: a3b80026b3a88a8489b7382eb64ca339, type: 3}
+  - enemyObject: {fileID: 0}
     numOfEnemy: 2
     isObject: 0
   - enemyObject: {fileID: 2911597060502401789, guid: 82ac877b4759148409d52da95cdebe9b, type: 3}

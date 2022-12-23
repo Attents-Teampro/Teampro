@@ -19,6 +19,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     EnemyHealth health;
     [Header("-------[FX]")]
     public GameObject hitEffect;
+    public float desolveSpeed = 2f;
     protected override void Awake()
     {
         base.Awake();
@@ -93,7 +94,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         isDead = true;
         audioSource.PlayOneShot(dieSfx);
         StartCoroutine(StartDesolve());
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3.5f);
 
         //10.11 추가
         //메인 매니저에게 죽은 몬스터 수를 갱신
@@ -156,7 +157,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
         float fadeValue = 1.0f;
         float timeElipsed = 0.0f;
-        float desolveDurationNormalize = 1 / 2.0f;
+        float desolveDurationNormalize = 1 / desolveSpeed;
 
         while (timeElipsed < 2)
         {

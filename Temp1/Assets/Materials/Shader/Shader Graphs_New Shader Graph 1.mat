@@ -43,7 +43,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _DesolveSize: 0.005
-    - _DisolveFade: 1
+    - _DisolveFade: 0.76
     - _Phase_Size: 0.001
     - _Phase_Split_Value: 1
     - _QueueControl: 0

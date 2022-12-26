@@ -34,6 +34,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     public CapsuleCollider dodgeinv;
     public SkinnedMeshRenderer[] skinMesh;
     public MeshRenderer[] meshs;
+    
 
     public AudioClip attackSfx;
     public AudioClip getHitSfx;
@@ -91,6 +92,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     Rigidbody rigid;
     Animator anim;
 
+    EnemyBase enemyBase;
+
     ParticleSystem weaponPS;
     Transform weapon_r;
 
@@ -128,11 +131,11 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         get => pHP;
         set
         {
-            Debug.Log("공격받음, 이프문 미실행");
-            Debug.Log($"isAlive = {isAlive}\n php = {pHP}\n value = {value}");
+            //Debug.Log("공격받음, 이프문 미실행");
+            //Debug.Log($"isAlive = {isAlive}\n php = {pHP}\n value = {value}");
             if (isAlive && pHP != value) // 살아있고 HP가 변경되었을 때만 실행
             {
-                Debug.Log("공격받음, 이프문 실행");
+                //Debug.Log("공격받음, 이프문 실행");
                 pHP = value;
                 anim.SetTrigger("Hit");
                 
@@ -248,6 +251,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         {
             Move();
             Rotate();
+
             //transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
         }
@@ -255,12 +259,9 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         if (isLookAt == true)
         {
             transform.LookAt(nearest);
+            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
-        else
-        {
-            isLookAt = false;
-        }
-
     }
 
     private void OnEnable()
@@ -298,32 +299,59 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        if (IsAlive)
-        {
-            if (isDodge)
-                inputDir = dodgeVec;
+        //if (IsAlive)
+        //{
+        //    if (isDodge)
+        //        inputDir = dodgeVec;
 
-            if (isSwap)
-                moveVec = Vector3.zero;
+        //    if (isSwap)
+        //        moveVec = Vector3.zero;
 
-            //Vector2 input = context.ReadValue<Vector2>();
-            //inputDir.x = input.x * Time.deltaTime;
-            //inputDir.y = 0.0f;
-            //inputDir.z = input.y * Time.deltaTime;
+        //    Vector2 input = context.ReadValue<Vector2>();
+        //    inputDir.x = input.x;// * Time.deltaTime;
+        //    inputDir.y = 0.0f;
+        //    inputDir.z = input.y;// * Time.deltaTime;
 
-            //if (!context.canceled)
-            //{
+        //    if (!context.canceled)
+        //    {
 
-            //    Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-            //    inputDir = cameraYRotation * inputDir;
+        //        Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+        //        inputDir = cameraYRotation * inputDir;
+        //        targetRotation = Quaternion.LookRotation(inputDir);
 
-            //}
-            //    targetRotation = Quaternion.LookRotation(inputDir);
+        //    }
+            
 
             Vector2 input = context.ReadValue<Vector2>();   // 입력된 값을 읽어오기
             moveDir = input.y;      // w : +1,  s : -1   전진인지 후진인지 결정
             rotateDir = input.x;
             anim.SetBool("isRun", !context.canceled);
+
+            if (isLookAt == true)
+            {
+                if (IsAlive)
+                {
+                    if (isDodge)
+                        inputDir = dodgeVec;
+
+                    if (isSwap)
+                        moveVec = Vector3.zero;
+
+                    Vector2 input2 = context.ReadValue<Vector2>();
+                    inputDir.x = input2.x;// * Time.deltaTime;
+                    inputDir.y = 0.0f;
+                    inputDir.z = input2.y;// * Time.deltaTime;
+
+                    if (!context.canceled)
+                    {
+
+                        Quaternion cameraYRotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+                        inputDir = cameraYRotation * inputDir;
+                        targetRotation = Quaternion.LookRotation(inputDir);
+
+                    }
+                    anim.SetBool("isRun", !context.canceled);
+                }
         }
     }
     void Move()
@@ -445,7 +473,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     {
         if (canUseSkill)
         {
-            Debug.Log("Use Skill");
+            //Debug.Log("Use Skill");
             skillFilter.fillAmount = 1; //스킬 버튼을 가림
             StartCoroutine("Cooltime");
 
@@ -472,7 +500,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 speed *= 2;
                 anim.SetTrigger("doDodgeUp");
                 //StartCoroutine("Dodgeinv");
-                Debug.Log("앞으로구르기");
+                //Debug.Log("앞으로구르기");
             }
         }
         else
@@ -485,7 +513,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     {
         if (canUseSkill)
         {
-            Debug.Log("Use Skill");
+            //Debug.Log("Use Skill");
             skillFilter.fillAmount = 1; //스킬 버튼을 가림
             StartCoroutine("Cooltime");
 
@@ -499,7 +527,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 dodgeVec = inputDir;
                 speed *= 2;
                 anim.SetTrigger("doDodgeDown");
-                Debug.Log("뒤로 구르기");
+                //Debug.Log("뒤로 구르기");
             }
         }
         else
@@ -512,7 +540,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     {
         if (canUseSkill)
         {
-            Debug.Log("Use Skill");
+            //Debug.Log("Use Skill");
             skillFilter.fillAmount = 1; //스킬 버튼을 가림
             StartCoroutine("Cooltime");
 
@@ -526,7 +554,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 dodgeVec = inputDir;
                 speed *= 2;
                 anim.SetTrigger("doDodgeLeft");
-                Debug.Log("왼쪽으로 구르기");
+                //Debug.Log("왼쪽으로 구르기");
             }
         }
         else
@@ -539,7 +567,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     {
         if (canUseSkill)
         {
-            Debug.Log("Use Skill");
+            //Debug.Log("Use Skill");
             skillFilter.fillAmount = 1; //스킬 버튼을 가림
             StartCoroutine("Cooltime");
 
@@ -553,7 +581,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 dodgeVec = inputDir;
                 speed *= 2;
                 anim.SetTrigger("doDodgeRight");
-                Debug.Log("오른쪽으로 구르기");
+                //Debug.Log("오른쪽으로 구르기");
             }
         }
         else
@@ -738,8 +766,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         }
         else
         {
-            Debug.Log("어택드 실행");
-            Debug.Log($"현재 플레이어 pHP = {pHP}");
+            //Debug.Log("어택드 실행");
+            //Debug.Log($"현재 플레이어 pHP = {pHP}");
             PHP -= d;
             audioSource.PlayOneShot(getHitSfx);
             //UI에 플레이어 pHP 값을 전달 -양해인 11.04
@@ -826,7 +854,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                     transform.LookAt(nearest.position);
                 }
             }
-            Debug.Log($"락온 활성화 {nearest}");
+
+            //Debug.Log($"락온 활성화 {nearest}");
             //lockOnEffect.SetLockOnTarget(nearest);      // 부모지정과 위치 변경
         }
         else
@@ -838,12 +867,13 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     void LockOff()
     {
+        enemyBase.isDead = true;
         //lockOnEffect.SetLockOnTarget(null);
     }
 
     private void OnLockOn(InputAction.CallbackContext context)
     {
-        //LockOnToggle();
-        LockOn();
+        LockOnToggle();
+        //LockOn();
     }
 }

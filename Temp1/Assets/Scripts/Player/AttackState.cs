@@ -8,7 +8,7 @@ public class AttackState : StateMachineBehaviour
     {
         if (animator != null)
         {
-            Debug.Log("ÀÌÆåÆ® ÄÑÁü");
+            //Debug.Log("ÀÌÆåÆ® ÄÑÁü");
             MainManager.instance.Player.WeaponEffectSwitch(true);   // ¹«±â ÀÌÆÑÆ® ÄÑ±â
         }
 

@@ -6,7 +6,7 @@ public class MoveState : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("ÀÌÆåÆ® ²¨Áü");
+        //Debug.Log("ÀÌÆåÆ® ²¨Áü");
         MainManager.instance.Player.WeaponEffectSwitch(false);  // ¹«±â ÀÌÆÑÆ® ²ô±â
 
         animator.ResetTrigger("doSwing");        // ¾îÅÃ Æ®¸®°Åµµ ÀÏ´Ü ÃÊ±âÈ­

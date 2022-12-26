@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour, ICharacter
         //mellArea가 null이면 에러가 계속 나와서 수정
         if(meleeArea == null)
         {
-            Debug.Log("에러, Weapon스크립트의 meleeArea변수가 null입니다.");
+            //Debug.Log("에러, Weapon스크립트의 meleeArea변수가 null입니다.");
         }
         else
         {

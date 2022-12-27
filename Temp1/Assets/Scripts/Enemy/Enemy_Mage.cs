@@ -98,10 +98,10 @@ public class Enemy_Mage : EnemyBase, ICharacter
     /// <returns></returns>
     IEnumerator OnDead()
     {
+        isDead = true;
         capsuleCollider.enabled = false;
         onMageDie?.Invoke();
         anim.SetTrigger("doDie");
-        isDead = true;
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가

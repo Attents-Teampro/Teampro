@@ -27,7 +27,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     protected override void FixedUpdate()
     {
-        base .FixedUpdate();
+        base.FixedUpdate();
     }
     protected override void SearchPlayer()
     {
@@ -75,9 +75,9 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     IEnumerator OnDead()
     {
+        isDead = true;
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
-        isDead = true;
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -133,7 +133,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     }
     public void Die()
     {
-        
+
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

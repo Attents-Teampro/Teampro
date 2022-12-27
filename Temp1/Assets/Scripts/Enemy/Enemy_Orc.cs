@@ -88,9 +88,9 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     IEnumerator OnDead()
     {
+        isDead = true;
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
-        isDead = true;
         audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
 

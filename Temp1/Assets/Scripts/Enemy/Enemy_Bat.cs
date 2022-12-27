@@ -110,10 +110,10 @@ public class Enemy_Bat : EnemyBase, ICharacter
     /// <returns></returns>
     IEnumerator OnDead()
     {
+        isDead = true;
         capsuleCollider.enabled = false;
         onBatDie?.Invoke();
         anim.SetTrigger("doDie");
-        isDead = true;
         yield return new WaitForSeconds(1.5f);
         //dieEffect.GetComponent<ParticleSystem>().Play();
 

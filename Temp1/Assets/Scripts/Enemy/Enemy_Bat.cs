@@ -21,7 +21,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
     public GameObject hitEffect;
     public GameObject dieEffect;
 
-    private Transform shotPosition;   //발사체(projectile) 생성 위치
+    public Transform shotPosition;   //발사체(projectile) 생성 위치
     
     public Action onBatDie;
 
@@ -37,6 +37,8 @@ public class Enemy_Bat : EnemyBase, ICharacter
         base.Start();
         offset = new Vector3(0, 1.35f, 0.38f);
         shotPosition = transform.GetChild(2);
+        dangerLine.GetComponent<DangerLine>().parentBat = this;
+        projectile.GetComponent<Projectile_Bat>().parentBat = this;
     }
 
 

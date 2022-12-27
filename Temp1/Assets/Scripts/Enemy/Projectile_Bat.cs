@@ -11,15 +11,16 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
 
     Rigidbody rb;
     GameObject player;
-   
+    public Enemy_Bat parentBat;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, 2f);
         rb.velocity = transform.forward * projectileSpeed;
-        Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
-        //bat.onBatDie += SelfDestroy;
+        //Enemy_Bat bat = GetComponentInParent<Enemy_Bat>();
+        parentBat.onBatDie += SelfDestroy;
     }
 
     // Update is called once per frame
@@ -29,7 +30,10 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
     }
     void SelfDestroy()
     {
-        Destroy(this.gameObject);
+        if (this.gameObject != null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +54,7 @@ public class Projectile_Bat : MonoBehaviour, ICharacter
     {
     }
     public void Attacked(int damage)
-    {        
+    {
     }
 
     public void Attack(GameObject target, int damage)

@@ -12,10 +12,11 @@ public class Test_Boss : Test_Base
     {
         r = FindObjectOfType<Room>();
         p = FindObjectOfType<Player>();
+        p.countCurrentRoom = r.isBossIndex - 1;
+        Debug.Log("보스 세팅완");
     }
     protected override void Test2(InputAction.CallbackContext _)
     {
-        p.countCurrentRoom = r.isBossIndex - 1;
-        Debug.Log("보스 세팅완");
+        
     }
 }

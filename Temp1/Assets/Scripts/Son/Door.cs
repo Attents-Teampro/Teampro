@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
 
     public bool isSpawn = false;
     bool isRelationDoorSpawn = false;
+    bool isBoss = false;
     //해당 문과 연결된 방 저장 변수
     GameObject thisRoom = null;
 
@@ -69,21 +70,25 @@ public class Door : MonoBehaviour
     }
     private void DoorControl(bool t)
     {
-        //Open
-        if (t)
+        if(mr!= null && col != null)
         {
-            mr.enabled = false;
-            col.isTrigger = true;
-            SetColliderSize(true);
+            //Open
+            if (t)
+            {
+                mr.enabled = false;
+                col.isTrigger = true;
+                SetColliderSize(true);
 
+            }
+            //Close
+            else
+            {
+                mr.enabled = true;
+                col.isTrigger = false;
+                SetColliderSize(false);
+            }
         }
-        //Close
-        else
-        {
-            mr.enabled = true;
-            col.isTrigger = false;
-            SetColliderSize(false);
-        }
+        
     }
    
     public bool CheckRoom()
@@ -144,6 +149,10 @@ public class Door : MonoBehaviour
                 IsOpen = false;
                 //Room 스크립트의 플레이어 방 들어왔을 때 실행 함수 호출
                 room.PlayerInThisRoom();
+                if (isBoss)
+                {
+                    room.StartSpawnBoss();
+                }
             }
             //해당 문과 연결된 방이 클리어되었고, 연결된 반대편 문을 스폰하지 않았고, 연결된 반대편 문이 클리어되지 않았으면 실행 
             else if (room.isClear && !isRelationDoorSpawn && !door.room.isClear)
@@ -154,7 +163,7 @@ public class Door : MonoBehaviour
                 //door.room.spawners = MainManager.instance.spawnManager.spawners[roomIndex];
                 door.room.indexPlayerIn = roomIndex;
                 //반대편 문과 연결된 방 스폰 시작
-                door.room.StartSpawn();
+                door.isBoss= door.room.StartSpawn();
                 //해당 문은 반대편 문을 스폰했던 적이 있다고 bool 변수 초기화
                 isRelationDoorSpawn = true;
             }

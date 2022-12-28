@@ -7,7 +7,7 @@ public class FireBall : MonoBehaviour
 
     public GameObject target;
     [SerializeField]
-    int damage=1;
+    public int damage=1;
     [SerializeField]
     float lifeTime = 4f;
     [SerializeField]
@@ -30,6 +30,7 @@ public class FireBall : MonoBehaviour
         {
             target = FindObjectOfType<Player>().gameObject;
         }
+        StartCoroutine(LifeTimeBoom());
         Destroy(gameObject, lifeTime);
         position = target.transform.position;
         position.y = transform.position.y;
@@ -42,6 +43,7 @@ public class FireBall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("wjqchr");
         if (other.CompareTag("Player"))
         {
             ICharacter player = other.GetComponent<ICharacter>();
@@ -50,13 +52,13 @@ public class FireBall : MonoBehaviour
 
             Boom();
         }
-        else if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy")) //|| other.CompareTag("Wall"))
         {
-
+            //Boom();
         }
         else
         {
-            Boom();
+            
         }
         
     }
@@ -80,5 +82,10 @@ public class FireBall : MonoBehaviour
         }
         
         Destroy(gameObject);
+    }
+    IEnumerator LifeTimeBoom()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Boom();
     }
 }

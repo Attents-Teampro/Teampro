@@ -15,6 +15,7 @@ public class Room : MonoBehaviour
     public bool isClear = false;
     public BoxCollider boxCol;
     public int isBossIndex=0;
+    public Action onBossSpawn;
 
     private void Awake()
     {
@@ -32,8 +33,13 @@ public class Room : MonoBehaviour
         }
         isBossIndex -= 3;
     }
-    public void StartSpawn()
+    /// <summary>
+    /// 방의 스폰을 시작시키는 함수
+    /// </summary>
+    /// <returns>true면 보스, false면 일반 방</returns>
+    public bool StartSpawn()
     {
+        bool result = false;
         //일반 방 일 때
         if (isBossIndex!=indexPlayerIn && MainManager.instance.spawnManager.spawners.Length-1 >= indexPlayerIn)
         {
@@ -43,14 +49,15 @@ public class Room : MonoBehaviour
         //보스 방 일 때(던전크리에이터에서 마지막 방 생성 시 spanwer을 설정해주므로)
         else if(isBossIndex==indexPlayerIn)
         {
-            spawners.bossPosition = roomPosition;
-            spawners.StartSpawn(gameObject);
+            result= true;
+            //spawners.bossPosition = roomPosition;
+            //spawners.StartSpawn(gameObject);
         }
         else
         {
             Debug.Log($"에러. {gameObject.name}의 스포너 인덱스 초과 상태. ");
         }
-        
+
         //for(int i = 0; i<spawners.Length; i++)
         //{
         //    spawners[i].StartSpawn(gameObject);
@@ -62,10 +69,15 @@ public class Room : MonoBehaviour
         //    i.StartSpawn(gameObject);
         //}
 
-        
+        return result;
         //Debug.Log($"연결. {name}은 함수 연결 완료");
     }
-    
+    public void StartSpawnBoss()
+    {
+        onBossSpawn?.Invoke();
+        spawners.bossPosition = roomPosition;
+        spawners.StartSpawn(gameObject);
+    }
     public void PlayerInThisRoom()
     {
         MainManager.instance.onClearthisRoom += OpenAllDoor;

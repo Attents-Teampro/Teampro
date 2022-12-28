@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -75,12 +77,18 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     AudioClip soundRoar => SFX[7];
     AudioClip soundAttacked => SFX[8];
     AudioClip soundExplosion => SFX[9];
+    [SerializeField]
+    GameObject[] cinemaObjectRep;
+    [NonSerialized]
+    CinemaSet cinemaSet = null;
     /// <summary>
     /// 피격 시 무적인지 판별 변수
     /// </summary>
     [NonSerialized]
     public bool isGod = false; //전투 중 피격 시 피격무적 체크
-
+    [SerializeField]
+    bool isSuperArmor = false;
+    bool isAttackedAndAttack = false;
     bool isSleeping = false; //보스 전투 전 상태 체크
     bool isActive = false; //인트로(포효) 끝났는지 체크
    // bool isChase = false;  //이동 체크
@@ -102,6 +110,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     attackType attackState;
     GetAttackCollider colliders;
     GameObject mouse, tail;
+    GameObject lamp;            //램프 저장용 변수
     MainManager mainManager;
     Transform target;            //타겟팅할 플레이어
     NavMeshAgent agent;            //네비 매쉬를 사용
@@ -110,6 +119,10 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     Vector3 targetDirection;
     AudioSource audio;
     AudioSource audio2;
+    Player p;
+    float originSpeed1;
+    float originSpeed2;
+    float originSpeed3;
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
@@ -117,6 +130,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         colliders = GetComponent<GetAttackCollider>();
+        cinemaSet = GetComponentInChildren<CinemaSet>();
         mouse = colliders.mouseCollider.gameObject;
         tail = colliders.tailCollider.gameObject;
         isSleeping = true;
@@ -125,15 +139,27 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void Start()
     {
+        //플레이어 컨트롤 X
+        GameObject pade = GameObject.Find("Pade");
+        cinemaObjectRep = new GameObject[5];
+        cinemaObjectRep[0] = this.gameObject;
+        cinemaObjectRep[1] = FindObjectOfType<CinemachineBrain>().gameObject;
+        cinemaObjectRep[2] = pade;
+        cinemaObjectRep[3] = this.gameObject;
+        cinemaObjectRep[4] = GetComponentInChildren<SignalReceiver>().gameObject;
+        foreach(var i in cinemaObjectRep) 
+        {
+            //Debug.Log(i.name);
+        }
+        cinemaSet.SetCinemaBindings(cinemaObjectRep);
         mainManager = MainManager.instance;
         if (target == null)
         {
-            Player p = FindObjectOfType<Player>();
+            p = FindObjectOfType<Player>();
             if(p != null)
             {
                 target = p.transform;
             }
-            
         }
         PlaySleepSound();
         //WakeUp();
@@ -151,9 +177,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         //보스가 살아있을 때
         if (!isDead)
         {
+            //Debug.Log("1");
+            //Debug.Log($"isAttack = {isAttack}\nisActive = {isActive}\nisAttacked = {isAttacked}");
             //idle 상태
             if (!isAttack && isActive && !isAttacked)
             {
+                //Debug.Log("2");
                 //transform.LookAt(target);
                 agent.SetDestination(target.position);
                 //rayHits = Physics.SphereCastAll(transform.position, targetRadius,
@@ -220,6 +249,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             //공격 속도 타이머(공격 중 + 깨어있는 상턔)
             if (isAttack && isActive) // 공격 중
             {
+                //Debug.Log("3");
                 transform.LookAt(target);
                 attackTimer += Time.deltaTime;
                 if (attackSpeed < attackTimer)
@@ -230,6 +260,76 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
 
             }
         }
+    }
+    public void PlayerDisableInput()
+    {
+        //플레이어 찾기
+        if (p == null)
+        {
+            if (target != null)
+            {
+                target.GetComponent<Player>();
+            }
+            else
+            {
+                p = FindObjectOfType<Player>();
+            }
+        }
+
+        //플레이어 속도 제어
+        originSpeed1 = p.moveSpeed;
+        originSpeed2 = p.rotateSpeed;
+        originSpeed3 = p.turnSpeed;
+        p.moveSpeed = 0;
+        p.rotateSpeed = 0;
+        p.turnSpeed = 0;
+
+        //플레이어 빛 꺼두기
+        for(int i = 1; i < 4; i++)
+        {
+            target.GetChild(target.childCount - i).gameObject.SetActive(false);
+        }
+
+        //플레이어 기타 액션 안하게 bool 변수 임시 변경
+        p.isAlive = false;
+
+        //조명 꺼두기
+        
+        lamp = FindObjectOfType<FlyingLamp>().transform.parent.gameObject;
+        if(lamp != null)
+        {
+            lamp.SetActive(false);
+        }
+        
+
+        //조명때문에 잠시 콜리더 꺼두기
+        //p.GetComponent<Collider>().enabled = false;
+
+    }
+    public void PlayerAbleInput()
+    {
+        //플레이어 빛 다시 키기
+        for (int i = 1; i < 4; i++)
+        {
+            target.GetChild(target.childCount - i).gameObject.SetActive(true);
+        }
+
+        //플레이어 속도 원상복구
+        p.moveSpeed = originSpeed1;
+        p.rotateSpeed = originSpeed2;
+        p.turnSpeed = originSpeed3;
+
+        //bool 변수 원상복구
+        p.isAlive = true;
+
+        if(lamp!= null)
+        {
+            //조명 다시 키기
+            lamp.SetActive(true);
+        }
+        //콜리더 원상복구
+        //p.GetComponent<Collider>().enabled = true;
+
     }
     /// <summary>
     /// 플레이어 쫒는 함수
@@ -259,6 +359,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //근접 랜덤 공격
     IEnumerator MeleeAniAttack()
     {
+        isAttackedAndAttack = false;
         anim.SetBool("isWalk", false);
         randomType = UnityEngine.Random.Range(0, 2);//Random.Range는 Max 벨류가 Exclusive라 포함되지 않는(미만)이기 때문에 Max값을 +1 해야함
                                         //Debug.Log(randomType);
@@ -316,6 +417,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //원거리 랜덤 공격(현재 파이어볼 하나)
     IEnumerator LongAniAttack(GameObject obj)
     {
+        isAttackedAndAttack = false;
         anim.SetBool("isWalk", false);
         randomType = Random.Range(0, 1); // 현재 하나라 0까지만 받기로..
         switch (randomType)
@@ -347,6 +449,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             FireBall fb = projectile.GetComponent<FireBall>();
             fb.target = target.gameObject;
             fb.boss = this;
+            fb.damage = eDamage;
 
         }
     }
@@ -368,7 +471,11 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     private void OnDestroy()
     {
-        mainManager.StageClear(true);
+        if (mainManager != null)
+        {
+            mainManager.StageClear(true);
+        }
+        
     }
     //공격 받을 때 실행
     public void Attacked(int d)
@@ -379,23 +486,33 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             if (isGod)
             {
             }
-            //무적이 아닐 때 공격받으면 실행
             else
             {
-                StartCoroutine(CanHit()); //isGod 계산 코루틴
-                StartCoroutine(DelayAttacked(0.87f)); //isAttacked 컨트롤 용 코루틴
+                
+
+                if (!isSuperArmor )//&& !isAttackedAndAttack)
+                {
+                    StartCoroutine(CanHit()); //isGod 계산 코루틴
+                    anim.SetTrigger("isGetHit");
+                    StartCoroutine(DelayAttacked(0.87f));//isAttacked 컨트롤 용 코루틴
+                    isSuperArmor = true;
+                    //isAttackedAndAttack = true;
+                }
+                else
+                {
+                     
+                }
+                
                 eHP -= d;
                 if (eHP <= 0)
                 {
                     Die();
                 }
-                else
-                {
-                    anim.SetTrigger("isGetHit");
-                }
+                //슈퍼아머가 아닐 때 공격받으면 히트 애니메이션 실행
+                
+                
             }
         }
-        
     }
     //공격할 때 실행
     public void Attack(GameObject target, int d)
@@ -622,5 +739,25 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         //플레이어 바라보기
         transform.LookAt(target); //나중에 램프로 하면 부드럽게 회전할 듯 by 손동욱 10.18
         isActive = true;
+        SetCameraForPlayer();
+    }
+
+    void SetCameraForPlayer()
+    {
+        CinemachineVirtualCamera[] cv = GetComponentsInChildren<CinemachineVirtualCamera>();
+        Camera camera = GetComponentInChildren<Camera>();
+        foreach(var i in cv)
+        {
+            i.gameObject.SetActive(false);
+        }
+        camera.gameObject.SetActive(false);
+    }
+    void OnSuperArmor()
+    {
+        isSuperArmor = true;
+    }
+    void OffSuperArmor()
+    {
+        isSuperArmor = false;
     }
 }

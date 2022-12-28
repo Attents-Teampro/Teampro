@@ -65120,6 +65120,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: OnSuperArmor
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.56666666
     functionName: AttackOn
     data: 
@@ -65129,6 +65136,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.7
     functionName: AttackOff
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.76666665
+    functionName: OffSuperArmor
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

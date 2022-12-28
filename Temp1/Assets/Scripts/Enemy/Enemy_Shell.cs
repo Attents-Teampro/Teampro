@@ -77,7 +77,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
         //MeleeAttackTrigger(true);
-        meleeAttack.SetActive(true);
+        //meleeAttack.SetActive(true);
         yield return new WaitForSeconds(1f);
         StartCoroutine(WaitForAttack());
     }
@@ -85,7 +85,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
     IEnumerator OnDead()
     {
         myMeleeAttack.gameObject.SetActive(false);
-        Destroy(myMeleeAttack.gameObject);
+        //Destroy(myMeleeAttack.gameObject);
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
         yield return new WaitForSeconds(1.5f);

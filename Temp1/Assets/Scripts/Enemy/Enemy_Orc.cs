@@ -113,7 +113,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         hitEffect.GetComponent<ParticleSystem>().Play();
         isGetHit = true;
         anim.SetTrigger("doGetHit");
-        MeleeAttackOff();   //meleeAttack Collision 끔
+        //MeleeAttackOff();   //meleeAttack Collision 끔
         audioSource.PlayOneShot(getHitSfx);
         HitColor(true);
 

@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     AudioSource audioSource;
 
     public Image skillFilter;
+    public Image skillFilterLookOn;
     //public Text coolTimeCounter; //남은 쿨타임을 표시할 텍스트
 
     public float coolTime;
@@ -93,6 +94,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     Animator anim;
 
     EnemyBase enemyBase;
+    public EnemyData enemyData;
 
     ParticleSystem weaponPS;
     Transform weapon_r;
@@ -223,6 +225,13 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         {
             skillFilter.fillAmount = 0; //처음에 스킬 버튼을 가리지 않음
         }
+
+        skillFilterLookOn = GameObject.Find("skillFilterLookOn").gameObject.GetComponent<Image>();
+        if (skillFilterLookOn != null)
+        {
+            skillFilterLookOn.fillAmount = 1; 
+        }
+        
         //skillFilter.fillAmount = 0; //처음에 스킬 버튼을 가리지 않음
         //HealthPreferences healthP = FindObjectOfType<HealthPreferences>();
         //healthP.SetPlayer(this);
@@ -261,6 +270,10 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             transform.LookAt(nearest);
             transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+        }
+        else
+        {
+            LockOff();
         }
     }
 
@@ -604,6 +617,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         yield break;
     }
 
+
     ////남은 쿨타임을 계산할 코르틴을 만들어줍니다.
     //IEnumerator CoolTimeCounter()
     //{
@@ -854,21 +868,25 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                     transform.LookAt(nearest.position);
                 }
             }
-
-            //Debug.Log($"락온 활성화 {nearest}");
+            skillFilterLookOn.fillAmount = 0;
+            Debug.Log($"락온 활성화 {nearest} 락온 범위 안에있음");
             //lockOnEffect.SetLockOnTarget(nearest);      // 부모지정과 위치 변경
         }
         else
         {
+            skillFilterLookOn.fillAmount = 1;
             LockOff();
-            Debug.Log("락온 해제");
+            Debug.Log("락온 해제 락온 범위 벗어남");
+            
         }
+            
     }
 
     void LockOff()
     {
-        enemyBase.isDead = true;
-        //lockOnEffect.SetLockOnTarget(null);
+        Rotate();
+        nearest = null;
+        //enemyBase.isDead = true;
     }
 
     private void OnLockOn(InputAction.CallbackContext context)

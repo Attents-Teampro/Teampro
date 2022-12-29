@@ -176,6 +176,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
 
     public void Die()
     {
+        onDead?.Invoke(this);
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

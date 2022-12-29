@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -45,6 +46,8 @@ public class EnemyBase : MonoBehaviour
     [Header("-------[ 드롭 아이템 ]")]
     public GameObject[] dropItems;
 
+    public Action<EnemyBase> onDead;
+
     protected virtual void Awake()
     {
         //컴포넌트 생성
@@ -65,6 +68,7 @@ public class EnemyBase : MonoBehaviour
         //target = GameObject.Find("Player").GetComponent<Transform>();
         player = FindObjectOfType<Player>();
         target = player.transform;
+        onDead += player.onLookOnAttack;
         //by 손동욱
     }
 

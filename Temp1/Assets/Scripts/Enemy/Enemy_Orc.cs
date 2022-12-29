@@ -149,6 +149,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
     
     public void Die()
     {
+        onDead?.Invoke(this);
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

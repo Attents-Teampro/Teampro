@@ -19,7 +19,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     [Header("-------[FX]")]
     public GameObject hitEffect;
-    public GameObject dieEffect;
+    //public GameObject dieEffect;
 
     public Transform shotPosition;   //발사체(projectile) 생성 위치
     
@@ -170,6 +170,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     public void Die()
     {
+        onDead?.Invoke(this);
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

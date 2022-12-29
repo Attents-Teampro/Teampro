@@ -157,6 +157,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
 
     public void Die()
     {
+        onDead?.Invoke(this);
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

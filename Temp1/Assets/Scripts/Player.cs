@@ -894,4 +894,12 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         LockOnToggle();
         //LockOn();
     }
+
+    public void onLookOnAttack(EnemyBase enemy)
+    {
+        if(nearest.gameObject == enemy.gameObject) 
+        {
+            LockOff();
+        }
+    }
 }

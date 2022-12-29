@@ -8,27 +8,16 @@ public class DangerLine : MonoBehaviour
     public float speed = 1f;
     public float destoyTime;
     Rigidbody rb;
-    TrailRenderer tr;
     float scaleZ;
     public Enemy_Bat parentBat;
 
+    // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, 1f);
         rb.velocity = transform.forward * speed;
-        scaleZ = transform.localScale.z;
-        parentBat.onBatDie += SelfDestroy;
-    }
-    private void Start()
-    {
-    }
-    void SelfDestroy()
-    {
-        if (this.gameObject != null)
-        {
-            Destroy(this.gameObject);
-        }
+        //scaleZ = transform.localScale.z;
     }
     void Update()
     {

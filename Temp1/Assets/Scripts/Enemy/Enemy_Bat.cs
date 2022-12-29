@@ -74,7 +74,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
                 transform.forward, enemyData.TargetRange, LayerMask.GetMask("Player"));
         if (rayHits.Length > 0)
         {
-            Debug.Log(rayHits[0]);
+            //Debug.Log(rayHits[0]);
             // 레이캐스트에 Player 오브젝트가 판별되면 어택
             if (!isAttack && !isGetHit)
             {

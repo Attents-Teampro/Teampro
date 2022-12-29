@@ -68,8 +68,8 @@ public class EnemyBase : MonoBehaviour
         //target = GameObject.Find("Player").GetComponent<Transform>();
         player = FindObjectOfType<Player>();
         target = player.transform;
-        onDead += player.onLookOnAttack;
         //by 손동욱
+        onDead += player.onLookOnAttack;
     }
 
     protected virtual void FixedUpdate()

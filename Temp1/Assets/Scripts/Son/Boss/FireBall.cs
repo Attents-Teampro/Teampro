@@ -43,7 +43,7 @@ public class FireBall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("wjqchr");
+        //Debug.Log("wjqchr");
         if (other.CompareTag("Player"))
         {
             ICharacter player = other.GetComponent<ICharacter>();
@@ -86,6 +86,10 @@ public class FireBall : MonoBehaviour
     IEnumerator LifeTimeBoom()
     {
         yield return new WaitForSeconds(lifeTime);
-        Boom();
+        if (gameObject != null)
+        {
+            Boom();
+        }
+        
     }
 }

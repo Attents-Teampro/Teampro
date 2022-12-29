@@ -62,21 +62,34 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// 파이어볼 생성 위치 변수_Y
     /// </summary>
     [SerializeField] float frontOfMouse_Y = 1.7f;
+
+    [SerializeField]
+    AudioSource[] SFX;
+    AudioSource soundTail => SFX[0];
+    AudioSource soundBites => SFX[1];
+    AudioSource soundBreath => SFX[2];
+    AudioSource soundFireBreath => SFX[3];
+    AudioSource soundDeath => SFX[4];
+    AudioSource soundFootStep => SFX[5];
+    AudioSource soundHisses => SFX[6];
+    AudioSource soundRoar => SFX[7];
+    AudioSource soundAttacked => SFX[8];
+    AudioSource soundExplosion => SFX[9];
     /// <summary>
     /// 효과음 저장 배열
     /// </summary>
     [SerializeField]
-    AudioClip[] SFX;
-    AudioClip soundTail => SFX[0];
-    AudioClip soundBites => SFX[1];
-    AudioClip soundBreath => SFX[2];
-    AudioClip soundFireBreath => SFX[3];
-    AudioClip soundDeath => SFX[4];
-    AudioClip soundFootStep => SFX[5];
-    AudioClip soundHisses => SFX[6];
-    AudioClip soundRoar => SFX[7];
-    AudioClip soundAttacked => SFX[8];
-    AudioClip soundExplosion => SFX[9];
+    AudioClip[] SFX_1;
+    //AudioClip soundTail => SFX[0];
+    //AudioClip soundBites => SFX[1];
+    //AudioClip soundBreath => SFX[2];
+    //AudioClip soundFireBreath => SFX[3];
+    //AudioClip soundDeath => SFX[4];
+    //AudioClip soundFootStep => SFX[5];
+    //AudioClip soundHisses => SFX[6];
+    //AudioClip soundRoar => SFX[7];
+    //AudioClip soundAttacked => SFX[8];
+    //AudioClip soundExplosion => SFX[9];
     [SerializeField]
     GameObject[] cinemaObjectRep;
     [NonSerialized]
@@ -425,7 +438,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             case 0:
                 aniType = "isFireballShoot";//발사체 현재 미지정
                 eDamage = damage * 3;
-                audio.clip = soundFireBreath;
+                audio = soundFireBreath;
+                audio.Play();
                 break;
             default:
                 Debug.Log($"인덱스에러, 입력 인덱스 : {randomType}");
@@ -456,7 +470,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //죽었을 때 실행되는 함수
     public void Die()
     {
-        audio2.clip = soundDeath;
+        audio2 = soundDeath;
         audio2.Play();
         isActive = false;
         anim.SetTrigger("doDie");
@@ -502,7 +516,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
                 {
                      
                 }
-                
+                PlayAttackedSound();
                 eHP -= d;
                 if (eHP <= 0)
                 {
@@ -656,13 +670,13 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     public void PlayExplosionAudio()
     {
-        
-        audio.clip = soundExplosion;
+        audio.Stop();
+        audio = soundExplosion;
         audio.Play();
     }
     void Footstep()
     {
-        audio2.clip = soundFootStep;
+        audio2 = soundFootStep;
         audio2.Play();
     }
     void StopFootstep()
@@ -678,13 +692,14 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void PlaySleepSound()
     {
-        audio.clip = soundHisses;
+        audio = soundHisses;
         audio.loop = true;
         audio.Play();
     }
-    void Roar()
+    public void Roar()
     {
-        Debug.Log("포효 실행");
+        audio.Stop();
+        //Debug.Log("포효 실행");
         //슬립 bool 변수 최신화
         isSleeping = false;
         //플레이어 바라보기
@@ -697,11 +712,11 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         {
             audio.loop = false;
         }
-        audio.clip = soundRoar;
+        audio = soundRoar;
         audio.Play();
     }
     //포효 끝나면 보스가 플레이어를 쫒게 하기
-    void RoarEnd()
+    public void RoarEnd()
     {
         //isActive = true;
     }
@@ -709,26 +724,22 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     {
         if (!isDead)
         {
-            //무적 상태일 때는 공격 안받기
-            if (isGod)
-            {
-            }
-            else
-            {
-                audio.clip = soundAttacked;
-                audio.Play();
-            }
+            //Debug.Log("공격 받음. sfx 실행");
+            audio.Stop();
+            audio = soundAttacked;
+            audio.Play();
         }
             
     }
     void PlayTailAttack()
     {
-        audio.clip = soundTail;
+        audio.Stop();
+        audio = soundTail;
         audio.Play();
     }
     public void AttackSuccess()
     {
-        audio.clip = soundBites;
+        audio = soundBites;
         audio.Play();
     }
 

@@ -143,7 +143,10 @@ public class Enemy_Shell : EnemyBase, ICharacter
 
     public void Die()
     {
-        onDead?.Invoke(this);
+        if (target.GetComponent<Player>().nearest == this)
+        {
+            onDead?.Invoke(this);
+        }
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

@@ -146,10 +146,13 @@ public class Enemy_Orc : EnemyBase, ICharacter
                 mesh.material.color = Color.white;
         }
     }
-    
+
     public void Die()
     {
-        onDead?.Invoke(this);
+        if (target.GetComponent<Player>().nearest == this)
+        {
+            onDead?.Invoke(this);
+        }
         StartCoroutine(OnDead());
     }
     public void Attacked(int damage)

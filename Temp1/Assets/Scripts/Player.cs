@@ -273,7 +273,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         }
         else
         {
-            LockOff();
+            //LockOff();
         }
     }
 
@@ -841,7 +841,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     public void LockOnToggle()
     {
-        LockOn();
+            LockOn();
     }
 
     public Transform nearest = null;
@@ -852,6 +852,10 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         {
             isLookAt = true;
         }
+        //else
+        //{
+        //    isLookAt = false;
+        //}
         
         Collider[] enemies = Physics.OverlapSphere(transform.position, lockOnRange, LayerMask.GetMask("Enemy"));
         if (enemies.Length > 0)
@@ -874,8 +878,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         }
         else
         {
-            skillFilterLookOn.fillAmount = 1;
             LockOff();
+            skillFilterLookOn.fillAmount = 1;
             Debug.Log("락온 해제 락온 범위 벗어남");
             
         }
@@ -885,7 +889,11 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     void LockOff()
     {
         Rotate();
-        nearest = null;
+        //if(isLookAt == false)
+        //{
+        //    skillFilterLookOn.fillAmount = 1;
+        //}
+        //nearest = null;
         //enemyBase.isDead = true;
     }
 

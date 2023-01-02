@@ -2386,16 +2386,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countCurrentRoom: 0
   attackState: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 5
   turnSpeed: 10
   rotateSpeed: 180
   speed: 5
   weapons:
   - {fileID: 8087115786859346644}
-  - {fileID: 2018361212048779002}
   - {fileID: 8367775387678809578}
-  - {fileID: 2154094371128111848}
-  hasWeapons: 01010101
+  hasWeapons: 0101
   dodgeinv: {fileID: 0}
   skinMesh: []
   meshs: []
@@ -7941,11 +7939,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4423288173768953624, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
   m_PrefabInstance: {fileID: 3156351463662118730}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2154094371128111848 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3902788558152209826, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
-  m_PrefabInstance: {fileID: 3156351463662118730}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &3156351463941504494 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 324606628, guid: ab8cbc17ad574516bb48cf22e74f3988, type: 3}
@@ -10017,11 +10010,6 @@ PrefabInstance:
 --- !u!4 &1678004796086844480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6873363103045821172, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
-  m_PrefabInstance: {fileID: 5200090954043416244}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2018361212048779002 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6064316799571392590, guid: 40cdcc2da7354eeebbd5d293fda195de, type: 3}
   m_PrefabInstance: {fileID: 5200090954043416244}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &5200090953305306530 stripped

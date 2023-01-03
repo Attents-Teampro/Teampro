@@ -176,7 +176,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest == this)
+        if (target.GetComponent<Player>().nearest != this)
         {
             onDead?.Invoke(this);
         }

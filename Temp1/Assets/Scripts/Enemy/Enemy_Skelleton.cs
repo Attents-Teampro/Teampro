@@ -133,7 +133,8 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
     }
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest == this)
+        //onDead?.Invoke(this);
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

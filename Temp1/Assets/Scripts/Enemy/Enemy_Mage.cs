@@ -157,7 +157,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest == this)
+        if (target.GetComponent<Player>().nearest != this)
         {
             onDead?.Invoke(this);
         }

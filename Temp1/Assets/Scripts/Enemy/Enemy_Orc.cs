@@ -149,7 +149,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest == this)
+        if (target.GetComponent<Player>().nearest != this)
         {
             onDead?.Invoke(this);
         }

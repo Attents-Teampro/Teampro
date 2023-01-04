@@ -15,8 +15,8 @@ public class Portal_Lobby : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Test");
             Destroy(other.gameObject);
+            SceneManager.LoadScene("Test");
             Debug.Log("teleported");
             //player.transform.position = new Vector3(0, 0, (float)1.6);
         }

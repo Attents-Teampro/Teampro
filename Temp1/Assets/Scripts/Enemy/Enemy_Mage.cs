@@ -21,12 +21,15 @@ public class Enemy_Mage : EnemyBase, ICharacter
     [Header("-------[FX]")]
     public GameObject hitEffect;
 
+    AudioSource audioSource;
+    public AudioClip dieSfx;
     public Action onMageDie;
 
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;
     }
@@ -102,6 +105,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
         capsuleCollider.enabled = false;
         onMageDie?.Invoke();
         anim.SetTrigger("doDie");
+        audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -157,7 +161,7 @@ public class Enemy_Mage : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest != this)
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

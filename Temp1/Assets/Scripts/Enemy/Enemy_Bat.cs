@@ -19,16 +19,18 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     [Header("-------[FX]")]
     public GameObject hitEffect;
-    //public GameObject dieEffect;
-
+    public GameObject dieEffect;
+    public AudioClip dieSfx;
     public Transform shotPosition;   //발사체(projectile) 생성 위치
-    
+    AudioSource audioSource;
+
     public Action onBatDie;
 
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;
     }
@@ -112,10 +114,10 @@ public class Enemy_Bat : EnemyBase, ICharacter
     {
         isDead = true;
         capsuleCollider.enabled = false;
-        onBatDie?.Invoke();
         anim.SetTrigger("doDie");
+        dieEffect.GetComponent<ParticleSystem>().Play();
+        audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
-        //dieEffect.GetComponent<ParticleSystem>().Play();
 
         //10.11 추가
         //메인 매니저에게 죽은 몬스터 수를 갱신
@@ -170,7 +172,7 @@ public class Enemy_Bat : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest != this)
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

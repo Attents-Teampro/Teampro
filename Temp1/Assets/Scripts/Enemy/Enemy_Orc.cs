@@ -81,7 +81,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
         isAttack = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
-        audioSource.PlayOneShot(attackSfx);
+        //audioSource.PlayOneShot(attackSfx);
         yield return new WaitForSeconds(1f);   //AudioPlay 를 위한 지연 시간
         StartCoroutine(WaitForAttack());
     }
@@ -149,7 +149,7 @@ public class Enemy_Orc : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest != this)
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

@@ -11,11 +11,15 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
 
     [Header("-------[FX]")]
     public GameObject hitEffect;
+
+    AudioSource audioSource;
+    public AudioClip dieSfx;
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
         maxHP = enemyData.EHP;
+        audioSource = GetComponent<AudioSource>();
         currentHP = maxHP;  //시작시 최대HP값을 enemyData 에서 가져옴
         enemyType = EnemyType.Skeleton;
     }
@@ -78,6 +82,7 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         isDead = true;
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
+        audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가

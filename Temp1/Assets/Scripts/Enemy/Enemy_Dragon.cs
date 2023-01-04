@@ -21,10 +21,15 @@ public class Enemy_Dragon : EnemyBase, ICharacter
     [Header("-------[FX]")]
     public GameObject hitEffect;
 
+    public AudioClip attackSfx;
+    public AudioClip dieSfx;
+    AudioSource audioSource;
+
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;
     }
@@ -92,6 +97,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
         nav.isStopped = true;
         anim.SetBool("isWalk", false);
         anim.SetTrigger("doAttack");
+        audioSource.PlayOneShot(attackSfx);
         yield return new WaitForSeconds(2f);
         FireFlameOff();
         Debug.Log("드래곤 대기");
@@ -121,6 +127,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
         FireFlameOff();
+        audioSource.PlayOneShot(dieSfx);
         yield return new WaitForSeconds(1.5f);
 
         //10.11 추가
@@ -176,7 +183,7 @@ public class Enemy_Dragon : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest != this)
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

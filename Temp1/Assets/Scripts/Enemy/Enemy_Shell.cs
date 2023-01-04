@@ -12,12 +12,15 @@ public class Enemy_Shell : EnemyBase, ICharacter
     [Header("-------[FX]")]
     public GameObject hitEffect;
 
+    AudioSource audioSource;
+    public AudioClip dieSfx;
     GameObject myMeleeAttack;
 
     protected override void Awake()
     {
         base.Awake();
         meshs = GetComponentsInChildren<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
         maxHP = enemyData.EHP;
         currentHP = maxHP;
         enemyType= EnemyType.Shell;
@@ -87,6 +90,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
         myMeleeAttack.gameObject.SetActive(false);
         //Destroy(myMeleeAttack.gameObject);
         capsuleCollider.enabled = false;
+        audioSource.PlayOneShot(dieSfx);
         anim.SetTrigger("doDie");
         yield return new WaitForSeconds(1.5f);
 
@@ -143,7 +147,7 @@ public class Enemy_Shell : EnemyBase, ICharacter
 
     public void Die()
     {
-        if (target.GetComponent<Player>().nearest != this)
+        if (target.GetComponent<Player>().nearest != null)
         {
             onDead?.Invoke(this);
         }

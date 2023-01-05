@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static UnityEditor.UIElements.ToolbarMenu;
 
 public class Door : MonoBehaviour
 {

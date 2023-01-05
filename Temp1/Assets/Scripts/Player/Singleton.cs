@@ -88,6 +88,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Initialize();
+        Debug.Log("씬 이동. 이니셜라이즈 실행");
     }
 
     /// <summary>
@@ -96,6 +97,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     protected virtual void Initialize()
     {
         isInitialize = true;
+        Debug.Log("이니셜라이즈");
     }
 }
 

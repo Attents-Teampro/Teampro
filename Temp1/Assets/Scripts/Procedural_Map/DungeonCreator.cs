@@ -77,6 +77,12 @@ public class DungeonCreator : MonoBehaviour
 
         //11.10 추가 by 손동욱
         //플레이어와 카메라를 활성화하고, 시작 위치로 이동시키는 코드
+        //01.05 추가 by 손동욱
+        //온씬로드 안되는 에러 있어서 수동으로 수정
+        if(MainManager.instance.Player == null)
+        {
+            MainManager.instance.Initialize_();
+        }
         player = MainManager.instance.Player.gameObject;
         player.SetActive(true);
         player.transform.position = roomCollider[0].center;

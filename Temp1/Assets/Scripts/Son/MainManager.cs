@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class MainManager : Singleton<MainManager>
 {
     Player player;
@@ -158,6 +157,7 @@ public class MainManager : Singleton<MainManager>
 
     protected override void Initialize()
     {
+        base.Initialize();
         player = FindObjectOfType<Player>();
         gameStart = GetComponent<GameStart>();
         spawnManager = GetComponent<SpawnManager>();
@@ -184,6 +184,7 @@ public class MainManager : Singleton<MainManager>
         }
 
     }
+
     
     /*
     //씬 이동 시 포탈 오브젝트가 초기화 되어서 몬스터가 다 죽어도 포탈 오브젝트가 활성화되지 않는 에러가 있음
@@ -199,6 +200,11 @@ public class MainManager : Singleton<MainManager>
         }
     }
     */
-
+    public void Initialize_()
+    {
+        player = FindObjectOfType<Player>();
+        gameStart = GetComponent<GameStart>();
+        spawnManager = GetComponent<SpawnManager>();
+    }
 
 }

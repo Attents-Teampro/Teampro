@@ -99,8 +99,28 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     /// </summary>
     [NonSerialized]
     public bool isGod = false; //전투 중 피격 시 피격무적 체크
+    bool isSuperArmor = false; 
+    bool IsSuperArmor 
+    {
+        get => isSuperArmor;
+        set
+        {
+            isSuperArmor = value;
+            if (isSuperArmor)
+            {
+                skinMeshRender.material = mSuperarmor;
+            }
+            else
+            {
+                skinMeshRender.material = mOrigin;
+            }
+        }
+    }
     [SerializeField]
-    bool isSuperArmor = false;
+    Material mSuperarmor;
+    Material mOrigin;
+    [SerializeField]
+    Canvas[] offWhileCinema;
     bool isAttackedAndAttack = false;
     bool isSleeping = false; //보스 전투 전 상태 체크
     bool isActive = false; //인트로(포효) 끝났는지 체크
@@ -133,6 +153,8 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     AudioSource audio;
     AudioSource audio2;
     Player p;
+    SkinnedMeshRenderer skinMeshRender;
+    
     float originSpeed1;
     float originSpeed2;
     float originSpeed3;
@@ -144,9 +166,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
         agent = GetComponent<NavMeshAgent>();
         colliders = GetComponent<GetAttackCollider>();
         cinemaSet = GetComponentInChildren<CinemaSet>();
+        skinMeshRender = GetComponentInChildren<SkinnedMeshRenderer>();
         mouse = colliders.mouseCollider.gameObject;
         tail = colliders.tailCollider.gameObject;
         isSleeping = true;
+        offWhileCinema = new Canvas[2];
+        offWhileCinema[0] = GetComponentInChildren<Canvas>();
         //일정 시간이(deley변수) 지난 후에 보스가 액티브 되도록
         //StartCoroutine(DelayStart());
     }
@@ -165,6 +190,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             //Debug.Log(i.name);
         }
         cinemaSet.SetCinemaBindings(cinemaObjectRep);
+        mOrigin = skinMeshRender.material;
         mainManager = MainManager.instance;
         if (target == null)
         {
@@ -372,6 +398,7 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     //근접 랜덤 공격
     IEnumerator MeleeAniAttack()
     {
+        IsSuperArmor = true;
         isAttackedAndAttack = false;
         anim.SetBool("isWalk", false);
         randomType = UnityEngine.Random.Range(0, 2);//Random.Range는 Max 벨류가 Exclusive라 포함되지 않는(미만)이기 때문에 Max값을 +1 해야함
@@ -504,11 +531,12 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
             {
                 
 
-                if (!isSuperArmor )//&& !isAttackedAndAttack)
+                if (!IsSuperArmor )//&& !isAttackedAndAttack)
                 {
                     StartCoroutine(CanHit()); //isGod 계산 코루틴
                     anim.SetTrigger("isGetHit");
                     StartCoroutine(DelayAttacked(0.87f));//isAttacked 컨트롤 용 코루틴
+                    //IsSuperArmor = true;
                     isSuperArmor = true;
                     //isAttackedAndAttack = true;
                 }
@@ -765,10 +793,19 @@ public class Enemy_Boss : MonoBehaviour, ICharacter
     }
     void OnSuperArmor()
     {
-        isSuperArmor = true;
+        IsSuperArmor = true;
     }
     void OffSuperArmor()
     {
-        isSuperArmor = false;
+        IsSuperArmor = false;
+    }
+    public void CanvasControl(bool sign)
+    {
+        if (offWhileCinema[1] == null)
+            offWhileCinema[1] = GameObject.Find("Canvas").GetComponent<Canvas>();
+        foreach(var i in offWhileCinema)
+        {
+            i.gameObject.SetActive(sign);
+        }
     }
 }

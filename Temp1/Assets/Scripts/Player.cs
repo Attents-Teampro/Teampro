@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+//using System.Collections.Generic;
+//using System.Text;
+//using Unity.Mathematics;
+//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using TMPro;
-using static UnityEditor.Progress;
-using UnityEngine.XR;
+//using TMPro;
+//using UnityEngine.XR;
 
 //11.04 인터페이스 ICharacter가 빠져있어서 추가했습니다. 
 //왜 빼신지 모르겠는데 일단 ICharacter로 enemy랑 enemy_Boss에서 ICharacter로 데미지를 적용하고 있어서

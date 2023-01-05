@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+
 
 [CustomEditor(typeof(DungeonCreator))]
 
@@ -16,3 +18,4 @@ public class DungeonCreatorEditor : Editor
         }
     }
 }
+#endif

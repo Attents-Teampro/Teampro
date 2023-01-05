@@ -1,4 +1,6 @@
-﻿using UnityEditor.Experimental.GraphView;
+﻿#if UNITY_EDITOR
+using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 public class Line
@@ -30,3 +32,4 @@ public enum Orientation
     Horizontal = 0,
     Vertical = 1
 }
+#endif

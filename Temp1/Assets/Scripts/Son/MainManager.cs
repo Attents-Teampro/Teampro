@@ -98,11 +98,13 @@ public class MainManager : Singleton<MainManager>
         //portalObject.SetActive(true);
         numOfDieEnemy = 0;
         numOfStageEnemy = 0;
-        if(player != null && !isBoss)
-        {
-            ICharacter ic = player.GetComponent<ICharacter>();
-            ic.Attacked(-healAmount_StageClear);
-        }
+
+        //스테이지 클리어 시 회복 기능
+        //if(player != null && !isBoss)
+        //{
+        //    ICharacter ic = player.GetComponent<ICharacter>();
+        //    ic.Attacked(-healAmount_StageClear);
+        //}
         
         //보스가 처치되면
         if (isBoss)

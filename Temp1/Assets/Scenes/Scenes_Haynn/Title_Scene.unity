@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632596072eada478ca53c8c97a6bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Test
-  nextStage: Test
+  sceneName: Test_Lobby
+  nextStage: Test_Lobby
 --- !u!1 &301590002
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +358,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 782248537}
     m_Modifications:
+    - target: {fileID: 1262084530507086750, guid: 96bb044c7b98a2b40897f20c5937ff83, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 213126072}
+    - target: {fileID: 1262084530507086750, guid: 96bb044c7b98a2b40897f20c5937ff83, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GameStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262084531829486351, guid: 96bb044c7b98a2b40897f20c5937ff83, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 213126072}
+    - target: {fileID: 1262084531829486351, guid: 96bb044c7b98a2b40897f20c5937ff83, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GameEnd
+      objectReference: {fileID: 0}
     - target: {fileID: 1262084532004934516, guid: 96bb044c7b98a2b40897f20c5937ff83, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

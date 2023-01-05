@@ -24,13 +24,13 @@ public class GameStart : MonoBehaviour
             {
                 creater = FindObjectOfType<DungeonCreator>().gameObject;
                 creater.SetActive(true);
-                creater.GetComponent<DungeonCreator>().CreateDungeon();
+                //creater.GetComponent<DungeonCreator>().CreateDungeon();
             }
         }
         else
         {
             creater.SetActive(true);
-            creater.GetComponent<DungeonCreator>().CreateDungeon();
+            //creater.GetComponent<DungeonCreator>().CreateDungeon();
         }
         
         

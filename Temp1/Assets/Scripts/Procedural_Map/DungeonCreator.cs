@@ -49,7 +49,8 @@ public class DungeonCreator : MonoBehaviour
     int count, count_BossCheck;
     GameObject player;
     public GameObject door;
-    List<GameObject> doors;
+    List<GameObject> doors
+        ;
 
     private void Awake()
     {
@@ -75,6 +76,7 @@ public class DungeonCreator : MonoBehaviour
         //}
         //Debug.Log("ㅁ");
 
+        CreateDungeon();
         //11.10 추가 by 손동욱
         //플레이어와 카메라를 활성화하고, 시작 위치로 이동시키는 코드
         //01.05 추가 by 손동욱
@@ -83,13 +85,18 @@ public class DungeonCreator : MonoBehaviour
         {
             MainManager.instance.Initialize_();
         }
-        player = MainManager.instance.Player.gameObject;
-        player.SetActive(true);
-        player.transform.position = roomCollider[0].center;
+        if (MainManager.instance.Player != null)
+        {
+            player = MainManager.instance.Player.gameObject;
+            player.SetActive(true);
+            player.transform.position = roomCollider[0].center;
+
+        }
 
     }
     public void CreateDungeon()
     {
+        Debug.Log("던전 생성");
         DestroyAllChildren();// 모든걸 지운다.
         DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength); // 던전을 생성하는 클래스
 

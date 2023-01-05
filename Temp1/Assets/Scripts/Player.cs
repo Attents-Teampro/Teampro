@@ -80,6 +80,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     bool isFireReady;
     bool isColltime;
     bool isLookAt;
+    bool isRotate;
+    bool isLockOnMove;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -267,14 +269,21 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
         if (isLookAt == true)
         {
-            transform.LookAt(nearest);
-            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+            LockOnMove();
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
-        else
+    }
+
+    public void LockOnMove()
+    {
+        isLockOnMove = false;
+        if (nearest != null)
         {
-            //LockOff();
+            Vector3 lookdir = nearest.position - transform.position;
+            lookdir.y = 0;
+            transform.rotation = Quaternion.LookRotation(lookdir);
         }
+            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
     }
 
     private void OnEnable()
@@ -869,7 +878,9 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 {
                     nearestDistance = dir.sqrMagnitude;
                     nearest = enemy.transform;
-                    transform.LookAt(nearest.position);
+                    
+                    //transform.LookAt(nearest.position);
+                    //transform.LookAt(new Vector3(0,transform.rotation.y,0));
                 }
             }
             skillFilterLookOn.fillAmount = 0;
@@ -888,13 +899,9 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     void LockOff()
     {
-        Rotate();
-        //if(isLookAt == false)
-        //{
-        //    skillFilterLookOn.fillAmount = 1;
-        //}
-        //nearest = null;
-        //enemyBase.isDead = true;
+        nearest = null;
+        //this.transform.rotation = quaternion.Euler(new Vector3(0,transform.rotation.y, 0));
+        //Rotate();
     }
 
     private void OnLockOn(InputAction.CallbackContext context)

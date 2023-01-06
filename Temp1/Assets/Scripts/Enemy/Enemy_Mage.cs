@@ -1,13 +1,12 @@
-//gitTest
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.Burst.CompilerServices;
+//using System.Collections.Generic;
+//using TMPro;
+//using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-using static UnityEngine.UI.Image;
+//using static UnityEngine.UI.Image;
 
 public class Enemy_Mage : EnemyBase, ICharacter
 {

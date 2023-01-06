@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
+//using UnityEngine.AI;
+//using UnityEngine.UIElements;
 
 public class Enemy_Orc : EnemyBase, ICharacter
 {

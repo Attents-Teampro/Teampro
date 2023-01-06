@@ -269,6 +269,11 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             LockOnMove();
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
+
+        if (nearest == null)
+        {
+            skillFilterLookOn.fillAmount = 1;
+        }
     }
 
     public void LockOnMove()

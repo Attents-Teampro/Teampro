@@ -78,9 +78,9 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     bool isSwap;
     bool isFireReady;
     bool isColltime;
-    bool isLookAt;
+    bool isLookAt = false;
     bool isRotate;
-    bool isLockOnMove;
+    bool isLockOnMove = false;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -246,8 +246,6 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         Swap();
         Interation();
         //UseSkill();
-        
-
     }
 
     void FixedUpdate()
@@ -266,7 +264,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);    // 회전 방향 자연스럽게
         }
 
-        if (isLookAt == true)
+        if (isLookAt == true && nearest != null)
         {
             LockOnMove();
             //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
@@ -275,7 +273,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     public void LockOnMove()
     {
-        isLockOnMove = false;
+        isLockOnMove = true;
         if (nearest != null)
         {
             Vector3 lookdir = nearest.position - transform.position;

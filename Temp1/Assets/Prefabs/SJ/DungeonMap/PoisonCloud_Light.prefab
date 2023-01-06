@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999128066244654473}
   - component: {fileID: 2024390378759568855}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PoisonCloud_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6990132902135430636}
   - component: {fileID: 2060034007849260011}
   - component: {fileID: 8372229283934996449}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Poison Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4730,9 +4730,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2913812655951777730}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PoisonCloud
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4764,7 +4764,7 @@ GameObject:
   - component: {fileID: 3963092128407906616}
   - component: {fileID: 4636491224167937228}
   - component: {fileID: 213037829088464567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glows
   m_TagString: Untagged
   m_Icon: {fileID: 0}

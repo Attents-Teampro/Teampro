@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 816354271289572920}
   - component: {fileID: 3220270183310854898}
   - component: {fileID: 919354164481095475}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TreasureChest
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 2121833694888030134, guid: 875a085e562c30d4790d58ee0a1420a0, type: 3}
       propertyPath: m_Name
       value: Treasure_lid
+      objectReference: {fileID: 0}
+    - target: {fileID: 2121833694888030134, guid: 875a085e562c30d4790d58ee0a1420a0, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8876298950328548957, guid: 875a085e562c30d4790d58ee0a1420a0, type: 3}
       propertyPath: m_RootOrder

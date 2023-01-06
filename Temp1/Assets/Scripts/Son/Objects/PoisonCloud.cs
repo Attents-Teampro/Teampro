@@ -19,8 +19,9 @@ public class PoisonCloud : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            speed = player.moveSpeed;
-            player.moveSpeed = 2.0f;
+            //speed = player.moveSpeed;
+            //player.moveSpeed = 2.5f;
+            player.moveSpeed = 2.5f;
         }
     }
 
@@ -28,7 +29,8 @@ public class PoisonCloud : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player.moveSpeed = speed;
+            //player.moveSpeed = speed;
+            player.moveSpeed = 5.0f;
         }
     }
 

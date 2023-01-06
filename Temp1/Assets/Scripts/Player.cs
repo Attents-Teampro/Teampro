@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     //씬 이동해도 플레이어 유지 및 중복되면 중복 오브젝트를 삭제하기 위한 코드
     public static Player instance;
 
-    public float moveSpeed = 3.0f;
+    public float moveSpeed = 5.0f;
     public float turnSpeed = 10.0f;
     public float rotateSpeed = 180.0f;
 

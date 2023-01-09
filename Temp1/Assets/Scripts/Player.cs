@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     public static Player instance;
 
     public float moveSpeed = 5.0f;
+    public float lockOnSpeed = 1.0f;
     public float turnSpeed = 10.0f;
     public float rotateSpeed = 180.0f;
 
@@ -43,16 +44,16 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
     public Image skillFilterLookOn;
     //public Text coolTimeCounter; //남은 쿨타임을 표시할 텍스트
 
+    public static Action input;
+
     public float coolTime;
 
     private float currentCoolTime; //남은 쿨타임을 추적 할 변수
 
     private bool canUseSkill = true; //스킬을 사용할 수 있는지 확인하는 변수
 
-
     float moveDir = 0.0f;
     float rotateDir = 0.0f;
-
 
     //플레이어 hp와 최대hp 설정 - 양해인 1104
     public int pHP;
@@ -273,7 +274,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         if (nearest == null)
         {
             skillFilterLookOn.fillAmount = 1;
-        }
+        }  
     }
 
     public void LockOnMove()
@@ -285,7 +286,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             lookdir.y = 0;
             transform.rotation = Quaternion.LookRotation(lookdir);
         }
-            transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+        //transform.Translate(moveSpeed * Time.deltaTime * inputDir, Space.World);
+        transform.RotateAround(nearest.position, Vector3.up * -rotateDir, lockOnSpeed);
     }
 
     private void OnEnable()
@@ -484,7 +486,7 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
         UseSkillRight();
     }
 
-    IEnumerator Dodgeinv()
+        IEnumerator Dodgeinv()
     {
         yield return new WaitForSeconds(0.0f);  // 0.1초 대기
         dodgeinv.enabled = false;
@@ -495,6 +497,127 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
 
     public void UseSkill()
     {
+            if (canUseSkill)
+            {
+                //Debug.Log("Use Skill");
+                skillFilter.fillAmount = 1; //스킬 버튼을 가림
+                StartCoroutine("Cooltime");
+
+                currentCoolTime = coolTime;
+                //coolTimeCounter.text = "" + currentCoolTime;
+
+                //StartCoroutine("CoolTimeCounter");
+
+                canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
+
+                //if (inputDir != Vector3.zero && !isColltime)
+                //{
+                //    dodgeVec = inputDir;
+                //    speed *= 2;
+                //    anim.SetTrigger("doDodge");
+                //    StartCoroutine("Dodgeinv");
+                //    Debug.Log("구르기");
+                //}
+
+                inputDir = new Vector3(moveDir, 0, rotateDir);
+                if (inputDir != Vector3.zero && !isColltime)
+                {
+                    dodgeVec = inputDir;
+                    speed *= 2;
+                    anim.SetTrigger("doDodgeUp");
+                    //StartCoroutine("Dodgeinv");
+                    //Debug.Log("앞으로구르기");
+                }
+            }
+            else
+            {
+                Debug.Log("아직 스킬을 사용할 수 없습니다.");
+            }
+    }
+
+    public void UseSkillDown()
+    {
+            if (canUseSkill)
+            {
+                //Debug.Log("Use Skill");
+                skillFilter.fillAmount = 1; //스킬 버튼을 가림
+                StartCoroutine("Cooltime");
+
+                currentCoolTime = coolTime;
+
+                canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
+
+                inputDir = new Vector3(moveDir, 0, rotateDir);
+                if (inputDir != Vector3.zero && !isColltime)
+                {
+                    dodgeVec = inputDir;
+                    speed *= 2;
+                    anim.SetTrigger("doDodgeDown");
+                    //Debug.Log("뒤로 구르기");
+                }
+            }
+            else
+            {
+                Debug.Log("아직 스킬을 사용할 수 없습니다.");
+            }
+    }
+
+    public void UseSkillLeft()
+    {
+            if (canUseSkill)
+            {
+                //Debug.Log("Use Skill");
+                skillFilter.fillAmount = 1; //스킬 버튼을 가림
+                StartCoroutine("Cooltime");
+
+                currentCoolTime = coolTime;
+
+                canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
+
+                inputDir = new Vector3(moveDir, 0, rotateDir);
+                if (inputDir != Vector3.zero && !isColltime)
+                {
+                    dodgeVec = inputDir;
+                    speed *= 2;
+                    anim.SetTrigger("doDodgeLeft");
+                    //Debug.Log("왼쪽으로 구르기");
+                }
+            }
+            else
+            {
+                Debug.Log("아직 스킬을 사용할 수 없습니다.");
+            }
+    }
+
+    public void UseSkillRight()
+    {
+            if (canUseSkill)
+            {
+                //Debug.Log("Use Skill");
+                skillFilter.fillAmount = 1; //스킬 버튼을 가림
+                StartCoroutine("Cooltime");
+
+                currentCoolTime = coolTime;
+
+                canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
+
+                inputDir = new Vector3(moveDir, 0, rotateDir);
+                if (inputDir != Vector3.zero && !isColltime)
+                {
+                    dodgeVec = inputDir;
+                    speed *= 2;
+                    anim.SetTrigger("doDodgeRight");
+                    //Debug.Log("오른쪽으로 구르기");
+                }
+            }
+            else
+            {
+                Debug.Log("아직 스킬을 사용할 수 없습니다.");
+            }
+    }
+
+    public void UseSkillLockOnDodge()
+    {
         if (canUseSkill)
         {
             //Debug.Log("Use Skill");
@@ -502,20 +625,8 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             StartCoroutine("Cooltime");
 
             currentCoolTime = coolTime;
-            //coolTimeCounter.text = "" + currentCoolTime;
-
-            //StartCoroutine("CoolTimeCounter");
 
             canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
-
-            //if (inputDir != Vector3.zero && !isColltime)
-            //{
-            //    dodgeVec = inputDir;
-            //    speed *= 2;
-            //    anim.SetTrigger("doDodge");
-            //    StartCoroutine("Dodgeinv");
-            //    Debug.Log("구르기");
-            //}
 
             inputDir = new Vector3(moveDir, 0, rotateDir);
             if (inputDir != Vector3.zero && !isColltime)
@@ -523,88 +634,6 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
                 dodgeVec = inputDir;
                 speed *= 2;
                 anim.SetTrigger("doDodgeUp");
-                //StartCoroutine("Dodgeinv");
-                //Debug.Log("앞으로구르기");
-            }
-        }
-        else
-        {
-            Debug.Log("아직 스킬을 사용할 수 없습니다.");
-        }
-    }
-
-    public void UseSkillDown()
-    {
-        if (canUseSkill)
-        {
-            //Debug.Log("Use Skill");
-            skillFilter.fillAmount = 1; //스킬 버튼을 가림
-            StartCoroutine("Cooltime");
-
-            currentCoolTime = coolTime;
-
-            canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
-
-            inputDir = new Vector3(moveDir, 0, rotateDir);
-            if (inputDir != Vector3.zero && !isColltime)
-            {
-                dodgeVec = inputDir;
-                speed *= 2;
-                anim.SetTrigger("doDodgeDown");
-                //Debug.Log("뒤로 구르기");
-            }
-        }
-        else
-        {
-            Debug.Log("아직 스킬을 사용할 수 없습니다.");
-        }
-    }
-
-    public void UseSkillLeft()
-    {
-        if (canUseSkill)
-        {
-            //Debug.Log("Use Skill");
-            skillFilter.fillAmount = 1; //스킬 버튼을 가림
-            StartCoroutine("Cooltime");
-
-            currentCoolTime = coolTime;
-
-            canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
-
-            inputDir = new Vector3(moveDir, 0, rotateDir);
-            if (inputDir != Vector3.zero && !isColltime)
-            {
-                dodgeVec = inputDir;
-                speed *= 2;
-                anim.SetTrigger("doDodgeLeft");
-                //Debug.Log("왼쪽으로 구르기");
-            }
-        }
-        else
-        {
-            Debug.Log("아직 스킬을 사용할 수 없습니다.");
-        }
-    }
-
-    public void UseSkillRight()
-    {
-        if (canUseSkill)
-        {
-            //Debug.Log("Use Skill");
-            skillFilter.fillAmount = 1; //스킬 버튼을 가림
-            StartCoroutine("Cooltime");
-
-            currentCoolTime = coolTime;
-
-            canUseSkill = false; //스킬을 사용하면 사용할 수 없는 상태로 바꿈
-
-            inputDir = new Vector3(moveDir, 0, rotateDir);
-            if (inputDir != Vector3.zero && !isColltime)
-            {
-                dodgeVec = inputDir;
-                speed *= 2;
-                anim.SetTrigger("doDodgeRight");
                 //Debug.Log("오른쪽으로 구르기");
             }
         }
@@ -650,15 +679,15 @@ public class Player : MonoBehaviour, ICharacter, IPlayer
             return;
         if (sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
             return;
-        if (sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
-            return;
+        //if (sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
+        //    return;
 
         int weaponIndex = -1;
         if (sDown1) weaponIndex = 0;
         if (sDown2) weaponIndex = 1;
-        if (sDown3) weaponIndex = 2;
+        //if (sDown3) weaponIndex = 2;
 
-        if ((sDown1 || sDown2 || sDown3) && !isJump && !isDodge)
+        if ((sDown1 || sDown2 /*|| sDown3*/) && !isJump && !isDodge)
         {
             if (equipWeapon != null)
                 equipWeapon.gameObject.SetActive(false);

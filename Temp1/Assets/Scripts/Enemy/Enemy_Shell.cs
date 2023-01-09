@@ -90,9 +90,10 @@ public class Enemy_Shell : EnemyBase, ICharacter
         myMeleeAttack.gameObject.SetActive(false);
         //Destroy(myMeleeAttack.gameObject);
         capsuleCollider.enabled = false;
-        audioSource.PlayOneShot(dieSfx);
         anim.SetTrigger("doDie");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.2f);
+        audioSource.PlayOneShot(dieSfx);
+        yield return new WaitForSeconds(1.3f);
 
         //10.11 추가
         //메인 매니저에게 죽은 몬스터 수를 갱신

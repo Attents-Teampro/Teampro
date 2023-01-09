@@ -82,8 +82,9 @@ public class Enemy_Skelleton : EnemyBase, ICharacter
         isDead = true;
         capsuleCollider.enabled = false;
         anim.SetTrigger("doDie");
+        yield return new WaitForSeconds(0.5f);
         audioSource.PlayOneShot(dieSfx);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.1f);
 
         //10.11 추가
         //메인 매니저에게 죽은 몬스터 수를 갱신

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -565035836674327913}
   - component: {fileID: 3616415399526746316}
   - component: {fileID: 6011930098258593766}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bat_DangerLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  destoyTime: 0
+  parentBat: {fileID: 0}
 --- !u!54 &6011930098258593766
 Rigidbody:
   m_ObjectHideFlags: 0

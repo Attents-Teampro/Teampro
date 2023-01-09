@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 59911073727594278}
   - component: {fileID: 6836486679312906467}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2473379963299752787}
   - component: {fileID: 1466457733449994798}
   - component: {fileID: 4876910412983204219}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 1398628935}
   - component: {fileID: -4503832635787534415}
   - component: {fileID: 1398628936}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mage_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,9 +264,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3173362508069504013}
     m_Modifications:
+    - target: {fileID: 1189025262136874, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652709212538448, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656536300976936, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1722081097931586, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
       propertyPath: m_Name
       value: FX_Fireball_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722081097931586, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4457159321914820, guid: 4b21d5ab091be5a46ad6e87699fab62c, type: 3}
       propertyPath: m_RootOrder

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8108590037073041317}
   - component: {fileID: 4216029993179080252}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2473379963299752787}
   - component: {fileID: 1466457733449994798}
   - component: {fileID: 4876910412983204219}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 1398628935}
   - component: {fileID: -4503832635787534415}
   - component: {fileID: 5503987253803646568}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bat_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 49e6adf5005e59f4182beb7e36f3a221, type: 2}
   projectileSpeed: 5
+  parentBat: {fileID: 0}
 --- !u!1001 &2281499228463430229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,6 +268,10 @@ PrefabInstance:
     - target: {fileID: 1747586400421602, guid: 27a7f93524a582440b2e162bf001be78, type: 3}
       propertyPath: m_Name
       value: FX_GlowSpot_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1747586400421602, guid: 27a7f93524a582440b2e162bf001be78, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4502724242207434, guid: 27a7f93524a582440b2e162bf001be78, type: 3}
       propertyPath: m_RootOrder

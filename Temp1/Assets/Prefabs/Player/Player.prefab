@@ -2404,7 +2404,7 @@ MonoBehaviour:
   skillFilterLookOn: {fileID: 0}
   coolTime: 5
   pHP: 100
-  pMaxHp: 200
+  pMaxHp: 500
   damage: 1
   pDamage: 20
   enemyData: {fileID: 0}

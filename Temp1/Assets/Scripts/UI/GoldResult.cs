@@ -8,7 +8,7 @@ public class GoldResult : MonoBehaviour
 
     TextMeshProUGUI goldResult;
 
-    int goldSum = 0;
+    
 
     private void Start()
     {

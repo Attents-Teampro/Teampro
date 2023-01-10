@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     
     bool isPlaying=false;
 
-    
+    public float CurrentTime => currentTime;
 
     private void Start()
     {

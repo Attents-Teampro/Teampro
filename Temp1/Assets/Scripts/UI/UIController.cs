@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    
+    
     /// <summary>
     /// 게임 스타트 버튼 누를시 넘어갈 스테이지 scene
     /// </summary>
@@ -22,6 +22,8 @@ public class UIController : MonoBehaviour
     //    LoadingSceneController.LoadScene("Title_Scene"); //시작할대 로딩 보여주고 타이틀화면 보여주기
     //}
 
+
+
     private void Awake()
     {
         //var obj = FindObjectsOfType<UIController>();
@@ -34,6 +36,7 @@ public class UIController : MonoBehaviour
         //    Destroy(gameObject);
         //    Debug.Log("중복삭제");
         //}
+        
     }
 
     public void GameStart()
@@ -62,6 +65,7 @@ public class UIController : MonoBehaviour
         LoadingSceneController.LoadScene("Title_Scene");
     }
 
+   
 
 
 

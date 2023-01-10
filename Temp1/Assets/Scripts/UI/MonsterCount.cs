@@ -7,18 +7,35 @@ public class MonsterCount : MonoBehaviour
 {
 
     TextMeshProUGUI monsterCount;
+    MainManager mainManager;
 
-    int goldSum = 0;
+    
+    
 
+    private void Awake()
+    {
+        mainManager = MainManager.instance;
+    }
     private void Start()
     {
         monsterCount = transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        
     }
 
-
+   
     // Update is called once per frame
     void Update()
     {
-        monsterCount.text = $"{((int)MainManager.instance.numOfDieEnemy)} EA";  //gold 읽기 전용 프로퍼티 생성 필요
+        if (mainManager.numOfStageEnemy > 0)
+        {
+        monsterCount.text = $"{mainManager.numOfStageEnemy-mainManager.numOfDieEnemy} / {mainManager.numOfStageEnemy}";
+
+        }
+
+        else
+        {
+            monsterCount.text = "Room Clear";
+        }
     }
+    
 }

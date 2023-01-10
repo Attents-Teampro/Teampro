@@ -339,12 +339,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 737
-        y: 1477
+        y: 1543
         width: 338
-        height: 339
+        height: 273
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 68, y: 0, z: 65, w: 65}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -860,7 +860,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Game_UI_04_36
+      name: Game_UI_04_36(EHP)
       rect:
         serializedVersion: 2
         x: 1159
@@ -2594,8 +2594,8 @@ TextureImporter:
       Game_UI_04_12: 935270067
       Game_UI_04_41: -93578375
       Game_UI_04_39: 1693031753
+      Game_UI_04_36(EHP): 1111478126
       Game_UI_04_Background03: 254501140
-      Game_UI_04_36: 1111478126
       Game_UI_04_13: 623773233
       Game_UI_04_31: -153251359
       Game_UI_04_16: 399498478
